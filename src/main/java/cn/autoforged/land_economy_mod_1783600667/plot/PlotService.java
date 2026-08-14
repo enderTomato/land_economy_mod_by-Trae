@@ -28,6 +28,10 @@ public final class PlotService {
     }
 
     public static Result process(ServerPlayer p, PlotAction.Action action, List<Long> chunks, String dim) {
+        return process(p, action, chunks, dim, null);
+    }
+
+    public static Result process(ServerPlayer p, PlotAction.Action action, List<Long> chunks, String dim, @javax.annotation.Nullable String regionName) {
         EconomySavedData data = LandEconomyMod.getEconomyData();
         if (data == null) return new Result(false, "经济数据不可用", 0, List.of());
         if (!"new".equals(data.getPlayerPlotMode(p.getUUID())))
@@ -61,7 +65,9 @@ public final class PlotService {
             if (mine == null) {
                 mine = new RegionData();
                 mine.setOwner(p.getUUID());
-                mine.setName(p.getScoreboardName() + "的领地");
+                String name = (regionName != null && !regionName.isBlank())
+                        ? regionName : (p.getScoreboardName() + "的领地");
+                mine.setName(name);
                 mine.setDimensionId(dim);
                 data.createRegion(p.getUUID(), mine);
             }

@@ -57,6 +57,12 @@ public class ModConfig {
         public final ForgeConfigSpec.IntValue    plotMessageBoardSize;  // 留言板上限
         public final ForgeConfigSpec.BooleanValue legacyCommandsEnabled; // 旧指令全局开关（默认 false）
 
+        // —— 第三方地图集成 ——
+        public final ForgeConfigSpec.BooleanValue plotMapIntegrationEnabled;
+        public final ForgeConfigSpec.BooleanValue plotJourneyMapIntegration;
+        public final ForgeConfigSpec.BooleanValue plotXaeroMinimapIntegration;
+        public final ForgeConfigSpec.BooleanValue plotXaeroWorldMapIntegration;
+
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("gdp");
             builder.comment("GDP calculation interval in minutes");
@@ -198,6 +204,18 @@ public class ModConfig {
             this.plotMessageBoardSize = builder.defineInRange("plotMessageBoardSize", 20, 0, 200);
             builder.comment("Globally enable legacy /land claim|add|unclaim (also require player mode=old).");
             this.legacyCommandsEnabled = builder.define("legacyCommandsEnabled", false);
+            builder.pop();
+
+            // —— 第三方地图集成配置 ——
+            builder.push("mapIntegration");
+            builder.comment("Enable third-party map mod integration (JourneyMap / Xaero's).");
+            this.plotMapIntegrationEnabled = builder.define("enabled", false);
+            builder.comment("Enable JourneyMap integration (boundary overlay + Ctrl+click selection).");
+            this.plotJourneyMapIntegration = builder.define("journeyMap", true);
+            builder.comment("Enable Xaero's Minimap integration (boundary overlay).");
+            this.plotXaeroMinimapIntegration = builder.define("xaeroMinimap", true);
+            builder.comment("Enable Xaero's World Map integration (boundary overlay + Ctrl+click selection).");
+            this.plotXaeroWorldMapIntegration = builder.define("xaeroWorldMap", true);
             builder.pop();
 
             builder.push("building_blocks");

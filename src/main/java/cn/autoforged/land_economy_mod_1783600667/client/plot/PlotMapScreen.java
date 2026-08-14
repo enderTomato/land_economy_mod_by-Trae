@@ -1,6 +1,7 @@
 package cn.autoforged.land_economy_mod_1783600667.client.plot;
 
 import cn.autoforged.land_economy_mod_1783600667.client.ClientKeyState;
+import cn.autoforged.land_economy_mod_1783600667.client.gui.RegionNameInputScreen;
 import cn.autoforged.land_economy_mod_1783600667.network.ModMessages;
 import cn.autoforged.land_economy_mod_1783600667.network.PacketC2SPlotAction;
 import cn.autoforged.land_economy_mod_1783600667.network.PacketC2SRequestPlotData;
@@ -9,6 +10,7 @@ import cn.autoforged.land_economy_mod_1783600667.plot.PlotAction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.ChunkPos;
 import org.lwjgl.glfw.GLFW;
@@ -52,6 +54,10 @@ public class PlotMapScreen extends Screen {
 
     private boolean confirmMode = false;
     private String confirmMessage = "";
+
+    /** 鼠标中键拖拽平移 */
+    private boolean isMiddleDragging = false;
+    private double middleDragLastX, middleDragLastY;
 
     /** 平移速度（像素/tick） */
     private static final int PAN_SPEED = 6;
@@ -111,6 +117,9 @@ public class PlotMapScreen extends Screen {
         int cx1 = (int) Math.ceil((view.centerX + (W / 2.0) * (16.0 / view.cellSize)) / 16.0);
         int cz1 = (int) Math.ceil((view.centerZ + (H / 2.0) * (16.0 / view.cellSize)) / 16.0);
 
+        ClientLevel level = Minecraft.getInstance().level;
+        boolean useTerrain = view.cellSize >= 16; // 大地形渲染仅在缩放 >= 16 时启用
+
         // 绘制每个区块
         for (int cx = cx0; cx <= cx1; cx++) {
             for (int cz = cz0; cz <= cz1; cz++) {
@@ -122,15 +131,45 @@ public class PlotMapScreen extends Screen {
 
                 PlotClientCache.Cell cell = PlotClientCache.get(key);
 
-                // 填充色（半透明）
-                int fill;
-                if (selectedBuy.contains(key))            fill = 0x40FFFFFF;
-                else if (selectedAbandon.contains(key))    fill = 0x40FFFFFF;
-                else if (cell == null)                    fill = 0x33000000;
-                else if (cell.isMine())                   fill = 0x400000AA;
-                else if (cell.isOthers())                 fill = 0x40AA0000;
-                else                                      fill = 0x4000AA00;
-                g.fill(x0, y0, x1, y1, fill);
+                // 尝试使用地形颜色渲染（DynMap 风格）
+                boolean terrainDrawn = false;
+                if (useTerrain && level != null) {
+                    int[] terrain = PlotMapTerrainRenderer.sampleTerrain(level, cx, cz);
+                    if (terrain != null) {
+                        float scale = (float) view.cellSize / 16f;
+                        for (int lx = 0; lx < 16; lx++) {
+                            for (int lz = 0; lz < 16; lz++) {
+                                int color = terrain[lx * 16 + lz];
+                                int tx = x0 + (int) (lx * scale);
+                                int ty = y0 + (int) (lz * scale);
+                                int tw = (int) Math.ceil(scale);
+                                int th = (int) Math.ceil(scale);
+                                // 叠加半透明归属色
+                                int overlay = 0;
+                                if (selectedBuy.contains(key) || selectedAbandon.contains(key))       overlay = 0x40FFFFFF;
+                                else if (cell == null)                                                  overlay = 0x33000000;
+                                else if (cell.isMine())                                                overlay = 0x400000AA;
+                                else if (cell.isOthers())                                              overlay = 0x40AA0000;
+                                else                                                                    overlay = 0x4000AA00;
+                                g.fill(tx, ty, tx + tw, ty + th, color);
+                                if (overlay != 0) g.fill(tx, ty, tx + tw, ty + th, overlay);
+                            }
+                        }
+                        terrainDrawn = true;
+                    }
+                }
+
+                if (!terrainDrawn) {
+                    // 回退：纯色填充
+                    int fill;
+                    if (selectedBuy.contains(key))            fill = 0x40FFFFFF;
+                    else if (selectedAbandon.contains(key))    fill = 0x40FFFFFF;
+                    else if (cell == null)                    fill = 0x33000000;
+                    else if (cell.isMine())                   fill = 0x400000AA;
+                    else if (cell.isOthers())                 fill = 0x40AA0000;
+                    else                                      fill = 0x4000AA00;
+                    g.fill(x0, y0, x1, y1, fill);
+                }
 
                 // 边框色（实线）
                 int border;
@@ -168,7 +207,7 @@ public class PlotMapScreen extends Screen {
     private void drawHud(GuiGraphics g) {
         int y = 12;
         g.drawString(Minecraft.getInstance().font, "§e=== 地图地块 ===", 12, y, 0xFFFFFFFF); y += 12;
-        g.drawString(Minecraft.getInstance().font, "§fWASD 移动视角  |  滚轮缩放  |  空格/ESC 退出", 12, y, 0xFFFFFFFF); y += 12;
+        g.drawString(Minecraft.getInstance().font, "§fWASD/中键拖拽 移动视角  |  滚轮缩放  |  空格/ESC 退出", 12, y, 0xFFFFFFFF); y += 12;
         g.drawString(Minecraft.getInstance().font, "§f左键: 购买  |  左键拖拽: 批量购买", 12, y, 0xFFFFFFFF); y += 12;
         g.drawString(Minecraft.getInstance().font, "§f右键: 放弃  |  右键拖拽: 批量放弃", 12, y, 0xFFFFFFFF); y += 12;
         g.drawString(Minecraft.getInstance().font, "§f点击已购买区块: 查看区域详情  |  回车: 确认购买/放弃", 12, y, 0xFFFFFFFF); y += 12;
@@ -215,6 +254,12 @@ public class PlotMapScreen extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (confirmMode) return super.mouseClicked(mouseX, mouseY, button);
+        if (button == GLFW.GLFW_MOUSE_BUTTON_MIDDLE) {
+            isMiddleDragging = true;
+            middleDragLastX = mouseX;
+            middleDragLastY = mouseY;
+            return true;
+        }
         if (button == 0 || button == 1) {
             dragButton = button;
             dragStartX = mouseX; dragStartY = mouseY;
@@ -227,6 +272,16 @@ public class PlotMapScreen extends Screen {
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
         if (confirmMode) return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+        if (isMiddleDragging) {
+            double dx = mouseX - middleDragLastX;
+            double dy = mouseY - middleDragLastY;
+            view.pan((int) -dx, (int) -dy);
+            middleDragLastX = mouseX;
+            middleDragLastY = mouseY;
+            String dim = Minecraft.getInstance().level.dimension().location().toString();
+            requestChunksIfNeeded(dim);
+            return true;
+        }
         if (button == dragButton) {
             dragCurX = mouseX; dragCurY = mouseY;
         }
@@ -236,6 +291,10 @@ public class PlotMapScreen extends Screen {
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         if (confirmMode) return super.mouseReleased(mouseX, mouseY, button);
+        if (button == GLFW.GLFW_MOUSE_BUTTON_MIDDLE) {
+            isMiddleDragging = false;
+            return true;
+        }
         if (button != dragButton) return true;
         long duration = System.currentTimeMillis() - pressStartTime;
         boolean moved = Math.abs(mouseX - dragStartX) > 4 || Math.abs(mouseY - dragStartY) > 4;
@@ -361,6 +420,23 @@ public class PlotMapScreen extends Screen {
         confirmMode = false;
         String dim = Minecraft.getInstance().level.dimension().location().toString();
         if (!selectedBuy.isEmpty()) {
+            // 检查是否需要命名（玩家已购区块数为 0）
+            if (!PlotClientCache.hasMine()) {
+                Minecraft.getInstance().setScreen(new RegionNameInputScreen(
+                    name -> {
+                        // 命名完成后回到 PlotMapScreen 并发送请求
+                        Minecraft.getInstance().setScreen(this);
+                        ModMessages.sendToServer(new PacketC2SPlotAction(
+                                PlotAction.Action.BUY, new java.util.ArrayList<>(selectedBuy), dim, name));
+                        clearSelection();
+                    },
+                    () -> {
+                        // 取消：回到 PlotMapScreen
+                        Minecraft.getInstance().setScreen(this);
+                    }
+                ));
+                return;
+            }
             ModMessages.sendToServer(new PacketC2SPlotAction(
                     PlotAction.Action.BUY, new java.util.ArrayList<>(selectedBuy), dim));
         }
@@ -398,6 +474,7 @@ public class PlotMapScreen extends Screen {
     public void onClose() {
         // 退出前通知服务端退出地块界面（让 isInPlotMode=false）
         // 服务端事件也会兜底处理，这里冗余保证
+        PlotMapTerrainRenderer.clearAll();
         super.onClose();
     }
 

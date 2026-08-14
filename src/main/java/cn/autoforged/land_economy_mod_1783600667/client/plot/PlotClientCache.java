@@ -49,4 +49,12 @@ public final class PlotClientCache {
     public static int size() {
         return CACHE.size();
     }
+
+    /** 判断缓存中是否有任何属于玩家的区块（用于判断是否首次购买） */
+    public static boolean hasMine() {
+        for (Cell cell : CACHE.values()) {
+            if (cell.isMine()) return true;
+        }
+        return false;
+    }
 }
