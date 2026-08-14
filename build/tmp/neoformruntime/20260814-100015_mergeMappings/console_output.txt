@@ -1,0 +1,29 @@
+--------------------------------------------------------------------------------
+
+Command-Line:
+ - /root/.local/share/mise/installs/java/17.0.2/bin/java
+ - -jar
+ - /root/.gradle/caches/neoformruntime/artifacts/net/minecraftforge/installertools/1.2.0/installertools-1.2.0-fatjar.jar
+ - --task
+ - MERGE_MAPPING
+ - --left
+ - config/joined.tsrg
+ - --right
+ - /root/.gradle/caches/neoformruntime/artifacts/minecraft_1.20.1_client_mappings.txt
+ - --right-names
+ - right,left
+ - --classes
+ - --output
+ - ./output.tsrg
+--------------------------------------------------------------------------------
+
+Task: MERGE_MAPPING
+Left:    config/joined.tsrg
+         null
+Right:   /root/.gradle/caches/neoformruntime/artifacts/minecraft_1.20.1_client_mappings.txt
+         right,left
+Classes: true
+Fields:  false
+Methods: false
+Params:  false
+Output:  ./output.tsrg

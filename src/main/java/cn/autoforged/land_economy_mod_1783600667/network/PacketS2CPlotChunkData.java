@@ -8,6 +8,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -23,7 +24,7 @@ public class PacketS2CPlotChunkData {
     private final List<CellDTO> cells;
     private final int cx0, cz0, cx1, cz1;
 
-    public PacketS2CPlotChunkData(List<EconomySavedData.PlotCell> rawCells, int cx0, int cz0, int cx1, int cz1) {
+    public PacketS2CPlotChunkData(Collection<EconomySavedData.PlotCell> rawCells, int cx0, int cz0, int cx1, int cz1) {
         this.cells = new ArrayList<>(rawCells.size());
         for (EconomySavedData.PlotCell c : rawCells) {
             this.cells.add(new CellDTO(c.chunkKey(), c.owner(), c.regionName(), c.isFlyland()));

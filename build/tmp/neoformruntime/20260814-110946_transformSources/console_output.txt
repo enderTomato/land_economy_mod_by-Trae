@@ -1,0 +1,27 @@
+--------------------------------------------------------------------------------
+
+Command-Line:
+ - /root/.gradle/jdks/eclipse_adoptium-21-amd64-linux.2/bin/java
+ - -jar
+ - /root/.gradle/caches/modules-2/files-2.1/net.neoforged.jst/jst-cli-bundle/1.0.72/5062f69cd7700922b3dbfce273ed795bab71858f/jst-cli-bundle-1.0.72.jar
+ - --problems-report
+ - /workspace/build/tmp/neoformruntime/20260814-110946_transformSources/problems.json
+ - --libraries-list
+ - /root/.gradle/caches/neoformruntime/intermediate_results/listLibraries_c2eaebc1956c654f294a7dc0a45883a9c1296ab9_output.txt
+ - --in-format
+ - ARCHIVE
+ - --out-format
+ - ARCHIVE
+ - --enable-accesstransformers
+ - --access-transformer
+ - ats/accesstransformer.cfg
+ - /root/.gradle/caches/neoformruntime/intermediate_results/applyNeoforgePatches_7365c3ee59217e7977e023ec8d6fd5169fdf9978_output.zip
+ - ./output.zip
+--------------------------------------------------------------------------------
+
+Access transformer targeting record class net.minecraft.core.RegistrySynchronization$NetworkedRegistryData attempts to widen its access without widening the constructor's access. You must AT the constructor too: "public net.minecraft.core.RegistrySynchronization$NetworkedRegistryData <init>(Lnet/minecraft/resources/ResourceKey;Lcom/mojang/serialization/Codec;)V" at PUBLIC LEAVE /workspace/build/tmp/neoformruntime/20260814-110946_transformSources/ats/accesstransformer.cfg:160
+Access transformer targeting record class net.minecraft.server.MinecraftServer$ReloadableResources attempts to widen its access without widening the constructor's access. You must AT the constructor too: "public net.minecraft.server.MinecraftServer$ReloadableResources <init>(Lnet/minecraft/server/packs/resources/CloseableResourceManager;Lnet/minecraft/server/ReloadableServerResources;)V" at PUBLIC LEAVE /workspace/build/tmp/neoformruntime/20260814-110946_transformSources/ats/accesstransformer.cfg:205
+Access transformer targeting record class net.minecraft.util.datafix.fixes.StructuresBecomeConfiguredFix$Conversion attempts to widen its access without widening the constructor's access. You must AT the constructor too: "public net.minecraft.util.datafix.fixes.StructuresBecomeConfiguredFix$Conversion <init>(Ljava/util/Map;Ljava/lang/String;)V" at PUBLIC LEAVE /workspace/build/tmp/neoformruntime/20260814-110946_transformSources/ats/accesstransformer.cfg:217
+Access transformer attempted to make m_43923_ of net.minecraft.world.item.crafting.Ingredient final. Was non-final at PUBLIC MAKEFINAL /workspace/build/tmp/neoformruntime/20260814-110946_transformSources/ats/accesstransformer.cfg:276
+Access transformer targeting record class net.minecraft.world.level.biome.Biome$ClimateSettings attempts to widen its access without widening the constructor's access. You must AT the constructor too: "public net.minecraft.world.level.biome.Biome$ClimateSettings <init>(ZFLnet/minecraft/world/level/biome/Biome$TemperatureModifier;F)V" at PUBLIC LEAVE /workspace/build/tmp/neoformruntime/20260814-110946_transformSources/ats/accesstransformer.cfg:292
+Access transformer PUBLIC LEAVE /workspace/build/tmp/neoformruntime/20260814-110946_transformSources/ats/accesstransformer.cfg:454, targeting net.minecraft.world.level.levelgen.NoiseGeneratorSettings METHOD m_64474_(Lcom/mojang/serialization/codecs/RecordCodecBuilder$Instance;)Lcom/mojang/datafixers/kinds/App; did not apply as its target doesn't exist

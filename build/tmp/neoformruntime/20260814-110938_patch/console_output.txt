@@ -1,0 +1,29 @@
+--------------------------------------------------------------------------------
+
+Command-Line:
+ - /root/.gradle/jdks/eclipse_adoptium-21-amd64-linux.2/bin/java
+ - -jar
+ - /root/.gradle/caches/modules-2/files-2.1/io.codechicken/DiffPatch/2.0.0.36/5b32f9baa0c0371c0dc80a3b88794960af0c6b44/DiffPatch-2.0.0.36-all.jar
+ - /root/.gradle/caches/neoformruntime/intermediate_results/inject_b5d6e2a664e255a153a14c71a95a7c093dddbe58_output.jar
+ - /root/.gradle/caches/neoformruntime/artifacts/de/oceanlabs/mcp/mcp_config/1.20.1-20230612.114412/mcp_config-1.20.1-20230612.114412.zip
+ - --prefix
+ - patches/joined/
+ - --patch
+ - --archive
+ - ZIP
+ - --output
+ - ./output.zip
+ - --log-level
+ - WARN
+ - --mode
+ - OFFSET
+ - --archive-rejects
+ - ZIP
+ - --reject
+ - ./outputRejects.zip
+ - --base-path-prefix
+ - a/
+ - --modified-path-prefix
+ - b/
+--------------------------------------------------------------------------------
+

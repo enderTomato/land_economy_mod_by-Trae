@@ -13,5 +13,6 @@ pluginManagement {
 }
 
 plugins {
-    // id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+    // 启用 foojay 下载器以自动下载 ModDevGradle 要求的 JDK 21 toolchain
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }

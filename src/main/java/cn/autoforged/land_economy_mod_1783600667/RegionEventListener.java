@@ -158,7 +158,7 @@ public class RegionEventListener {
 
     @SubscribeEvent
     public static void onPlayerInteract(PlayerInteractEvent.RightClickBlock event) {
-        if (event.getLevel().isClientSide) return;
+        if (event.getLevel().isClientSide()) return;
         Player player = event.getEntity();
         BlockPos pos = event.getPos();
         Level level = event.getLevel();
@@ -222,7 +222,7 @@ public class RegionEventListener {
 
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
-        if (event.getLevel().isClientSide) return;
+        if (event.getLevel().isClientSide()) return;
         Entity entity = event.getEntity();
         if (!(entity instanceof Player player)) return;
 

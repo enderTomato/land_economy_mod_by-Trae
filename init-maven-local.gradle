@@ -1,0 +1,21 @@
+// init-script: 强制重写 maven.neoforged.net 仓库为 mavenLocal 优先
+// 解决沙箱代理下 Gradle Apache HttpClient 与 maven.neoforged.net CDN77 的 TLS 握手失败
+
+allprojects {
+    buildscript.configurations.configureEach {
+        resolutionStrategy.preferProjectModules()
+    }
+}
+
+// 在所有项目构建脚本仓库中插入 mavenLocal
+allprojects {
+    buildscript {
+        repositories {
+            // 先尝试本地仓库（curl 已预下载关键依赖）
+            mavenLocal()
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}

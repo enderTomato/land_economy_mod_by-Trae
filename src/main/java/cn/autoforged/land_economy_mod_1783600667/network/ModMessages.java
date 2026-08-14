@@ -55,8 +55,10 @@ public final class ModMessages {
 
     public static <M> void sendToServer(M msg) { INSTANCE.sendToServer(msg); }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static <M> void sendToPlayer(ServerPlayer p, M msg) {
-        INSTANCE.send(msg, PacketDistributor.PLAYER.with(() -> p));
+        PacketDistributor.PacketTarget target = PacketDistributor.PLAYER.with(() -> p);
+        INSTANCE.send(target, msg);
     }
 
     /** 便利：从 BiConsumer 适配到 Forge 的 message handler 函数式接口 */
