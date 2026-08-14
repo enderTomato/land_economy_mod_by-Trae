@@ -1,21 +1,26 @@
 package cn.autoforged.land_economy_mod_1783600667.data;
 
+import cn.autoforged.land_economy_mod_1783600667.LandEconomyMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.level.ChunkPos;
 
 import java.util.*;
 
 public class RegionData {
 
-    public static final int TOTAL_PERMISSIONS = 11;
+    // 11 -> 13：新增 region_fly(11)、block_update(12)
+    public static final int TOTAL_PERMISSIONS = 13;
 
     private static final String[] PERMISSION_NAMES = {
             "explode", "undead_spawn", "phantom_spawn", "friendly_fire", "pvp",
             "explosion_block_damage", "container_access", "redstone_interact", "ender_pearl",
-            "fire_spread", "block_place_break"
+            "fire_spread", "block_place_break",
+            "region_fly",   // 11：true=允许区域内成员飞行
+            "block_update"  // 12：true=允许方块更新(默认)；false=区域冻结
     };
 
     private UUID regionId;
@@ -40,6 +45,10 @@ public class RegionData {
     private Set<UUID> childRegionIds;
     private boolean isFlyland;
     private Map<UUID, Long> pendingJoinRequests;
+    // —— 地块系统：已购买区块集合（chunkKey = ChunkPos.asLong(x,z)）——
+    private Set<Long> claimedChunks = new HashSet<>();
+    // —— 留言板 ——
+    private final List<MessageEntry> messages = new ArrayList<>();
 
     public RegionData() {
         this.regionId = UUID.randomUUID();
@@ -56,6 +65,81 @@ public class RegionData {
         this.childRegionIds = new HashSet<>();
         this.isFlyland = false;
         this.pendingJoinRequests = new HashMap<>();
+    }
+
+    /** 留言条目 */
+    public static class MessageEntry {
+        public final UUID author;
+        public final String authorName;
+        public final String text;
+        public final long time;
+        public MessageEntry(UUID author, String authorName, String text, long time) {
+            this.author = author; this.authorName = authorName; this.text = text; this.time = time;
+        }
+        public CompoundTag toNbt() {
+            CompoundTag t = new CompoundTag();
+            t.putUUID("Author", author);
+            t.putString("AuthorName", authorName);
+            t.putString("Text", text);
+            t.putLong("Time", time);
+            return t;
+        }
+        public static MessageEntry fromNbt(CompoundTag t) {
+            return new MessageEntry(t.getUUID("Author"), t.getString("AuthorName"),
+                    t.getString("Text"), t.getLong("Time"));
+        }
+    }
+
+    // ====== 区块集合 API ======
+    public static long chunkKey(BlockPos pos) { return ChunkPos.asLong(pos.getX() >> 4, pos.getZ() >> 4); }
+    public static long chunkKey(int cx, int cz) { return ChunkPos.asLong(cx, cz); }
+
+    public Set<Long> getClaimedChunks() { return claimedChunks; }
+
+    /** 新模式是否已启用（有任意已购买区块） */
+    public boolean hasPlots() { return !claimedChunks.isEmpty(); }
+
+    public boolean ownsChunk(long key) { return claimedChunks.contains(key); }
+    public boolean ownsChunk(BlockPos pos) { return claimedChunks.contains(chunkKey(pos)); }
+    public boolean addChunk(long key) { setDirty(); return claimedChunks.add(key); }
+    public boolean removeChunk(long key) { setDirty(); return claimedChunks.remove(key); }
+
+    /** 由 AABB 一次性写入其覆盖的全部区块（旧→新迁移/旧指令兼容） */
+    public void addAllChunksInAABB() {
+        if (minX == 0 && maxX == 0 && minZ == 0 && maxZ == 0) return;
+        int cx0 = minX >> 4, cx1 = maxX >> 4, cz0 = minZ >> 4, cz1 = maxZ >> 4;
+        for (int cx = cx0; cx <= cx1; cx++)
+            for (int cz = cz0; cz <= cz1; cz++)
+                claimedChunks.add(chunkKey(cx, cz));
+        setDirty();
+    }
+
+    /** 由当前 chunk 集合反算 AABB（新→旧显示兼容） */
+    public void recomputeAABBFromChunks() {
+        if (claimedChunks.isEmpty()) return;
+        int mnX = Integer.MAX_VALUE, mnZ = Integer.MAX_VALUE, mxX = Integer.MIN_VALUE, mxZ = Integer.MIN_VALUE;
+        for (long k : claimedChunks) {
+            int cx = ChunkPos.getX(k), cz = ChunkPos.getZ(k);
+            mnX = Math.min(mnX, cx << 4); mnZ = Math.min(mnZ, cz << 4);
+            mxX = Math.max(mxX, (cx << 4) + 15); mxZ = Math.max(mxZ, (cz << 4) + 15);
+        }
+        this.minX = mnX; this.minZ = mnZ; this.maxX = mxX; this.maxZ = mxZ;
+        if (center == null) center = new BlockPos((mnX + mxX) / 2, 64, (mnZ + mxZ) / 2);
+        setDirty();
+    }
+
+    // ====== 留言板 ======
+    public List<MessageEntry> getMessages() { return Collections.unmodifiableList(messages); }
+    public void addMessage(UUID author, String authorName, String text, int max) {
+        messages.add(new MessageEntry(author, authorName, text, System.currentTimeMillis()));
+        while (messages.size() > max) messages.remove(0);
+        setDirty();
+    }
+
+    /** 标记外部 SavedData 脏；RegionData 是 POJO，由 EconomySavedData.setDirty() 兜底 */
+    private void setDirty() {
+        EconomySavedData data = LandEconomyMod.getEconomyData();
+        if (data != null) data.setDirty();
     }
 
     public RegionData(UUID owner, BlockPos center, int sizeX, int sizeZ) {
@@ -128,6 +212,17 @@ public class RegionData {
             }
         }
 
+        // —— 新增：chunk 集合 ——
+        if (tag.contains("ClaimedChunks")) {
+            long[] arr = tag.getLongArray("ClaimedChunks");
+            for (long k : arr) data.claimedChunks.add(k);
+        }
+        // —— 新增：留言板 ——
+        if (tag.contains("Messages")) {
+            ListTag ml = tag.getList("Messages", Tag.TAG_COMPOUND);
+            for (int i = 0; i < ml.size(); i++) data.messages.add(MessageEntry.fromNbt(ml.getCompound(i)));
+        }
+
         return data;
     }
 
@@ -191,10 +286,18 @@ public class RegionData {
         }
         tag.put("PendingJoinRequests", joinList);
 
+        // —— 新增 ——
+        tag.putLongArray("ClaimedChunks", claimedChunks.stream().mapToLong(Long::longValue).toArray());
+        ListTag ml = new ListTag();
+        for (MessageEntry m : messages) ml.add(m.toNbt());
+        tag.put("Messages", ml);
+
         return tag;
     }
 
+    // ====== containsPos：优先 chunk 集合，回退 AABB（旧数据） ======
     public boolean containsPos(BlockPos pos) {
+        if (!claimedChunks.isEmpty()) return ownsChunk(pos);
         return pos.getX() >= minX && pos.getX() <= maxX
                 && pos.getZ() >= minZ && pos.getZ() <= maxZ;
     }
@@ -263,7 +366,10 @@ public class RegionData {
     public void setBankDeposits(double deposits) { this.bankDeposits = deposits; }
     public double getPersonalFunds() { return personalFunds; }
     public void setPersonalFunds(double funds) { this.personalFunds = funds; }
-    public int getAreaSize() { return (maxX - minX + 1) * (maxZ - minZ + 1); }
+    public int getAreaSize() {
+        if (!claimedChunks.isEmpty()) return claimedChunks.size() * 256;
+        return (maxX - minX + 1) * (maxZ - minZ + 1);
+    }
 
     public Set<UUID> getMembers() { return members; }
 

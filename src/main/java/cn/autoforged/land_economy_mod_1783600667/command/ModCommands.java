@@ -145,6 +145,21 @@ public class ModCommands {
                         .then(Commands.literal("add")
                                 .then(Commands.argument("amount", DoubleArgumentType.doubleArg(0))
                                         .executes(ModCommands::setOutlayAdd))))
+                // /land map — 打开地图地块界面（新版）
+                .then(Commands.literal("map")
+                        .executes(ModCommands::openMap))
+                // /land mode <new|old> — 切换新旧版本
+                .then(Commands.literal("mode")
+                        .then(Commands.argument("mode", StringArgumentType.word())
+                                .suggests(ModCommands::suggestPlotModes)
+                                .executes(ModCommands::setPlotMode)))
+                // /land gui — 打开箱子GUI
+                .then(Commands.literal("gui")
+                        .executes(ModCommands::openChestGui))
+                // /land message <text> — 在当前区域留言板发布留言
+                .then(Commands.literal("message")
+                        .then(Commands.argument("text", StringArgumentType.greedyString())
+                                .executes(ModCommands::postMessage)))
                 .then(Commands.literal("flyland")
                         .then(Commands.literal("claim")
                                 .then(Commands.argument("width", IntegerArgumentType.integer(1))
@@ -258,6 +273,13 @@ public class ModCommands {
     private static CompletableFuture<Suggestions> suggestDisplayModes(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder builder) {
         builder.suggest("title");
         builder.suggest("actionbar");
+        return builder.buildFuture();
+    }
+
+    // Tab completion for /land mode <new|old>
+    private static CompletableFuture<Suggestions> suggestPlotModes(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder builder) {
+        builder.suggest("new");
+        builder.suggest("old");
         return builder.buildFuture();
     }
 
@@ -482,5 +504,23 @@ public class ModCommands {
 
     private static int setPopCheckHours(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         return EconomyCommandHandler.setPopCheckHours(ctx);
+    }
+
+    // ==================== 地块系统相关命令 ====================
+
+    private static int openMap(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        return RegionCommandHandler.openMap(ctx);
+    }
+
+    private static int setPlotMode(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        return RegionCommandHandler.setPlotMode(ctx);
+    }
+
+    private static int openChestGui(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        return RegionCommandHandler.openChestGui(ctx);
+    }
+
+    private static int postMessage(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        return RegionCommandHandler.postMessage(ctx);
     }
 }

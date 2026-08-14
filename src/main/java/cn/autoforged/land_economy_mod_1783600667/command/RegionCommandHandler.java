@@ -5,6 +5,8 @@ import cn.autoforged.land_economy_mod_1783600667.ModConfig;
 import cn.autoforged.land_economy_mod_1783600667.data.EconomySavedData;
 import cn.autoforged.land_economy_mod_1783600667.data.RegionData;
 import cn.autoforged.land_economy_mod_1783600667.data.RegionType;
+import cn.autoforged.land_economy_mod_1783600667.network.ModMessages;
+import cn.autoforged.land_economy_mod_1783600667.network.PacketS2COpenScreen;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.ChatFormatting;
@@ -41,6 +43,11 @@ public class RegionCommandHandler {
         if (data == null) {
             ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
             return 0;
+        }
+        // 新版模式下提示使用 /land map（旧指令仍可执行）
+        if ("new".equals(data.getPlayerPlotMode(player.getUUID()))) {
+            ctx.getSource().sendSuccess(() -> Component.literal("[提示] 你处于新版地图地块模式，建议使用 /land map 通过图形化方式购买地块")
+                    .withStyle(ChatFormatting.AQUA), false);
         }
 
         RegionData existing = data.getRegionByOwner(player.getUUID());
@@ -1290,6 +1297,13 @@ public class RegionCommandHandler {
         ctx.getSource().sendSuccess(() -> Component.literal("  /land setOutlay <new/add> <金额> — 设置新建/扩大区域费用（管理员）").withStyle(ChatFormatting.WHITE), false);
         ctx.getSource().sendSuccess(() -> Component.literal("").withStyle(ChatFormatting.WHITE), false);
 
+        ctx.getSource().sendSuccess(() -> Component.literal("【地块系统（新版）】").withStyle(ChatFormatting.YELLOW), false);
+        ctx.getSource().sendSuccess(() -> Component.literal("  /land map — 打开地图地块界面（俯视购买/放弃区块）").withStyle(ChatFormatting.WHITE), false);
+        ctx.getSource().sendSuccess(() -> Component.literal("  /land mode <new|old> — 切换新版（地块系统）/旧版（区域声明）").withStyle(ChatFormatting.WHITE), false);
+        ctx.getSource().sendSuccess(() -> Component.literal("  /land gui — 打开领地箱子GUI（图形化操作所有功能）").withStyle(ChatFormatting.WHITE), false);
+        ctx.getSource().sendSuccess(() -> Component.literal("  /land message <留言> — 在当前领地留言板发布留言").withStyle(ChatFormatting.WHITE), false);
+        ctx.getSource().sendSuccess(() -> Component.literal("").withStyle(ChatFormatting.WHITE), false);
+
         ctx.getSource().sendSuccess(() -> Component.literal("【经济指令】").withStyle(ChatFormatting.YELLOW), false);
         ctx.getSource().sendSuccess(() -> Component.literal("  /economy gdp — 查看GDP总览（含进度条）").withStyle(ChatFormatting.WHITE), false);
         ctx.getSource().sendSuccess(() -> Component.literal("  /economy gdpdetail — 查看各领地GDP详情").withStyle(ChatFormatting.WHITE), false);
@@ -1450,6 +1464,8 @@ public class RegionCommandHandler {
             case "ender_pearl" -> "末影珍珠使用";
             case "fire_spread" -> "火焰蔓延";
             case "block_place_break" -> "非成员破坏与放置方块";
+            case "region_fly" -> "区域飞行";
+            case "block_update" -> "区域方块更新(关闭=区域冻结)";
             default -> permName;
         };
     }
@@ -1463,5 +1479,96 @@ public class RegionCommandHandler {
             }
         }
         return null;
+    }
+
+    // ==================== 地块系统相关命令实现 ====================
+
+    /** /land map — 打开地图地块界面 */
+    public static int openMap(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        EconomySavedData data = LandEconomyMod.getEconomyData();
+        if (data == null) {
+            ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
+            return 0;
+        }
+        // 新版模式下，提示客户端打开 PlotMapScreen；旧版模式提示切换
+        String mode = data.getPlayerPlotMode(player.getUUID());
+        if ("old".equals(mode)) {
+            ctx.getSource().sendFailure(Component.literal("当前为旧版模式，请先使用 /land mode new 切换到新版地图地块系统")
+                    .withStyle(ChatFormatting.YELLOW));
+            return 0;
+        }
+        // 进入地块界面：服务端记录在线状态（用于强制退出）
+        data.setInPlotMode(player.getUUID(), true);
+        ModMessages.sendToPlayer(player, new PacketS2COpenScreen(PacketS2COpenScreen.Type.PLOT_MAP));
+        ctx.getSource().sendSuccess(() -> Component.literal("正在打开地图地块界面... 按 空格/ESC 退出")
+                .withStyle(ChatFormatting.AQUA), true);
+        return 1;
+    }
+
+    /** /land mode <new|old> — 切换玩家个人地块模式 */
+    public static int setPlotMode(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        String mode = ctx.getArgument("mode", String.class);
+        if (!"new".equals(mode) && !"old".equals(mode)) {
+            ctx.getSource().sendFailure(Component.literal("模式必须为 new 或 old"));
+            return 0;
+        }
+        EconomySavedData data = LandEconomyMod.getEconomyData();
+        if (data == null) {
+            ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
+            return 0;
+        }
+        // 切换到新版：自动迁移旧版 AABB 到 chunk 集合
+        if ("new".equals(mode)) {
+            RegionData mine = data.getRegionByOwner(player.getUUID());
+            if (mine != null) data.migrateLegacyAABBToChunks(mine);
+        }
+        data.setPlayerPlotMode(player.getUUID(), mode);
+        data.setDirty();
+        String label = "new".equals(mode) ? "新版（地图地块系统）" : "旧版（区域声明）";
+        ctx.getSource().sendSuccess(() -> Component.literal("已切换到" + label)
+                .withStyle(ChatFormatting.GREEN), true);
+        return 1;
+    }
+
+    /** /land gui — 打开箱子GUI */
+    public static int openChestGui(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        EconomySavedData data = LandEconomyMod.getEconomyData();
+        if (data == null) {
+            ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
+            return 0;
+        }
+        ModMessages.sendToPlayer(player, new PacketS2COpenScreen(PacketS2COpenScreen.Type.CHEST));
+        ctx.getSource().sendSuccess(() -> Component.literal("正在打开领地GUI...")
+                .withStyle(ChatFormatting.AQUA), true);
+        return 1;
+    }
+
+    /** /land message <text> — 在当前所在区域留言板发布留言 */
+    public static int postMessage(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        String text = ctx.getArgument("text", String.class);
+        EconomySavedData data = LandEconomyMod.getEconomyData();
+        if (data == null) {
+            ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
+            return 0;
+        }
+        RegionData region = findRegionAtPlayer(player, data);
+        if (region == null) {
+            ctx.getSource().sendFailure(Component.literal("你不在任何领地中"));
+            return 0;
+        }
+        if (!region.isMember(player.getUUID())) {
+            ctx.getSource().sendFailure(Component.literal("仅领地成员可留言"));
+            return 0;
+        }
+        int max = ModConfig.COMMON.plotMessageBoardSize.get();
+        region.addMessage(player.getUUID(), player.getScoreboardName(), text, max);
+        data.setDirty();
+        ctx.getSource().sendSuccess(() -> Component.literal("已在 " + region.getName() + " 留言板发布留言")
+                .withStyle(ChatFormatting.GREEN), true);
+        return 1;
     }
 }

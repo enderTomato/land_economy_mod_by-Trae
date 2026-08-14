@@ -48,6 +48,15 @@ public class ModConfig {
         public final ForgeConfigSpec.IntValue mathGdpCooldownMinutes;
         public final ForgeConfigSpec.ConfigValue<String> regionDisplayMode;
 
+        // —— 地块系统配置 ——
+        public final ForgeConfigSpec.BooleanValue plotSystemEnabled;     // 全局默认地块系统
+        public final ForgeConfigSpec.DoubleValue plotCostPerChunk;       // 每区块购买费用
+        public final ForgeConfigSpec.DoubleValue plotRefundPerChunk;     // 放弃每区块返还
+        public final ForgeConfigSpec.IntValue    plotMaxChunksPerPlayer; // -1=不限
+        public final ForgeConfigSpec.IntValue    plotMapViewRadius;      // 一次请求的区块半径
+        public final ForgeConfigSpec.IntValue    plotMessageBoardSize;  // 留言板上限
+        public final ForgeConfigSpec.BooleanValue legacyCommandsEnabled; // 旧指令全局开关（默认 false）
+
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("gdp");
             builder.comment("GDP calculation interval in minutes");
@@ -171,6 +180,24 @@ public class ModConfig {
             builder.comment("Default region-entry notification style: title (Traveler's Title style, screen title) or actionbar (vanilla). Each player can override per-player with /land display.");
             this.regionDisplayMode = builder
                     .define("regionDisplayMode", "title");
+            builder.pop();
+
+            // —— plot 配置段 ——
+            builder.push("plot");
+            builder.comment("Enable the new Cities-Skylines-style plot system by default (per-player can override via /land mode).");
+            this.plotSystemEnabled = builder.define("plotSystemEnabled", true);
+            builder.comment("Cost (player funds) to buy one chunk in plot mode.");
+            this.plotCostPerChunk = builder.defineInRange("plotCostPerChunk", 0.0, 0.0, 1000000.0);
+            builder.comment("Funds refunded per chunk when abandoning in plot mode.");
+            this.plotRefundPerChunk = builder.defineInRange("plotRefundPerChunk", 0.0, 0.0, 1000000.0);
+            builder.comment("Max chunks a single player can own (-1 = unlimited).");
+            this.plotMaxChunksPerPlayer = builder.defineInRange("plotMaxChunksPerPlayer", -1, -1, 1000000);
+            builder.comment("Chunk radius fetched per plot-data request (client pan).");
+            this.plotMapViewRadius = builder.defineInRange("plotMapViewRadius", 16, 4, 64);
+            builder.comment("Max message-board entries per region.");
+            this.plotMessageBoardSize = builder.defineInRange("plotMessageBoardSize", 20, 0, 200);
+            builder.comment("Globally enable legacy /land claim|add|unclaim (also require player mode=old).");
+            this.legacyCommandsEnabled = builder.define("legacyCommandsEnabled", false);
             builder.pop();
 
             builder.push("building_blocks");
