@@ -1,0 +1,18 @@
+--------------------------------------------------------------------------------
+
+Command-Line:
+ - /root/.local/share/mise/installs/java/17.0.2/bin/java
+ - -jar
+ - /root/.gradle/caches/modules-2/files-2.1/net.minecraftforge/mergetool/1.1.7/3d41564f78f123d64573cae7948014baf3aaba3f/mergetool-1.1.7-fatjar.jar
+ - --client
+ - /root/.gradle/caches/neoformruntime/intermediate_results/stripClient_941c0e85c4ecfc1814dcfedcc14ed394700291a9_output.jar
+ - --server
+ - /root/.gradle/caches/neoformruntime/intermediate_results/stripServer_abb4adc476d0711edad1e29210ed2a1c2a7662d5_output.jar
+ - --ann
+ - 1.20.1
+ - --output
+ - ./output.jar
+ - --inject
+ - false
+--------------------------------------------------------------------------------
+
