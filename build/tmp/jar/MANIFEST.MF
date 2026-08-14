@@ -1,2 +1,9 @@
 Manifest-Version: 1.0
+Specification-Title: land_economy_mod_1783600667
+Specification-Vendor: m20091112@126.com
+Specification-Version: 1
+Implementation-Title: workspace
+Implementation-Version: 1.8.0
+Implementation-Vendor: m20091112@126.com
+Implementation-Timestamp: 2026-08-14T20:36:24+0000
 

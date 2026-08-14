@@ -1,18 +1,16 @@
 pluginManagement {
     repositories {
-        // 国内 Gradle 插件镜像优先
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://repo.huaweicloud.com/repository/gradle-plugin' }
-        // 官方 Gradle Plugin Portal（兜底）
         gradlePluginPortal()
-        mavenCentral()
-        maven { url 'https://maven.minecraftforge.net' }
+        maven {
+            name = 'MinecraftForge'
+            url = 'https://maven.minecraftforge.net/'
+        }
         maven { url 'https://maven.parchmentmc.org' }
     }
 }
 
 plugins {
-    // 启用 foojay 下载器以自动下载 ModDevGradle 要求的 JDK 21 toolchain
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }
