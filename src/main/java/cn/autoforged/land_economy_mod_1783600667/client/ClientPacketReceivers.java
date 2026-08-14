@@ -13,6 +13,7 @@ import net.minecraft.world.level.ChunkPos;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 /**

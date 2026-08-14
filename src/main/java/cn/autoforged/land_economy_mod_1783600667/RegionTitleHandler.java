@@ -2,6 +2,8 @@ package cn.autoforged.land_economy_mod_1783600667;
 
 import cn.autoforged.land_economy_mod_1783600667.data.EconomySavedData;
 import cn.autoforged.land_economy_mod_1783600667.data.RegionData;
+import cn.autoforged.land_economy_mod_1783600667.network.ModMessages;
+import cn.autoforged.land_economy_mod_1783600667.network.PacketS2CForceExitPlot;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -53,6 +55,13 @@ public class RegionTitleHandler {
         if (pos.equals(lastPos)) return;
         LAST_POS.put(serverPlayer.getUUID(), pos);
 
+        // 玩家实体位置变化：如果处于地块界面，强制退出（避免玩家利用地图视角期间移动实体）
+        EconomySavedData dataCheck = LandEconomyMod.getEconomyData();
+        if (dataCheck != null && dataCheck.isInPlotMode(serverPlayer.getUUID())) {
+            dataCheck.setInPlotMode(serverPlayer.getUUID(), false);
+            ModMessages.sendToPlayer(serverPlayer, new PacketS2CForceExitPlot());
+        }
+
         RegionData region = getRegionAt(level, pos);
         // 需求: 进入区域时显示该区所属玩家以及区域名称。原实现仅对"他人区域"触发，
         // 用户反馈该功能"完全没有触发"。此处改为: 只要玩家进入任意区域（含自己领地）
@@ -75,8 +84,14 @@ public class RegionTitleHandler {
     @SubscribeEvent
     public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() == null) return;
-        LAST_REGION.remove(event.getEntity().getUUID());
-        LAST_POS.remove(event.getEntity().getUUID());
+        UUID uid = event.getEntity().getUUID();
+        LAST_REGION.remove(uid);
+        LAST_POS.remove(uid);
+        // 退出登录时清理地块界面状态，防止内存泄漏
+        EconomySavedData data = LandEconomyMod.getEconomyData();
+        if (data != null) {
+            data.setInPlotMode(uid, false);
+        }
     }
 
     /**
