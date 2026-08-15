@@ -9,7 +9,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -22,9 +23,16 @@ import java.util.Map;
  */
 public final class PlotMapTerrainRenderer {
 
-    /** 缓存：chunkKey -> 16x16 ARGB 颜色数组 */
-    private static final Map<Long, int[]> TERRAIN_CACHE = new HashMap<>();
     private static final int CACHE_MAX = 256;
+
+    /** 线程安全的 LRU 缓存：chunkKey -> 16x16 ARGB 颜色数组 */
+    private static final Map<Long, int[]> TERRAIN_CACHE = Collections.synchronizedMap(
+            new LinkedHashMap<>(CACHE_MAX + 1, 0.75f, true) {
+                @Override
+                protected boolean removeEldestEntry(Map.Entry<Long, int[]> eldest) {
+                    return size() > CACHE_MAX;
+                }
+            });
 
     private PlotMapTerrainRenderer() {}
 
@@ -71,10 +79,6 @@ public final class PlotMapTerrainRenderer {
             }
         }
 
-        // LRU 淘汰
-        if (TERRAIN_CACHE.size() >= CACHE_MAX) {
-            TERRAIN_CACHE.keySet().iterator().remove();
-        }
         TERRAIN_CACHE.put(key, colors);
         return colors;
     }
