@@ -145,9 +145,6 @@ public class ModCommands {
                         .then(Commands.literal("add")
                                 .then(Commands.argument("amount", DoubleArgumentType.doubleArg(0))
                                         .executes(ModCommands::setOutlayAdd))))
-                // /land map — 打开区块认领地图
-                .then(Commands.literal("map")
-                        .executes(ModCommands::openMap))
                 // /land gui — 打开箱子GUI
                 .then(Commands.literal("gui")
                         .executes(ModCommands::openChestGui))
@@ -494,11 +491,7 @@ public class ModCommands {
         return EconomyCommandHandler.setPopCheckHours(ctx);
     }
 
-    // ==================== 地块系统相关命令 ====================
-
-    private static int openMap(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
-        return RegionCommandHandler.openMap(ctx);
-    }
+    // ==================== 区域系统相关命令 ====================
 
     private static int openChestGui(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         return RegionCommandHandler.openChestGui(ctx);

@@ -1,7 +1,6 @@
 package cn.autoforged.land_economy_mod_1783600667.client;
 
 import cn.autoforged.land_economy_mod_1783600667.LandEconomyMod;
-import cn.autoforged.land_economy_mod_1783600667.client.screen.WaypointManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,9 +16,6 @@ public final class ClientModEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            WaypointManager.load();
-        });
         LandEconomyMod.LOGGER.info("Land Economy Mod client setup complete.");
     }
 }

@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  * 服务端→客户端 打开某 Screen（地块图 / 箱子GUI）。
  */
 public class PacketS2COpenScreen {
-    public enum Type { CHUNK_CLAIM_MAP, CHEST, CLOSE_MAP }
+    public enum Type { CHEST }
 
     private final Type type;
 

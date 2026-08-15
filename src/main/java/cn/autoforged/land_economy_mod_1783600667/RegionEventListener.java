@@ -2,8 +2,6 @@ package cn.autoforged.land_economy_mod_1783600667;
 
 import cn.autoforged.land_economy_mod_1783600667.data.EconomySavedData;
 import cn.autoforged.land_economy_mod_1783600667.data.RegionData;
-import cn.autoforged.land_economy_mod_1783600667.network.ModMessages;
-import cn.autoforged.land_economy_mod_1783600667.network.PacketS2COpenScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -136,10 +134,7 @@ public class RegionEventListener {
             }
         }
 
-        // 玩家受击时关闭区块认领地图
-        if (event.getEntity() instanceof ServerPlayer sp) {
-            forceExitClaimMap(sp);
-        }
+        // 玩家受击不再强制退出地块界面（已移除旧系统）
     }
 
     @SubscribeEvent
@@ -234,10 +229,6 @@ public class RegionEventListener {
         if (region != null && !region.getPermission(8)) {
             event.setCanceled(true);
         }
-        // 传送时关闭区块认领地图
-        if (player instanceof ServerPlayer sp) {
-            forceExitClaimMap(sp);
-        }
     }
 
     // ==================== 区域冻结：禁止方块状态变化与更新 ====================
@@ -289,12 +280,5 @@ public class RegionEventListener {
         if (isFrozen(level, event.getPos())) {
             event.setCanceled(true);
         }
-    }
-
-    // ==================== 区块认领地图 ====================
-
-    /** 强制关闭玩家的区块认领地图（受击/传送时调用） */
-    private static void forceExitClaimMap(ServerPlayer player) {
-        ModMessages.sendToPlayer(player, new PacketS2COpenScreen(PacketS2COpenScreen.Type.CLOSE_MAP));
     }
 }

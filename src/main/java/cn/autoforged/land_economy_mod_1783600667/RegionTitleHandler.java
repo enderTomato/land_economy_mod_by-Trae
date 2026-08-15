@@ -2,8 +2,6 @@ package cn.autoforged.land_economy_mod_1783600667;
 
 import cn.autoforged.land_economy_mod_1783600667.data.EconomySavedData;
 import cn.autoforged.land_economy_mod_1783600667.data.RegionData;
-import cn.autoforged.land_economy_mod_1783600667.network.ModMessages;
-import cn.autoforged.land_economy_mod_1783600667.network.PacketS2COpenScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -54,12 +52,6 @@ public class RegionTitleHandler {
         BlockPos lastPos = LAST_POS.get(serverPlayer.getUUID());
         if (pos.equals(lastPos)) return;
         LAST_POS.put(serverPlayer.getUUID(), pos);
-
-        // 玩家实体位置变化：如果处于区块认领地图界面，强制退出
-        EconomySavedData dataCheck = LandEconomyMod.getEconomyData();
-        if (dataCheck != null) {
-            ModMessages.sendToPlayer(serverPlayer, new PacketS2COpenScreen(PacketS2COpenScreen.Type.CLOSE_MAP));
-        }
 
         RegionData region = getRegionAt(level, pos);
         // 需求: 进入区域时显示该区所属玩家以及区域名称。原实现仅对"他人区域"触发，

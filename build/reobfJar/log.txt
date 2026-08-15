@@ -122,27 +122,14 @@ Adding Libraries to Inheritance
 Reading Input: /workspace/build/libs/land_economy_mod-1.8.0.jar
 Adding input to inheritance map
 Processing entries
-Conflicting propagated mapping for net/minecraft/world/entity/LivingEntity/lambda$addAdditionalSaveData$3(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/nbt/Tag;)V from net/minecraft/world/entity/player/Player/lambda$addAdditionalSaveData$3(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/nbt/Tag;)V: lambda$addAdditionalSaveData$3 -> m_219754_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/data/EconomySavedData/save(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag; from net/minecraft/world/level/saveddata/SavedData/save(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;: save -> m_7176_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimScreen/keyPressed(III)Z from net/minecraft/client/gui/screens/Screen/keyPressed(III)Z: keyPressed -> m_7933_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimScreen/isPauseScreen()Z from net/minecraft/client/gui/screens/Screen/isPauseScreen()Z: isPauseScreen -> m_7043_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimScreen/mouseScrolled(DDD)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseScrolled(DDD)Z: mouseScrolled -> m_6050_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimScreen/onClose()V from net/minecraft/client/gui/screens/Screen/onClose()V: onClose -> m_7379_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimScreen/init()V from net/minecraft/client/gui/screens/Screen/init()V: init -> m_7856_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimScreen/mouseClicked(DDI)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseClicked(DDI)Z: mouseClicked -> m_6375_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimScreen/tick()V from net/minecraft/client/gui/screens/Screen/tick()V: tick -> m_86600_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimScreen/mouseDragged(DDIDD)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseDragged(DDIDD)Z: mouseDragged -> m_7979_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimScreen/mouseReleased(DDI)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseReleased(DDI)Z: mouseReleased -> m_6348_
+Conflicting propagated mapping for net/minecraft/world/entity/LivingEntity/lambda$addAdditionalSaveData$3(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/nbt/Tag;)V from net/minecraft/world/entity/player/Player/lambda$addAdditionalSaveData$3(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/nbt/Tag;)V: lambda$addAdditionalSaveData$3 -> m_219754_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/LandChestScreen/isPauseScreen()Z from net/minecraft/client/gui/screens/Screen/isPauseScreen()Z: isPauseScreen -> m_7043_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/LandChestScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/LandChestScreen/init()V from net/minecraft/client/gui/screens/Screen/init()V: init -> m_7856_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/RegionDetailScreen/isPauseScreen()Z from net/minecraft/client/gui/screens/Screen/isPauseScreen()Z: isPauseScreen -> m_7043_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/RegionDetailScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/RegionDetailScreen/init()V from net/minecraft/client/gui/screens/Screen/init()V: init -> m_7856_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimSettingsScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimSettingsScreen/onClose()V from net/minecraft/client/gui/screens/Screen/onClose()V: onClose -> m_7379_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimSettingsScreen/init()V from net/minecraft/client/gui/screens/Screen/init()V: init -> m_7856_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/RegionNameInputScreen/keyPressed(III)Z from net/minecraft/client/gui/screens/Screen/keyPressed(III)Z: keyPressed -> m_7933_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/RegionNameInputScreen/isPauseScreen()Z from net/minecraft/client/gui/screens/Screen/isPauseScreen()Z: isPauseScreen -> m_7043_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/RegionNameInputScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
@@ -171,8 +158,6 @@ Writing Output: /workspace/build/reobfJar/output.jar
   cn/autoforged/land_economy_mod_1783600667/RegionTitleHandler.class
   cn/autoforged/land_economy_mod_1783600667/api/
   cn/autoforged/land_economy_mod_1783600667/api/LandEconomyAPI.class
-  cn/autoforged/land_economy_mod_1783600667/claim/
-  cn/autoforged/land_economy_mod_1783600667/claim/ChunkClaimService.class
   cn/autoforged/land_economy_mod_1783600667/client/
   cn/autoforged/land_economy_mod_1783600667/client/ClientKeyState.class
   cn/autoforged/land_economy_mod_1783600667/client/ClientModEvents.class
@@ -182,13 +167,6 @@ Writing Output: /workspace/build/reobfJar/output.jar
   cn/autoforged/land_economy_mod_1783600667/client/gui/LandChestScreen.class
   cn/autoforged/land_economy_mod_1783600667/client/gui/RegionDetailScreen.class
   cn/autoforged/land_economy_mod_1783600667/client/gui/RegionNameInputScreen.class
-  cn/autoforged/land_economy_mod_1783600667/client/screen/
-  cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimCache$CacheEntry.class
-  cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimCache.class
-  cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimScreen.class
-  cn/autoforged/land_economy_mod_1783600667/client/screen/ChunkClaimSettingsScreen.class
-  cn/autoforged/land_economy_mod_1783600667/client/screen/WaypointData.class
-  cn/autoforged/land_economy_mod_1783600667/client/screen/WaypointManager.class
   cn/autoforged/land_economy_mod_1783600667/command/
   cn/autoforged/land_economy_mod_1783600667/command/EconomyCommandHandler$1.class
   cn/autoforged/land_economy_mod_1783600667/command/EconomyCommandHandler.class
@@ -209,15 +187,8 @@ Writing Output: /workspace/build/reobfJar/output.jar
   cn/autoforged/land_economy_mod_1783600667/economy/PopulationEngine.class
   cn/autoforged/land_economy_mod_1783600667/network/
   cn/autoforged/land_economy_mod_1783600667/network/ModMessages.class
-  cn/autoforged/land_economy_mod_1783600667/network/PacketC2SChunkClaimAction$1.class
-  cn/autoforged/land_economy_mod_1783600667/network/PacketC2SChunkClaimAction$Action.class
-  cn/autoforged/land_economy_mod_1783600667/network/PacketC2SChunkClaimAction.class
   cn/autoforged/land_economy_mod_1783600667/network/PacketC2SPostMessage.class
-  cn/autoforged/land_economy_mod_1783600667/network/PacketC2SRequestChunkData.class
   cn/autoforged/land_economy_mod_1783600667/network/PacketC2SRequestRegionDetail.class
-  cn/autoforged/land_economy_mod_1783600667/network/PacketS2CChunkClaimResult.class
-  cn/autoforged/land_economy_mod_1783600667/network/PacketS2CChunkData$CellDTO.class
-  cn/autoforged/land_economy_mod_1783600667/network/PacketS2CChunkData.class
   cn/autoforged/land_economy_mod_1783600667/network/PacketS2COpenScreen$Type.class
   cn/autoforged/land_economy_mod_1783600667/network/PacketS2COpenScreen.class
   cn/autoforged/land_economy_mod_1783600667/network/PacketS2CRegionDetail$MessageDTO.class

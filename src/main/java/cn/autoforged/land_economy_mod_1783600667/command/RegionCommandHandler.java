@@ -1291,13 +1291,6 @@ public class RegionCommandHandler {
         ctx.getSource().sendSuccess(() -> Component.literal("  /land setOutlay <new/add> <金额> — 设置新建/扩大区域费用（管理员）").withStyle(ChatFormatting.WHITE), false);
         ctx.getSource().sendSuccess(() -> Component.literal("").withStyle(ChatFormatting.WHITE), false);
 
-        ctx.getSource().sendSuccess(() -> Component.literal("【地块系统（新版）】").withStyle(ChatFormatting.YELLOW), false);
-        ctx.getSource().sendSuccess(() -> Component.literal("  /land map — 打开地图地块界面（俯视购买/放弃区块）").withStyle(ChatFormatting.WHITE), false);
-        ctx.getSource().sendSuccess(() -> Component.literal("  /land mode <new|old> — 切换新版（地块系统）/旧版（区域声明）").withStyle(ChatFormatting.WHITE), false);
-        ctx.getSource().sendSuccess(() -> Component.literal("  /land gui — 打开领地箱子GUI（图形化操作所有功能）").withStyle(ChatFormatting.WHITE), false);
-        ctx.getSource().sendSuccess(() -> Component.literal("  /land message <留言> — 在当前领地留言板发布留言").withStyle(ChatFormatting.WHITE), false);
-        ctx.getSource().sendSuccess(() -> Component.literal("").withStyle(ChatFormatting.WHITE), false);
-
         ctx.getSource().sendSuccess(() -> Component.literal("【经济指令】").withStyle(ChatFormatting.YELLOW), false);
         ctx.getSource().sendSuccess(() -> Component.literal("  /economy gdp — 查看GDP总览（含进度条）").withStyle(ChatFormatting.WHITE), false);
         ctx.getSource().sendSuccess(() -> Component.literal("  /economy gdpdetail — 查看各领地GDP详情").withStyle(ChatFormatting.WHITE), false);
@@ -1473,22 +1466,6 @@ public class RegionCommandHandler {
             }
         }
         return null;
-    }
-
-    // ==================== 区块认领系统相关命令 ====================
-
-    /** /land map — 打开区块认领地图 */
-    public static int openMap(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
-        ServerPlayer player = ctx.getSource().getPlayerOrException();
-        EconomySavedData data = LandEconomyMod.getEconomyData();
-        if (data == null) {
-            ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
-            return 0;
-        }
-        ModMessages.sendToPlayer(player, new PacketS2COpenScreen(PacketS2COpenScreen.Type.CHUNK_CLAIM_MAP));
-        ctx.getSource().sendSuccess(() -> Component.literal("正在打开区块认领地图... 按 ESC 退出")
-                .withStyle(ChatFormatting.AQUA), true);
-        return 1;
     }
 
     /** /land gui — 打开箱子GUI */

@@ -48,13 +48,7 @@ public class ModConfig {
         public final ForgeConfigSpec.IntValue mathGdpCooldownMinutes;
         public final ForgeConfigSpec.ConfigValue<String> regionDisplayMode;
 
-        // —— 区块认领系统配置 ——
-        public final ForgeConfigSpec.DoubleValue chunkClaimCost;            // 每区块购买费用
-        public final ForgeConfigSpec.DoubleValue chunkUnclaimRefund;        // 放弃每区块返还
-        public final ForgeConfigSpec.IntValue    chunkMaxPerPlayer;         // -1=不限
-        public final ForgeConfigSpec.DoubleValue chunkExpandDistanceMultiplier; // 扩大距离系数
-        public final ForgeConfigSpec.BooleanValue chunkClaimForceLoadEnabled;  // 是否启用强制加载
-        public final ForgeConfigSpec.IntValue     chunkClaimForceLoadMax;      // 最大强制加载数
+        // —— 留言板配置 ——
         public final ForgeConfigSpec.IntValue     messageBoardSize;        // 留言板最大留言数
 
         public Common(ForgeConfigSpec.Builder builder) {
@@ -182,20 +176,8 @@ public class ModConfig {
                     .define("regionDisplayMode", "title");
             builder.pop();
 
-            // —— chunk_claim 配置段 ——
-            builder.push("chunk_claim");
-            builder.comment("Cost (player funds) to claim one chunk.");
-            this.chunkClaimCost = builder.defineInRange("chunkClaimCost", 100.0, 0.0, 1000000.0);
-            builder.comment("Funds refunded per chunk when unclaiming.");
-            this.chunkUnclaimRefund = builder.defineInRange("chunkUnclaimRefund", 50.0, 0.0, 1000000.0);
-            builder.comment("Max chunks a single player can claim (-1 = unlimited).");
-            this.chunkMaxPerPlayer = builder.defineInRange("chunkMaxPerPlayer", -1, -1, 1000000);
-            builder.comment("Price multiplier based on distance from existing claimed chunks.");
-            this.chunkExpandDistanceMultiplier = builder.defineInRange("chunkExpandDistanceMultiplier", 0.05, 0.0, 10.0);
-            builder.comment("Enable force-loading of claimed chunks via Shift+click.");
-            this.chunkClaimForceLoadEnabled = builder.define("forceLoadEnabled", true);
-            builder.comment("Max force-loaded chunks per player.");
-            this.chunkClaimForceLoadMax = builder.defineInRange("forceLoadMax", 25, 0, 500);
+            // —— 留言板配置 ——
+            builder.push("message_board");
             builder.comment("Max messages on the region message board.");
             this.messageBoardSize = builder.defineInRange("messageBoardSize", 20, 1, 100);
             builder.pop();

@@ -30,19 +30,11 @@ public final class ModMessages {
 
     public static void register() {
         // C2S
-        INSTANCE.registerMessage(next(), PacketC2SRequestChunkData.class,
-                PacketC2SRequestChunkData::enc, PacketC2SRequestChunkData::dec, PacketC2SRequestChunkData::handle);
-        INSTANCE.registerMessage(next(), PacketC2SChunkClaimAction.class,
-                PacketC2SChunkClaimAction::enc, PacketC2SChunkClaimAction::dec, PacketC2SChunkClaimAction::handle);
         INSTANCE.registerMessage(next(), PacketC2SRequestRegionDetail.class,
                 PacketC2SRequestRegionDetail::enc, PacketC2SRequestRegionDetail::dec, PacketC2SRequestRegionDetail::handle);
         INSTANCE.registerMessage(next(), PacketC2SPostMessage.class,
                 PacketC2SPostMessage::enc, PacketC2SPostMessage::dec, PacketC2SPostMessage::handle);
         // S2C
-        INSTANCE.registerMessage(next(), PacketS2CChunkData.class,
-                PacketS2CChunkData::enc, PacketS2CChunkData::dec, PacketS2CChunkData::handle);
-        INSTANCE.registerMessage(next(), PacketS2CChunkClaimResult.class,
-                PacketS2CChunkClaimResult::enc, PacketS2CChunkClaimResult::dec, PacketS2CChunkClaimResult::handle);
         INSTANCE.registerMessage(next(), PacketS2CRegionDetail.class,
                 PacketS2CRegionDetail::enc, PacketS2CRegionDetail::dec, PacketS2CRegionDetail::handle);
         INSTANCE.registerMessage(next(), PacketS2COpenScreen.class,
