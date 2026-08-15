@@ -184,10 +184,12 @@ Writing Output: /workspace/build/reobfJar/output.jar
   cn/autoforged/land_economy_mod_1783600667/client/integration/JourneyMapIntegration.class
   cn/autoforged/land_economy_mod_1783600667/client/integration/MapBoundaryRenderer.class
   cn/autoforged/land_economy_mod_1783600667/client/integration/MapIntegrationManager.class
+  cn/autoforged/land_economy_mod_1783600667/client/integration/MapScreenEventHandler.class
   cn/autoforged/land_economy_mod_1783600667/client/integration/MapSelectionConfirmScreen.class
   cn/autoforged/land_economy_mod_1783600667/client/integration/XaeroMinimapIntegration.class
   cn/autoforged/land_economy_mod_1783600667/client/integration/XaeroWorldMapIntegration.class
   cn/autoforged/land_economy_mod_1783600667/client/plot/
+  cn/autoforged/land_economy_mod_1783600667/client/plot/MapOpener.class
   cn/autoforged/land_economy_mod_1783600667/client/plot/PlotClientCache$Cell.class
   cn/autoforged/land_economy_mod_1783600667/client/plot/PlotClientCache.class
   cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapScreen.class

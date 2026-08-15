@@ -52,6 +52,11 @@ public final class MapIntegrationManager {
                 LandEconomyMod.LOGGER.warn("[MapIntegration] Failed to init Xaero's World Map integration: {}", e.getMessage());
             }
         }
+
+        // 初始化鼠标事件捕获器（用于第三方地图全屏中的 Ctrl+点击操作）
+        if (!ACTIVE.isEmpty()) {
+            MapScreenEventHandler.init();
+        }
     }
 
     public static void shutdown() {

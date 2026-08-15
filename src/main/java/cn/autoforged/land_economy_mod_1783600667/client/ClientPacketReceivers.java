@@ -2,6 +2,7 @@ package cn.autoforged.land_economy_mod_1783600667.client;
 
 import cn.autoforged.land_economy_mod_1783600667.client.gui.RegionDetailScreen;
 import cn.autoforged.land_economy_mod_1783600667.client.gui.LandChestScreen;
+import cn.autoforged.land_economy_mod_1783600667.client.plot.MapOpener;
 import cn.autoforged.land_economy_mod_1783600667.client.plot.PlotClientCache;
 import cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapScreen;
 import cn.autoforged.land_economy_mod_1783600667.network.*;
@@ -81,7 +82,7 @@ public final class ClientPacketReceivers {
         ctx.get().enqueueWork(() -> {
             Minecraft mc = Minecraft.getInstance();
             switch (m.getType()) {
-                case PLOT_MAP -> mc.setScreen(new PlotMapScreen());
+                case PLOT_MAP -> MapOpener.openMap();
                 case CHEST  -> mc.setScreen(new LandChestScreen());
             }
         });
@@ -91,12 +92,27 @@ public final class ClientPacketReceivers {
     public static void onForceExit(PacketS2CForceExitPlot m, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             Minecraft mc = Minecraft.getInstance();
-            if (mc.screen instanceof PlotMapScreen pms) {
+            var screen = mc.screen;
+
+            if (screen instanceof PlotMapScreen pms) {
                 pms.cancelAll();
             }
-            if (mc.screen != null && mc.screen.getClass().getName().startsWith("cn.autoforged.land_economy_mod_1783600667.client")) {
+
+            // 关闭 JourneyMap 全屏
+            if (screen != null && screen.getClass().getName().equals("journeymap.client.ui.fullscreen.Fullscreen")) {
                 mc.setScreen(null);
             }
+
+            // 关闭 Xaero's World Map 全屏
+            if (screen != null && screen.getClass().getName().equals("xaero.map.gui.GuiMap")) {
+                mc.setScreen(null);
+            }
+
+            // 关闭本模组创建的其他 screen
+            if (screen != null && screen.getClass().getName().startsWith("cn.autoforged.land_economy_mod_1783600667.client")) {
+                mc.setScreen(null);
+            }
+
             LocalPlayer p = mc.player;
             if (p != null) {
                 p.sendSystemMessage(Component.literal("§e[地块界面] 已被服务端强制退出（受击/移动/传送）"));
