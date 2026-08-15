@@ -1,0 +1,500 @@
+	at java.base/java.util.concurrent.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1403)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+[08:15:43] [Render thread/INFO] [minecraft/Options]: Added resource packs: [mod_resources, vanilla, fabric]
+[08:15:43] [Render thread/INFO] [minecraft/Minecraft]: Backend library: LWJGL version 3.3.1 build 7
+[08:15:43] [modloading-worker-0/INFO] [ne.mi.co.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.20, for MC 1.20.1 with MCP 20230612.114412
+[08:15:43] [modloading-worker-0/INFO] [ne.mi.co.MinecraftForge/FORGE]: MinecraftForge v47.4.20 Initialized
+[08:15:43] [modloading-worker-0/INFO] [ne.fa.fa.im.cl.in.Indigo/]: [Indigo] Registering Indigo renderer!
+[08:15:43] [modloading-worker-0/INFO] [xa.hu.mi.MinimapLogs/]: Xaero's Minimap: World Map found!
+[08:15:43] [modloading-worker-0/INFO] [xa.hu.mi.MinimapLogs/]: No Optifine!
+[08:15:43] [modloading-worker-0/INFO] [xa.hu.mi.MinimapLogs/]: Xaero's Minimap: No Vivecraft!
+[08:15:43] [modloading-worker-0/INFO] [xa.li.XaeroLib/]: Registering common data for channel xaerolib:main!
+[08:15:43] [modloading-worker-0/INFO] [xa.li.XaeroLib/]: Registering client data for channel xaerolib:main!
+[08:15:43] [modloading-worker-0/INFO] [xa.li.XaeroLib/]: Loading primary common config for channel xaerolib:main!
+[08:15:43] [modloading-worker-0/INFO] [xa.li.XaeroLib/]: Loading server config profiles for channel xaerolib:main!
+[08:15:43] [modloading-worker-0/INFO] [xa.li.XaeroLib/]: Loading primary client config for channel xaerolib:main!
+[08:15:43] [modloading-worker-0/INFO] [xa.li.XaeroLib/]: Loading client config profiles for channel xaerolib:main!
+[08:15:43] [modloading-worker-0/INFO] [xa.co.HudMod/]: Registering common data for channel xaerominimap:main!
+[08:15:43] [modloading-worker-0/INFO] [xa.co.HudMod/]: Registering client data for channel xaerominimap:main!
+[08:15:44] [modloading-worker-0/INFO] [xa.co.HudMod/]: Loading primary common config for channel xaerominimap:main!
+[08:15:44] [modloading-worker-0/INFO] [xa.co.HudMod/]: Loading server config profiles for channel xaerominimap:main!
+[08:15:44] [modloading-worker-0/INFO] [xa.co.HudMod/]: Loading primary client config for channel xaerominimap:main!
+[08:15:44] [modloading-worker-0/INFO] [xa.co.HudMod/]: Loading client config profiles for channel xaerominimap:main!
+[08:15:44] [modloading-worker-0/INFO] [xa.ma.WorldMap/]: Registering common data for channel xaeroworldmap:main!
+[08:15:44] [modloading-worker-0/INFO] [xa.ma.WorldMap/]: Registering client data for channel xaeroworldmap:main!
+[08:15:44] [modloading-worker-0/INFO] [xa.ma.WorldMap/]: Loading primary common config for channel xaeroworldmap:main!
+[08:15:44] [modloading-worker-0/INFO] [xa.ma.WorldMap/]: Loading server config profiles for channel xaeroworldmap:main!
+[08:15:44] [modloading-worker-0/INFO] [xa.ma.WorldMap/]: Loading primary client config for channel xaeroworldmap:main!
+[08:15:44] [modloading-worker-0/INFO] [xa.ma.WorldMap/]: Loading client config profiles for channel xaeroworldmap:main!
+[08:15:44] [Render thread/INFO] [minecraft/RegistryDataLoader]: Capturing existing worldgen registries
+[08:15:44] [Render thread/INFO] [minecraft/RegistryDataLoader]: Found 0 injected RegistryDataLoader worldgen registries
+[08:15:45] [Render thread/INFO] [minecraft/ReloadableResourceManager]: Reloading ResourceManager: mod_resources, vanilla, fabric
+[08:15:45] [modloading-worker-0/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Configuration file D:\mc\.minecraft\新建文件夹\.minecraft\versions\1.20.1-Forge_47.4.20\config\land_economy_mod_1783600667-common.toml is not correct. Correcting
+[08:15:45] [modloading-worker-0/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key mapIntegration was corrected from null to its default, SimpleCommentedConfig:{}. 
+[08:15:45] [modloading-worker-0/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key mapIntegration.enabled was corrected from null to its default, false. 
+[08:15:45] [modloading-worker-0/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key mapIntegration.journeyMap was corrected from null to its default, true. 
+[08:15:45] [modloading-worker-0/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key mapIntegration.xaeroMinimap was corrected from null to its default, true. 
+[08:15:45] [modloading-worker-0/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key mapIntegration.xaeroWorldMap was corrected from null to its default, true. 
+[08:15:45] [Worker-Main-14/INFO] [xa.li.XaeroLib/]: Loading XaeroLib common 1/2!
+[08:15:46] [Worker-Main-7/INFO] [minecraft/UnihexProvider]: Found unifont_all_no_pua-15.0.06.hex, loading
+[08:15:46] [Render thread/INFO] [axiom/]: Using DearImGui config: config\axiom\imgui.ini
+[08:15:46] [Forge Version Check/INFO] [ne.mi.fm.VersionChecker/]: [forge] Starting version check at https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json
+[08:15:47] [Render thread/INFO] [cn.au.la.LandEconomyMod/]: Land Economy Mod initialized
+[08:15:47] [Worker-Main-7/INFO] [xa.mi.XaeroMinimap/]: Loading Xaero's Minimap - Stage 1/2
+[08:15:47] [Worker-Main-8/INFO] [xa.ma.WorldMap/]: Loading Xaero's World Map - Stage 1/2
+[08:15:47] [Worker-Main-3/INFO] [cn.au.la.LandEconomyMod/]: Land Economy Mod client setup complete.
+[08:15:47] [Worker-Main-1/INFO] [xa.li.XaeroLib/]: Loading XaeroLib client 1/2!
+[08:15:47] [Forge Version Check/INFO] [ne.mi.fm.VersionChecker/]: [forge] Found status: OUTDATED Current: 47.4.20 Target: 47.4.22
+[08:15:49] [Render thread/INFO] [xa.ma.WorldMap/]: Loading Xaero's World Map - Stage 2/2
+[08:15:49] [Render thread/INFO] [xa.ma.WorldMap/]: New world map region cache hash code: 2139232431
+[08:15:50] [Render thread/INFO] [xa.ma.WorldMap/]: Registered player tracker system: map_synced
+[08:15:50] [Render thread/INFO] [xa.ma.WorldMap/]: Xaero's WorldMap Mod: Xaero's minimap found!
+[08:15:50] [Render thread/INFO] [xa.ma.WorldMap/]: Registered player tracker system: minimap_synced
+[08:15:50] [Render thread/INFO] [xa.ma.WorldMap/]: No Optifine!
+[08:15:50] [Render thread/INFO] [xa.ma.WorldMap/]: Xaero's World Map: No Vivecraft!
+[08:15:50] [Render thread/WARN] [ne.mi.fm.DeferredWorkQueue/LOADING]: Mod 'xaeroworldmap' took 1.132 s to run a deferred task.
+[08:15:50] [Render thread/INFO] [xa.mi.XaeroMinimap/]: Loading Xaero's Minimap - Stage 2/2
+[08:15:51] [Render thread/INFO] [xa.hu.mi.MinimapLogs/]: Registered player tracker system: minimap_synced
+[08:15:51] [Render thread/WARN] [ne.mi.fm.DeferredWorkQueue/LOADING]: Mod 'xaerominimap' took 1.096 s to run a deferred task.
+[08:15:51] [Render thread/INFO] [xa.li.XaeroLib/]: Loading XaeroLib common 2/2!
+[08:15:51] [Render thread/INFO] [xa.li.XaeroLib/]: Loading XaeroLib client 2/2!
+[08:15:52] [Render thread/INFO] [minecraft/Options]: Added resource packs: [mod_resources, vanilla, fabric]
+[08:15:52] [ForkJoinPool.commonPool-worker-1/INFO] [axiom/]: Using cached localizations...
+[08:15:53] [Render thread/WARN] [minecraft/SoundEngine]: Missing sound for event: minecraft:item.goat_horn.play
+[08:15:53] [Render thread/WARN] [minecraft/SoundEngine]: Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[08:15:54] [Render thread/INFO] [mojang/Library]: OpenAL initialized on device OpenAL Soft on 扬声器 (Realtek(R) Audio)
+[08:15:54] [Render thread/INFO] [minecraft/SoundEngine]: Sound engine started
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[08:15:54] [Render thread/WARN] [minecraft/ShaderInstance]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
+[08:15:54] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[08:15:54] [Render thread/INFO] [xa.li.XaeroLib/]: Successfully reloaded the XaeroLib shaders!
+[08:15:56] [Render thread/INFO] [minecraft/ReloadableResourceManager]: Reloading ResourceManager: axiom_translations, mod_resources, vanilla, fabric
+[08:15:56] [Worker-Main-2/INFO] [minecraft/UnihexProvider]: Found unifont_all_no_pua-15.0.06.hex, loading
+Cleaning up unclosed ZipFile for archive unknown archive
+[08:15:57] [Render thread/INFO] [minecraft/Options]: Added resource packs: [mod_resources, vanilla, fabric]
+[08:15:59] [Render thread/WARN] [minecraft/SoundEngine]: Missing sound for event: minecraft:item.goat_horn.play
+[08:15:59] [Render thread/WARN] [minecraft/SoundEngine]: Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[08:15:59] [Render thread/INFO] [mojang/Library]: OpenAL initialized on device OpenAL Soft on 扬声器 (Realtek(R) Audio)
+[08:15:59] [Render thread/INFO] [minecraft/SoundEngine]: Sound engine started
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[08:15:59] [Render thread/INFO] [xa.ma.WorldMap/]: New world map region cache hash code: -1959675032
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[08:15:59] [Render thread/WARN] [minecraft/ShaderInstance]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
+[08:15:59] [Render thread/INFO] [minecraft/TextureAtlas]: Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[08:15:59] [Render thread/INFO] [xa.li.XaeroLib/]: Successfully reloaded the XaeroLib shaders!
+[08:16:06] [Render thread/INFO] [minecraft/RecipeManager]: Loaded 7 recipes
+[08:16:06] [Render thread/INFO] [minecraft/AdvancementList]: Loaded 1271 advancements
+[08:16:07] [Server thread/INFO] [minecraft/IntegratedServer]: Starting integrated minecraft server version 1.20.1
+[08:16:07] [Server thread/INFO] [minecraft/MinecraftServer]: Generating keypair
+[08:16:07] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing start region for dimension minecraft:overworld
+[08:16:09] [Render thread/INFO] [minecraft/LoggerChunkProgressListener]: 准备生成区域中：0%
+[08:16:09] [Render thread/INFO] [minecraft/LoggerChunkProgressListener]: 准备生成区域中：0%
+[08:16:09] [Render thread/INFO] [minecraft/LoggerChunkProgressListener]: 准备生成区域中：0%
+[08:16:09] [Render thread/INFO] [minecraft/LoggerChunkProgressListener]: 准备生成区域中：0%
+[08:16:09] [Render thread/INFO] [minecraft/LoggerChunkProgressListener]: 准备生成区域中：0%
+[08:16:10] [Render thread/INFO] [minecraft/LoggerChunkProgressListener]: 准备生成区域中：59%
+[08:16:10] [Render thread/INFO] [minecraft/LoggerChunkProgressListener]: Time elapsed: 2767 ms
+[08:16:10] [Server thread/INFO] [ne.mi.se.pe.PermissionAPI/]: Successfully initialized permission handler forge:default_handler
+[08:16:10] [Server thread/INFO] [cn.au.la.LandEconomyMod/]: Industry classification initialized with 520 items
+[08:16:10] [Server thread/INFO] [cn.au.la.LandEconomyMod/]: GDP Engine started. Interval: 120 minutes, Multi-threaded: false
+[08:16:10] [Server thread/INFO] [cn.au.la.LandEconomyMod/]: Population Engine started.
+[08:16:10] [Server thread/INFO] [cn.au.la.LandEconomyMod/]: Land Economy Mod server started
+[08:16:10] [Server thread/INFO] [minecraft/IntegratedServer]: Changing view distance to 12, from 10
+[08:16:10] [Server thread/INFO] [minecraft/IntegratedServer]: Changing simulation distance to 12, from 0
+[08:16:10] [Render thread/WARN] [io.ne.ut.in.SystemPropertyUtil/]: Unable to parse the boolean system property 'java.net.preferIPv6Addresses':system - using the default value: false
+[08:16:11] [Netty Local Client IO #0/INFO] [ne.mi.ne.NetworkHooks/]: Connected to a modded server.
+[08:16:11] [Server thread/INFO] [minecraft/PlayerList]: TomatoMiku[local:E:c7eefa63] logged in with entity id 102 at (38.87452048559644, -60.0, -17.38439590746487)
+[08:16:11] [Server thread/INFO] [minecraft/MinecraftServer]: TomatoMiku加入了游戏
+[08:16:11] [Render thread/INFO] [xa.ma.WorldMap/]: Fullscreen map required item set to nothing.
+[08:16:11] [Render thread/INFO] [xa.ma.WorldMap/]: New world map session initialized!
+[08:16:11] [Render thread/INFO] [xa.hu.mi.MinimapLogs/]: Minimap required item set to nothing.
+[08:16:11] [Render thread/INFO] [xa.hu.mi.MinimapLogs/]: New Xaero hud session initialized!
+[08:16:12] [Render thread/INFO] [xa.hu.mi.MinimapLogs/]: Minimap updated server level id: -652539994 for world ResourceKey[minecraft:dimension / minecraft:overworld]
+[08:16:12] [Render thread/INFO] [minecraft/AdvancementList]: Loaded 2 advancements
+[08:16:12] [Render thread/INFO] [xa.hu.mi.MinimapLogs/]: Reloading radar icon resources...
+[08:16:12] [Render thread/INFO] [xa.hu.mi.MinimapLogs/]: Reloaded radar icon resources!
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:318)
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796)
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099)
+	at java.base/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:489)
+	at java.base/sun.security.ssl.SSLSocketInputRecord.readHeader(SSLSocketInputRecord.java:483)
+	at java.base/sun.security.ssl.SSLSocketInputRecord.decode(SSLSocketInputRecord.java:160)
+	at java.base/sun.security.ssl.SSLTransport.decode(SSLTransport.java:111)
+	at java.base/sun.security.ssl.SSLSocketImpl.decode(SSLSocketImpl.java:1506)
+	at java.base/sun.security.ssl.SSLSocketImpl.readHandshakeRecord(SSLSocketImpl.java:1421)
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:455)
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:426)
+	at java.base/sun.net.www.protocol.https.HttpsClient.afterConnect(HttpsClient.java:586)
+	at java.base/sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(AbstractDelegateHttpsURLConnection.java:187)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1690)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1614)
+	at java.base/sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:223)
+	at TRANSFORMER/com_moulberry_axiomclientapi@1.0.0/com.moulberry.axiοm.utils.Authorization.lambda$getMeta$0(Authorization.java:65)
+	at java.base/java.util.concurrent.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1403)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188)
+[08:16:17] [Server thread/INFO] [minecraft/IntegratedServer]: Saving and pausing game...
+[08:16:17] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[新的世界]'/minecraft:overworld
+[08:16:17] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_nether
+[08:16:17] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_end
+[08:16:30] [Server thread/INFO] [minecraft/MinecraftServer]: [TomatoMiku: 正在打开地图地块界面... 按 空格/ESC 退出]
+[08:16:30] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] 正在打开地图地块界面... 按 空格/ESC 退出
+[08:16:31] [Server thread/INFO] [cn.au.la.LandEconomyMod/]: Land Economy Mod server stopping
+[08:16:31] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[08:16:31] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[08:16:31] [Server thread/INFO] [minecraft/ServerGamePacketListenerImpl]: TomatoMiku lost connection: 连接中断
+[08:16:31] [Server thread/INFO] [minecraft/MinecraftServer]: TomatoMiku退出了游戏
+[08:16:31] [Server thread/INFO] [minecraft/ServerGamePacketListenerImpl]: Stopping singleplayer server as player logged out
+[08:16:31] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[08:16:32] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[新的世界]'/minecraft:overworld
+[08:16:32] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_nether
+[08:16:32] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[新的世界]'/minecraft:the_end
+[08:16:32] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (新的世界 (4)): All chunks are saved
+[08:16:32] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[08:16:32] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[08:16:32] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved
+[08:16:33] [Render thread/INFO] [xa.ma.WorldMap/]: Finalizing world map session...
+[08:16:33] [Thread-6/INFO] [xa.ma.WorldMap/]: World map cleaned normally!
+[08:16:33] [Render thread/INFO] [xa.ma.WorldMap/]: World map session finalized.
+[08:16:33] [Render thread/INFO] [xa.hu.mi.MinimapLogs/]: Xaero hud session finalized.
+[08:16:33] [Render thread/ERROR] [minecraft/Minecraft]: Reported exception thrown!
+net.minecraft.ReportedException: Rendering screen
+	at net.minecraft.client.renderer.GameRenderer.m_109093_(GameRenderer.java:978) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.Minecraft.m_91383_(Minecraft.java:1146) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.Minecraft.m_91374_(Minecraft.java:718) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.main.Main.main(Main.java:218) ~[1.20.1-Forge_47.4.20.jar:?] {re:classloading,pl:connector_pre_launch:A}
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:99) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonClientLaunchHandler.lambda$makeService$0(CommonClientLaunchHandler.java:25) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?] {}
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at oolloo.jlw.Wrapper.invokeMain(Wrapper.java:112) ~[?:?] {}
+	at oolloo.jlw.Wrapper.main(Wrapper.java:105) ~[?:?] {}
+Caused by: java.lang.IllegalStateException
+	at java.util.HashMap$HashIterator.remove(HashMap.java:1617) ~[?:?] {}
+	at cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapTerrainRenderer.sampleTerrain(PlotMapTerrainRenderer.java:76) ~[land_economy_mod-1.8.0.jar%23171!/:1.8.0] {re:classloading}
+	at cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapScreen.m_88315_(PlotMapScreen.java:137) ~[land_economy_mod-1.8.0.jar%23171!/:1.8.0] {re:classloading}
+	at net.minecraft.client.gui.screens.Screen.m_280264_(Screen.java:109) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:computing_frames,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-screen-api-v1.mixins.json:ScreenMixin from mod fabric_screen_api_v1,pl:mixin:APP:fabric-screen-api-v1.mixins.json:ScreenAccessor from mod fabric_screen_api_v1,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraftforge.client.ForgeHooksClient.drawScreenInternal(ForgeHooksClient.java:428) ~[forge-1.20.1-47.4.20-universal.jar%23177!/:?] {re:mixin,re:classloading,pl:mixin:A}
+	at net.minecraftforge.client.ForgeHooksClient.drawScreen(ForgeHooksClient.java:421) ~[forge-1.20.1-47.4.20-universal.jar%23177!/:?] {re:mixin,re:classloading,pl:mixin:A}
+	at net.minecraft.client.renderer.GameRenderer.m_109093_(GameRenderer.java:965) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	... 20 more
+[08:16:33] [Render thread/FATAL] [ne.mi.co.ForgeMod/]: Preparing crash report with UUID a8f451ce-bdde-4ca3-9989-d2816fbdffa2
+---- Minecraft Crash Report ----
+
+// Hi. I'm Connector, and I'm a crashaholic
+=========================
+SINYTRA CONNECTOR IS PRESENT!
+Please verify issues are not caused by Connector before reporting them to mod authors.
+If you're unsure, file a report on Connector's issue tracker found at https://github.com/Sinytra/Connector/issues.
+=========================
+
+// Don't do that.
+
+Time: 2026-08-15 08:16:33
+Description: Rendering screen
+
+java.lang.IllegalStateException: null
+	at java.util.HashMap$HashIterator.remove(HashMap.java:1617) ~[?:?] {}
+	at cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapTerrainRenderer.sampleTerrain(PlotMapTerrainRenderer.java:76) ~[land_economy_mod-1.8.0.jar%23171!/:1.8.0] {re:classloading}
+	at cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapScreen.m_88315_(PlotMapScreen.java:137) ~[land_economy_mod-1.8.0.jar%23171!/:1.8.0] {re:classloading}
+	at net.minecraft.client.gui.screens.Screen.m_280264_(Screen.java:109) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:computing_frames,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-screen-api-v1.mixins.json:ScreenMixin from mod fabric_screen_api_v1,pl:mixin:APP:fabric-screen-api-v1.mixins.json:ScreenAccessor from mod fabric_screen_api_v1,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraftforge.client.ForgeHooksClient.drawScreenInternal(ForgeHooksClient.java:428) ~[forge-1.20.1-47.4.20-universal.jar%23177!/:?] {re:mixin,re:classloading,pl:mixin:A}
+	at net.minecraftforge.client.ForgeHooksClient.drawScreen(ForgeHooksClient.java:421) ~[forge-1.20.1-47.4.20-universal.jar%23177!/:?] {re:mixin,re:classloading,pl:mixin:A}
+	at net.minecraft.client.renderer.GameRenderer.m_109093_(GameRenderer.java:965) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.Minecraft.m_91383_(Minecraft.java:1146) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.Minecraft.m_91374_(Minecraft.java:718) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.main.Main.main(Main.java:218) ~[1.20.1-Forge_47.4.20.jar:?] {re:classloading,pl:connector_pre_launch:A}
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:99) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonClientLaunchHandler.lambda$makeService$0(CommonClientLaunchHandler.java:25) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?] {}
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at oolloo.jlw.Wrapper.invokeMain(Wrapper.java:112) ~[?:?] {}
+	at oolloo.jlw.Wrapper.main(Wrapper.java:105) ~[?:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Render thread
+Suspected Mod: 
+	领地经济 (land_economy_mod_1783600667), Version: 1.8.0
+		at TRANSFORMER/land_economy_mod_1783600667@1.8.0/cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapTerrainRenderer.sampleTerrain(PlotMapTerrainRenderer.java:76)
+Stacktrace:
+	at java.util.HashMap$HashIterator.remove(HashMap.java:1617) ~[?:?] {}
+	at cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapTerrainRenderer.sampleTerrain(PlotMapTerrainRenderer.java:76) ~[land_economy_mod-1.8.0.jar%23171!/:1.8.0] {re:classloading}
+	at cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapScreen.m_88315_(PlotMapScreen.java:137) ~[land_economy_mod-1.8.0.jar%23171!/:1.8.0] {re:classloading}
+	at net.minecraft.client.gui.screens.Screen.m_280264_(Screen.java:109) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:computing_frames,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:APP:fabric-screen-api-v1.mixins.json:ScreenMixin from mod fabric_screen_api_v1,pl:mixin:APP:fabric-screen-api-v1.mixins.json:ScreenAccessor from mod fabric_screen_api_v1,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraftforge.client.ForgeHooksClient.drawScreenInternal(ForgeHooksClient.java:428) ~[forge-1.20.1-47.4.20-universal.jar%23177!/:?] {re:mixin,re:classloading,pl:mixin:A}
+	at net.minecraftforge.client.ForgeHooksClient.drawScreen(ForgeHooksClient.java:421) ~[forge-1.20.1-47.4.20-universal.jar%23177!/:?] {re:mixin,re:classloading,pl:mixin:A}
+-- Screen render details --
+Details:
+	Screen name: cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapScreen
+	Mouse location: Scaled: (240, 135). Absolute: (1440.000000, 810.000000)
+	Screen size: Scaled: (480, 270). Absolute: (2880, 1620). Scale factor of 6.000000
+Stacktrace:
+	at net.minecraft.client.renderer.GameRenderer.m_109093_(GameRenderer.java:965) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.Minecraft.m_91383_(Minecraft.java:1146) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.Minecraft.m_91374_(Minecraft.java:718) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.main.Main.main(Main.java:218) ~[1.20.1-Forge_47.4.20.jar:?] {re:classloading,pl:connector_pre_launch:A}
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:99) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonClientLaunchHandler.lambda$makeService$0(CommonClientLaunchHandler.java:25) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?] {}
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at oolloo.jlw.Wrapper.invokeMain(Wrapper.java:112) ~[?:?] {}
+	at oolloo.jlw.Wrapper.main(Wrapper.java:105) ~[?:?] {}
+
+
+-- Affected level --
+Details:
+	All players: 1 total; [LocalPlayer['TomatoMiku'/102, l='ClientLevel', x=40.95, y=-60.00, z=-17.01]]
+	Chunk stats: 961, 609
+	Level dimension: minecraft:overworld
+	Level spawn location: World: (0,-60,0), Section: (at 0,4,0 in 0,-4,0; chunk contains blocks 0,-64,0 to 15,319,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,-64,0 to 511,319,511)
+	Level time: 3866 game time, 3866 day time
+	Server brand: forge
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.ClientLevel.m_6026_(ClientLevel.java:455) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:APP:xaerolib.mixins.json:MixinClientLevel from mod xaerolib,pl:mixin:APP:xaeroworldmap.mixins.json:MixinClientWorld from mod xaeroworldmap,pl:mixin:APP:xaerohud.mixins.json:MixinClientWorld from mod xaerominimap,pl:mixin:APP:fabric-lifecycle-events-v1.client.mixins.json:ClientWorldMixin from mod fabric_lifecycle_events_v1,pl:mixin:APP:axiom.mixins.json:MixinClientLevel from mod axiom,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.Minecraft.m_91354_(Minecraft.java:2319) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.Minecraft.m_91374_(Minecraft.java:735) ~[client-1.20.1-20230612.114412-srg.jar%23172!/:?] {re:mixin,pl:accesstransformer:B,pl:connector_pre_launch:A,re:classloading,pl:accesstransformer:B,pl:mixin:A,pl:connector_pre_launch:A}
+	at net.minecraft.client.main.Main.main(Main.java:218) ~[1.20.1-Forge_47.4.20.jar:?] {re:classloading,pl:connector_pre_launch:A}
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:99) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonClientLaunchHandler.lambda$makeService$0(CommonClientLaunchHandler.java:25) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?] {}
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at oolloo.jlw.Wrapper.invokeMain(Wrapper.java:112) ~[?:?] {}
+	at oolloo.jlw.Wrapper.main(Wrapper.java:105) ~[?:?] {}
+
+
+-- Last reload --
+Details:
+	Reload number: 2
+	Reload reason: manual
+	Finished: Yes
+	Packs: axiom_translations, mod_resources, vanilla, fabric
+
+-- System Details --
+Details:
+	Minecraft Version: 1.20.1
+	Minecraft Version ID: 1.20.1
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 21.0.7, Microsoft
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Microsoft
+	Memory: 233265536 bytes (222 MiB) / 1006632960 bytes (960 MiB) up to 12884901888 bytes (12288 MiB)
+	CPUs: 16
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Ryzen 7 6800H with Radeon Graphics         
+	Identifier: AuthenticAMD Family 25 Model 68 Stepping 1
+	Microarchitecture: Zen 3
+	Frequency (GHz): 3.19
+	Number of physical packages: 1
+	Number of physical CPUs: 8
+	Number of logical CPUs: 16
+	Graphics card #0 name: AMD Radeon(TM) Graphics
+	Graphics card #0 vendor: Advanced Micro Devices, Inc. (0x1002)
+	Graphics card #0 VRAM (MB): 512.00
+	Graphics card #0 deviceId: 0x1681
+	Graphics card #0 versionInfo: DriverVersion=31.0.12046.22002
+	Graphics card #1 name: NVIDIA GeForce RTX 3050 Laptop GPU
+	Graphics card #1 vendor: NVIDIA (0x10de)
+	Graphics card #1 VRAM (MB): 4095.00
+	Graphics card #1 deviceId: 0x25a2
+	Graphics card #1 versionInfo: DriverVersion=32.0.16.1088
+	Memory slot #0 capacity (MB): 4096.00
+	Memory slot #0 clockSpeed (GHz): 6.40
+	Memory slot #0 type: Unknown
+	Memory slot #1 capacity (MB): 4096.00
+	Memory slot #1 clockSpeed (GHz): 6.40
+	Memory slot #1 type: Unknown
+	Memory slot #2 capacity (MB): 4096.00
+	Memory slot #2 clockSpeed (GHz): 6.40
+	Memory slot #2 type: Unknown
+	Memory slot #3 capacity (MB): 4096.00
+	Memory slot #3 clockSpeed (GHz): 6.40
+	Memory slot #3 type: Unknown
+	Virtual memory max (MB): 42943.12
+	Virtual memory used (MB): 38409.19
+	Swap memory total (MB): 27312.96
+	Swap memory used (MB): 1832.06
+	JVM Flags: 12 total; -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump -XX:-OmitStackTraceInFastThrow -Xmx12288m -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:G1HeapRegionSize=32M -XX:MaxGCPauseMillis=50 -XX:+PerfDisableSharedMem -XX:MinHeapFreeRatio=25 -XX:MaxHeapFreeRatio=40
+	Launched Version: 1.20.1-Forge_47.4.20
+	Backend library: LWJGL version 3.3.1 build 7
+	Backend API: NVIDIA GeForce RTX 3050 Laptop GPU/PCIe/SSE2 GL version 4.6.0 NVIDIA 610.88, NVIDIA Corporation
+	Window size: 2880x1620
+	GL Caps: Using framebuffer using OpenGL 3.2
+	GL debug messages: 
+	Using VBOs: Yes
+	Is Modded: Definitely; Client brand changed to 'forge'; Server brand changed to 'forge'
+	Type: Integrated Server (map_client.txt)
+	Graphics mode: fancy
+	Resource Packs: mod_resources, vanilla, fabric
+	Current Language: zh_cn
+	CPU: 16x AMD Ryzen 7 6800H with Radeon Graphics 
+	Server Running: true
+	Player Count: 1 / 8; [ServerPlayer['TomatoMiku'/102, l='ServerLevel[新的世界]', x=40.95, y=-60.00, z=-17.01]]
+	Data Packs: vanilla, mod:fabric_dimensions_v1, mod:fabric_transfer_api_v1, mod:fabric_renderer_api_v1, mod:fabric_model_loading_api_v1, mod:fabric_item_api_v1, mod:fabric_rendering_fluids_v1, mod:xaerolib (incompatible), mod:fabric_screen_handler_api_v1, mod:fabric_models_v0, mod:fabric_resource_loader_v0, mod:fabric_rendering_v1, mod:fabric_renderer_indigo, mod:fabric_convention_tags_v1, mod:xaeroworldmap (incompatible), mod:fabric_command_api_v1, mod:fabric_mining_level_api_v1, mod:fabric_command_api_v2, mod:fabric_block_view_api_v2, mod:fabric_data_attachment_api_v1, mod:mixinextras (incompatible), mod:fabric_screen_api_v1, mod:fabric_particles_v1, mod:forge, mod:fabric_api, mod:fabric_content_registries_v0, mod:fabric_transitive_access_wideners_v1, mod:fabric_game_rule_api_v1, mod:fabric_api_base, mod:fabric_api_lookup_api_v1, mod:fabric_blockrenderlayer_v1, mod:fabric_block_api_v1, mod:fabric_resource_conditions_api_v1, mod:com_moulberry_axiomclientapi, mod:xaerominimap (incompatible), mod:fabric_item_group_api_v1, mod:com_moulberry_mixinconstraints, mod:connectormod, mod:fabric_biome_api_v1, mod:fabric_entity_events_v1, mod:land_economy_mod_1783600667, mod:fabric_registry_sync_v0, mod:fabric_recipe_api_v1, mod:fabric_object_builder_api_v1, mod:fabric_loot_api_v2, mod:fabric_rendering_data_attachment_v1, mod:fabric_networking_api_v1, mod:fabric_sound_api_v1, mod:fabric_message_api_v1, mod:fabric_lifecycle_events_v1, mod:fabric_data_generation_api_v1, mod:fabric_events_interaction_v0, mod:fabric_key_binding_api_v1, mod:fabric_client_tags_api_v1, mod:axiom, fabric
+	Enabled Feature Flags: minecraft:vanilla
+	World Generation: Stable
+	Sinytra Connector: 1.0.0-beta.49+1.20.1
+		SINYTRA CONNECTOR IS PRESENT!
+		Please verify issues are not caused by Connector before reporting them to mod authors. If you're unsure, file a report on Connector's issue tracker.
+		Connector's issue tracker can be found at https://github.com/Sinytra/Connector/issues.
+		Installed Fabric mods:
+		| ================================================== | ============================== | ============================== | ==================== |
+		| Axiom-4.9.1-for-MC1.20.1$axiomclientapi-1.0.0_mapp | axiomclientapi                 | com_moulberry_axiomclientapi   | 1.0.0                |
+		| Axiom-4.9.1-for-MC1.20.1$mixinconstraints-1.0.9_ma | mixinconstraints               | com_moulberry_mixinconstraints | 1.0.9                |
+		| Axiom-4.9.1-for-MC1.20.1_mapped_srg_1.20.1.jar     | Axiom                          | axiom                          | 4.9.1                |
+	ModLauncher: 10.0.9+10.0.9+main.dcd20f30
+	ModLauncher launch target: forgeclient
+	ModLauncher naming: srg
+	ModLauncher services: 
+		mixin-0.8.5.jar mixin PLUGINSERVICE 
+		eventbus-6.2.33.jar eventbus PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar slf4jfixer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar object_holder_definalize PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar runtime_enum_extender PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar capability_token_subclass PLUGINSERVICE 
+		accesstransformers-8.0.4.jar accesstransformer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-10.0.9.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar fml TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar mixin-transmogrifier TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar connector_loader TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		minecraft@1.0
+		lowcodefml@null
+		javafml@null
+	Mod List: 
+		fabric-dimensions-v1-2.1.55+8005d10d77.jar        |Fabric Dimensions API (v1)    |fabric_dimensions_v1          |2.1.55+8005d10d77   |DONE      |Manifest: NOSIGNATURE
+		fabric-transfer-api-v1-3.3.6+631c9cd677.jar       |Fabric Transfer API (v1)      |fabric_transfer_api_v1        |3.3.6+631c9cd677    |DONE      |Manifest: NOSIGNATURE
+		fabric-renderer-api-v1-3.2.2+cf68abbe77.jar       |Fabric Renderer API (v1)      |fabric_renderer_api_v1        |3.2.2+cf68abbe77    |DONE      |Manifest: NOSIGNATURE
+		fabric-model-loading-api-v1-1.0.4+6274ab9d77.jar  |Fabric Model Loading API (v1) |fabric_model_loading_api_v1   |1.0.4+6274ab9d77    |DONE      |Manifest: NOSIGNATURE
+		fabric-item-api-v1-2.1.29+4d0bbcfa77.jar          |Fabric Item API (v1)          |fabric_item_api_v1            |2.1.29+4d0bbcfa77   |DONE      |Manifest: NOSIGNATURE
+		fabric-rendering-fluids-v1-3.0.29+4ac5e37a77.jar  |Fabric Rendering Fluids (v1)  |fabric_rendering_fluids_v1    |3.0.29+4ac5e37a77   |DONE      |Manifest: NOSIGNATURE
+		xaerolib-forge-1.20.1-1.7.1.jar                   |XaeroLib                      |xaerolib                      |1.7.1               |DONE      |Manifest: NOSIGNATURE
+		fabric-screen-handler-api-v1-1.3.33+561530ec77.jar|Fabric Screen Handler API (v1)|fabric_screen_handler_api_v1  |1.3.33+561530ec77   |DONE      |Manifest: NOSIGNATURE
+		fabric-models-v0-0.4.3+7c3892a477.jar             |Fabric Models (v0)            |fabric_models_v0              |0.4.3+7c3892a477    |DONE      |Manifest: NOSIGNATURE
+		fabric-resource-loader-v0-0.11.12+4b4151c077.jar  |Fabric Resource Loader (v0)   |fabric_resource_loader_v0     |0.11.12+4b4151c077  |DONE      |Manifest: NOSIGNATURE
+		fabric-rendering-v1-3.0.9+66e9a48f77.jar          |Fabric Rendering (v1)         |fabric_rendering_v1           |3.0.9+66e9a48f77    |DONE      |Manifest: NOSIGNATURE
+		fabric-renderer-indigo-1.5.3+b5b2da4177.jar       |Fabric Renderer - Indigo      |fabric_renderer_indigo        |1.5.3+b5b2da4177    |DONE      |Manifest: NOSIGNATURE
+		fabric-convention-tags-v1-1.5.6+fa3d1c0177.jar    |Fabric Convention Tags        |fabric_convention_tags_v1     |1.5.6+fa3d1c0177    |DONE      |Manifest: NOSIGNATURE
+		[Xaero的世界地图] xaeroworldmap-forge-1.20.1-1.44.2.jar|Xaero's World Map             |xaeroworldmap                 |1.44.2              |DONE      |Manifest: NOSIGNATURE
+		fabric-command-api-v1-1.2.35+f71b366f77.jar       |Fabric Command API (v1)       |fabric_command_api_v1         |1.2.35+f71b366f77   |DONE      |Manifest: NOSIGNATURE
+		fabric-mining-level-api-v1-2.1.52+561530ec77.jar  |Fabric Mining Level API (v1)  |fabric_mining_level_api_v1    |2.1.52+561530ec77   |DONE      |Manifest: NOSIGNATURE
+		fabric-command-api-v2-2.2.14+561530ec77.jar       |Fabric Command API (v2)       |fabric_command_api_v2         |2.2.14+561530ec77   |DONE      |Manifest: NOSIGNATURE
+		fabric-block-view-api-v2-1.0.3+53347ba977.jar     |Fabric BlockView API (v2)     |fabric_block_view_api_v2      |1.0.3+53347ba977    |DONE      |Manifest: NOSIGNATURE
+		fabric-data-attachment-api-v1-1.0.2+30ef839e77.jar|Fabric Data Attachment API (v1|fabric_data_attachment_api_v1 |1.0.2+30ef839e77    |DONE      |Manifest: NOSIGNATURE
+		mixinextras-forge-0.4.1.jar                       |MixinExtras                   |mixinextras                   |0.4.1               |DONE      |Manifest: NOSIGNATURE
+		fabric-screen-api-v1-2.0.9+45a670a577.jar         |Fabric Screen API (v1)        |fabric_screen_api_v1          |2.0.9+45a670a577    |DONE      |Manifest: NOSIGNATURE
+		fabric-particles-v1-1.1.3+78e1ecb877.jar          |Fabric Particles (v1)         |fabric_particles_v1           |1.1.3+78e1ecb877    |DONE      |Manifest: NOSIGNATURE
+		forge-1.20.1-47.4.20-universal.jar                |Forge                         |forge                         |47.4.20             |DONE      |Manifest: NOSIGNATURE
+		fabric-api-0.92.6+1.11.14+1.20.1.jar              |Forgified Fabric API          |fabric_api                    |0.92.6+1.11.14+1.20.|DONE      |Manifest: NOSIGNATURE
+		fabric-content-registries-v0-4.0.13+a670df1e77.jar|Fabric Content Registries (v0)|fabric_content_registries_v0  |4.0.13+a670df1e77   |DONE      |Manifest: NOSIGNATURE
+		fabric-transitive-access-wideners-v1-4.3.2+1880499|Fabric Transitive Access Widen|fabric_transitive_access_widen|4.3.2+1880499877    |DONE      |Manifest: NOSIGNATURE
+		client-1.20.1-20230612.114412-srg.jar             |Minecraft                     |minecraft                     |1.20.1              |DONE      |Manifest: a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
+		fabric-game-rule-api-v1-1.0.41+683d4da877.jar     |Fabric Game Rule API (v1)     |fabric_game_rule_api_v1       |1.0.41+683d4da877   |DONE      |Manifest: NOSIGNATURE
+		fabric-api-base-0.4.32+ef105b4977.jar             |Fabric API Base               |fabric_api_base               |0.4.32+ef105b4977   |DONE      |Manifest: NOSIGNATURE
+		fabric-api-lookup-api-v1-1.6.37+67f9824077.jar    |Fabric API Lookup API (v1)    |fabric_api_lookup_api_v1      |1.6.37+67f9824077   |DONE      |Manifest: NOSIGNATURE
+		fabric-blockrenderlayer-v1-1.1.42+1d0da21e77.jar  |Fabric BlockRenderLayer Regist|fabric_blockrenderlayer_v1    |1.1.42+1d0da21e77   |DONE      |Manifest: NOSIGNATURE
+		fabric-block-api-v1-1.0.12+0e6cb7f777.jar         |Fabric Block API (v1)         |fabric_block_api_v1           |1.0.12+0e6cb7f777   |DONE      |Manifest: NOSIGNATURE
+		fabric-resource-conditions-api-v1-2.3.9+996d00b277|Fabric Resource Conditions API|fabric_resource_conditions_api|2.3.9+996d00b277    |DONE      |Manifest: NOSIGNATURE
+		Axiom-4.9.1-for-MC1.20.1$axiomclientapi-1.0.0_mapp|axiomclientapi                |com_moulberry_axiomclientapi  |1.0.0               |DONE      |Manifest: NOSIGNATURE
+		[Xaero的小地图] xaerominimap-forge-1.20.1-26.4.2.jar  |Xaero's Minimap               |xaerominimap                  |26.4.2              |DONE      |Manifest: NOSIGNATURE
+		fabric-item-group-api-v1-4.0.14+c9161c2d77.jar    |Fabric Item Group API (v1)    |fabric_item_group_api_v1      |4.0.14+c9161c2d77   |DONE      |Manifest: NOSIGNATURE
+		Axiom-4.9.1-for-MC1.20.1$mixinconstraints-1.0.9_ma|mixinconstraints              |com_moulberry_mixinconstraints|1.0.9               |DONE      |Manifest: NOSIGNATURE
+		Connector-1.0.0-beta.49+1.20.1-mod.jar            |Connector                     |connectormod                  |1.0.0-beta.49+1.20.1|DONE      |Manifest: NOSIGNATURE
+		fabric-biome-api-v1-13.0.14+dc36698e77.jar        |Fabric Biome API (v1)         |fabric_biome_api_v1           |13.0.14+dc36698e77  |DONE      |Manifest: NOSIGNATURE
+		fabric-entity-events-v1-1.6.1+4ca7515277.jar      |Fabric Entity Events (v1)     |fabric_entity_events_v1       |1.6.1+4ca7515277    |DONE      |Manifest: NOSIGNATURE
+		land_economy_mod-1.8.0.jar                        |领地经济                          |land_economy_mod_1783600667   |1.8.0               |DONE      |Manifest: NOSIGNATURE
+		fabric-registry-sync-v0-2.3.6+1c0ea72177.jar      |Fabric Registry Sync (v0)     |fabric_registry_sync_v0       |2.3.6+1c0ea72177    |DONE      |Manifest: NOSIGNATURE
+		fabric-recipe-api-v1-1.0.24+514a076577.jar        |Fabric Recipe API (v1)        |fabric_recipe_api_v1          |1.0.24+514a076577   |DONE      |Manifest: NOSIGNATURE
+		fabric-object-builder-api-v1-11.1.5+f8c414ce77.jar|Fabric Object Builder API (v1)|fabric_object_builder_api_v1  |11.1.5+f8c414ce77   |DONE      |Manifest: NOSIGNATURE
+		fabric-loot-api-v2-1.2.3+eb28f93e77.jar           |Fabric Loot API (v2)          |fabric_loot_api_v2            |1.2.3+eb28f93e77    |DONE      |Manifest: NOSIGNATURE
+		fabric-rendering-data-attachment-v1-0.3.39+a6081af|Fabric Rendering Data Attachme|fabric_rendering_data_attachme|0.3.39+a6081afc77   |DONE      |Manifest: NOSIGNATURE
+		fabric-networking-api-v1-1.3.14+fb7c822677.jar    |Fabric Networking API (v1)    |fabric_networking_api_v1      |1.3.14+fb7c822677   |DONE      |Manifest: NOSIGNATURE
+		fabric-sound-api-v1-1.0.14+4f23bd8477.jar         |Fabric Sound API (v1)         |fabric_sound_api_v1           |1.0.14+4f23bd8477   |DONE      |Manifest: NOSIGNATURE
+		fabric-message-api-v1-5.1.10+52cc178c77.jar       |Fabric Message API (v1)       |fabric_message_api_v1         |5.1.10+52cc178c77   |DONE      |Manifest: NOSIGNATURE
+		fabric-lifecycle-events-v1-2.2.23+afab492177.jar  |Fabric Lifecycle Events (v1)  |fabric_lifecycle_events_v1    |2.2.23+afab492177   |DONE      |Manifest: NOSIGNATURE
+		fabric-data-generation-api-v1-12.3.7+369cb3a477.ja|Fabric Data Generation API (v1|fabric_data_generation_api_v1 |12.3.7+369cb3a477   |DONE      |Manifest: NOSIGNATURE
+		fabric-events-interaction-v0-0.6.5+0f26153f77.jar |Fabric Events Interaction (v0)|fabric_events_interaction_v0  |0.6.5+0f26153f77    |DONE      |Manifest: NOSIGNATURE
+		fabric-key-binding-api-v1-1.0.38+561530ec77.jar   |Fabric Key Binding API (v1)   |fabric_key_binding_api_v1     |1.0.38+561530ec77   |DONE      |Manifest: NOSIGNATURE
+		fabric-client-tags-api-v1-1.1.3+5d6761b877.jar    |Fabric Client Tags            |fabric_client_tags_api_v1     |1.1.3+5d6761b877    |DONE      |Manifest: NOSIGNATURE
+		Axiom-4.9.1-for-MC1.20.1_mapped_srg_1.20.1.jar    |Axiom                         |axiom                         |4.9.1               |DONE      |Manifest: NOSIGNATURE
+	Crash Report UUID: a8f451ce-bdde-4ca3-9989-d2816fbdffa2
+	FML: 47.4
+	Forge: net.minecraftforge:47.4.20
+[08:16:33] [Render thread/FATAL] [ne.mi.co.ForgeMod/]: Preparing crash report with UUID d976bd09-13c9-4aae-951f-89b999bdcf6b
+#@!@# Game crashed! Crash report saved to: #@!@# D:\mc\.minecraft\新建文件夹\.minecraft\versions\1.20.1-Forge_47.4.20\crash-reports\crash-2026-08-15_08.16.33-client.txt

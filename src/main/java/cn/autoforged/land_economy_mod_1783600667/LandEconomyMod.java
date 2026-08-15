@@ -32,6 +32,7 @@ public class LandEconomyMod {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            cn.autoforged.land_economy_mod_1783600667.network.ModMessages.register();
             LOGGER.info("Land Economy Mod initialized");
         });
     }

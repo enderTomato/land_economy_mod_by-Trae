@@ -3,6 +3,7 @@ package cn.autoforged.land_economy_mod_1783600667;
 import cn.autoforged.land_economy_mod_1783600667.data.EconomySavedData;
 import cn.autoforged.land_economy_mod_1783600667.data.RegionData;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -19,6 +20,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.ExplosionEvent;
+import net.minecraftforge.event.level.PistonEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -39,6 +41,12 @@ public class RegionEventListener {
         return null;
     }
 
+    /** 区域冻结：禁止区域内的方块更新（permission 12 = false 表示冻结） */
+    private static boolean isFrozen(Level level, BlockPos pos) {
+        RegionData r = getRegionAt(level, pos);
+        return r != null && !r.getPermission(12);
+    }
+
     @SubscribeEvent
     public static void onExplosionStart(ExplosionEvent.Start event) {
         Level level = event.getLevel();
@@ -47,6 +55,11 @@ public class RegionEventListener {
         RegionData region = getRegionAt(level, center);
         if (region == null) return;
 
+        // 区域冻结：禁止爆炸发生
+        if (!region.getPermission(12)) {
+            event.setCanceled(true);
+            return;
+        }
         if (!region.getPermission(0)) {
             event.setCanceled(true);
         }
@@ -120,11 +133,13 @@ public class RegionEventListener {
                 return;
             }
         }
+
+        // 玩家受击不再强制退出地块界面（已移除旧系统）
     }
 
     @SubscribeEvent
     public static void onPlayerInteract(PlayerInteractEvent.RightClickBlock event) {
-        if (event.getLevel().isClientSide) return;
+        if (event.getLevel().isClientSide()) return;
         Player player = event.getEntity();
         BlockPos pos = event.getPos();
         Level level = event.getLevel();
@@ -176,6 +191,11 @@ public class RegionEventListener {
         RegionData region = getRegionAt((Level) event.getLevel(), event.getPos());
         if (region == null) return;
 
+        // 区域冻结：禁止非母区域成员破坏方块；母区域成员仍可破坏（用于解除冻结）
+        if (!region.getPermission(12) && !region.isMember(player.getUUID())) {
+            event.setCanceled(true);
+            return;
+        }
         if (!region.isMember(player.getUUID()) && !region.getPermission(10)) {
             event.setCanceled(true);
         }
@@ -190,6 +210,11 @@ public class RegionEventListener {
         RegionData region = getRegionAt((Level) event.getLevel(), event.getPos());
         if (region == null) return;
 
+        // 区域冻结：禁止非母区域成员放置方块；母区域成员仍可放置
+        if (!region.getPermission(12) && !region.isMember(player.getUUID())) {
+            event.setCanceled(true);
+            return;
+        }
         if (!region.isMember(player.getUUID()) && !region.getPermission(10)) {
             event.setCanceled(true);
         }
@@ -202,6 +227,57 @@ public class RegionEventListener {
         BlockPos targetPos = BlockPos.containing(event.getTargetX(), event.getTargetY(), event.getTargetZ());
         RegionData region = getRegionAt(player.level(), targetPos);
         if (region != null && !region.getPermission(8)) {
+            event.setCanceled(true);
+        }
+    }
+
+    // ==================== 区域冻结：禁止方块状态变化与更新 ====================
+
+    /** 邻居方块更新（红石信号传播、方块状态联动） */
+    @SubscribeEvent
+    public static void onNeighborNotify(BlockEvent.NeighborNotifyEvent event) {
+        if (event.getLevel().isClientSide()) return;
+        Level level = (Level) event.getLevel();
+        if (isFrozen(level, event.getPos())) {
+            event.setCanceled(true);
+        }
+    }
+
+    /** 活塞推动方块（收回/推出） */
+    @SubscribeEvent
+    public static void onPiston(PistonEvent.Pre event) {
+        if (event.getLevel().isClientSide()) return;
+        if (!(event.getLevel() instanceof Level level)) return;
+        BlockPos pistonPos = event.getPos();
+        // 检查活塞本身位置 + 活塞将影响的所有位置（粗略检查活塞前方一格）
+        if (isFrozen(level, pistonPos)) {
+            event.setCanceled(true);
+            return;
+        }
+        // 朝向方向
+        net.minecraft.core.Direction dir = event.getDirection();
+        BlockPos target = pistonPos.relative(dir);
+        if (isFrozen(level, target)) {
+            event.setCanceled(true);
+        }
+    }
+
+    /** 流体放置（水/岩浆流入） */
+    @SubscribeEvent
+    public static void onFluidPlace(BlockEvent.FluidPlaceBlockEvent event) {
+        if (event.getLevel().isClientSide()) return;
+        Level level = (Level) event.getLevel();
+        if (isFrozen(level, event.getPos())) {
+            event.setCanceled(true);
+        }
+    }
+
+    /** 远古残骸与作物生长：通过 NeighborNotify 的子事件不一定触发，这里使用 BlockEvent.CropGrowEvent */
+    @SubscribeEvent
+    public static void onCropGrow(BlockEvent.CropGrowEvent.Pre event) {
+        if (event.getLevel().isClientSide()) return;
+        Level level = (Level) event.getLevel();
+        if (isFrozen(level, event.getPos())) {
             event.setCanceled(true);
         }
     }

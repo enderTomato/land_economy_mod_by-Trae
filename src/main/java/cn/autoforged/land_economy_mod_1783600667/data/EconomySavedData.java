@@ -1,6 +1,7 @@
 package cn.autoforged.land_economy_mod_1783600667.data;
 
 import cn.autoforged.land_economy_mod_1783600667.LandEconomyMod;
+import cn.autoforged.land_economy_mod_1783600667.ModConfig;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -296,6 +297,40 @@ public class EconomySavedData extends SavedData {
     public long getLastPopulationCheckTime() { return lastPopulationCheckTime; }
     public void setLastPopulationCheckTime(long time) {
         this.lastPopulationCheckTime = time;
+        setDirty();
+    }
+
+    // ====== 地块系统 ======
+
+    /** 返回某维度下拥有该 chunk 的区域（无则 null） */
+    public RegionData getRegionOwningChunk(String dimId, long chunkKey) {
+        for (RegionData r : regions.values()) {
+            if (r.getDimensionId() != null && r.getDimensionId().equals(dimId) && r.ownsChunk(chunkKey))
+                return r;
+        }
+        return null;
+    }
+
+    /** 区块归属快照条目（供客户端渲染区块颜色） */
+    public record ChunkCell(long chunkKey, UUID owner, String regionName, boolean isFlyland) {}
+
+    /** 返回某区块范围内（cx0..cx1, cz0..cz1）的区块归属快照 */
+    public List<ChunkCell> snapshotChunkCells(String dimId, int cx0, int cz0, int cx1, int cz1) {
+        List<ChunkCell> out = new ArrayList<>();
+        for (int cx = cx0; cx <= cx1; cx++)
+            for (int cz = cz0; cz <= cz1; cz++) {
+                long key = RegionData.chunkKey(cx, cz);
+                RegionData r = getRegionOwningChunk(dimId, key);
+                if (r != null) out.add(new ChunkCell(key, r.getOwner(), r.getName(), r.isFlyland()));
+            }
+        return out;
+    }
+
+    /** 旧→新 迁移：对单个 region 把 AABB 转为 chunk 集合（幂等） */
+    public void migrateLegacyAABBToChunks(RegionData r) {
+        if (r.hasClaimedChunks()) return;            // 已是 chunk 模式
+        if (r.getMinX() == 0 && r.getMaxX() == 0 && r.getMinZ() == 0 && r.getMaxZ() == 0) return; // 空区域
+        r.addAllChunksInAABB();
         setDirty();
     }
 

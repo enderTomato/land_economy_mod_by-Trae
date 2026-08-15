@@ -48,6 +48,9 @@ public class ModConfig {
         public final ForgeConfigSpec.IntValue mathGdpCooldownMinutes;
         public final ForgeConfigSpec.ConfigValue<String> regionDisplayMode;
 
+        // —— 留言板配置 ——
+        public final ForgeConfigSpec.IntValue     messageBoardSize;        // 留言板最大留言数
+
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("gdp");
             builder.comment("GDP calculation interval in minutes");
@@ -171,6 +174,12 @@ public class ModConfig {
             builder.comment("Default region-entry notification style: title (Traveler's Title style, screen title) or actionbar (vanilla). Each player can override per-player with /land display.");
             this.regionDisplayMode = builder
                     .define("regionDisplayMode", "title");
+            builder.pop();
+
+            // —— 留言板配置 ——
+            builder.push("message_board");
+            builder.comment("Max messages on the region message board.");
+            this.messageBoardSize = builder.defineInRange("messageBoardSize", 20, 1, 100);
             builder.pop();
 
             builder.push("building_blocks");

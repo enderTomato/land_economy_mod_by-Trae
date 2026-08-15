@@ -145,6 +145,13 @@ public class ModCommands {
                         .then(Commands.literal("add")
                                 .then(Commands.argument("amount", DoubleArgumentType.doubleArg(0))
                                         .executes(ModCommands::setOutlayAdd))))
+                // /land gui — 打开箱子GUI
+                .then(Commands.literal("gui")
+                        .executes(ModCommands::openChestGui))
+                // /land message <text> — 在当前区域留言板发布留言
+                .then(Commands.literal("message")
+                        .then(Commands.argument("text", StringArgumentType.greedyString())
+                                .executes(ModCommands::postMessage)))
                 .then(Commands.literal("flyland")
                         .then(Commands.literal("claim")
                                 .then(Commands.argument("width", IntegerArgumentType.integer(1))
@@ -482,5 +489,15 @@ public class ModCommands {
 
     private static int setPopCheckHours(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         return EconomyCommandHandler.setPopCheckHours(ctx);
+    }
+
+    // ==================== 区域系统相关命令 ====================
+
+    private static int openChestGui(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        return RegionCommandHandler.openChestGui(ctx);
+    }
+
+    private static int postMessage(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        return RegionCommandHandler.postMessage(ctx);
     }
 }

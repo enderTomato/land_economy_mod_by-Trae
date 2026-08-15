@@ -75,8 +75,9 @@ public class RegionTitleHandler {
     @SubscribeEvent
     public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() == null) return;
-        LAST_REGION.remove(event.getEntity().getUUID());
-        LAST_POS.remove(event.getEntity().getUUID());
+        UUID uid = event.getEntity().getUUID();
+        LAST_REGION.remove(uid);
+        LAST_POS.remove(uid);
     }
 
     /**

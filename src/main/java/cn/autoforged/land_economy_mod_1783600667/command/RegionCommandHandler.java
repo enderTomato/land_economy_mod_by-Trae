@@ -5,6 +5,8 @@ import cn.autoforged.land_economy_mod_1783600667.ModConfig;
 import cn.autoforged.land_economy_mod_1783600667.data.EconomySavedData;
 import cn.autoforged.land_economy_mod_1783600667.data.RegionData;
 import cn.autoforged.land_economy_mod_1783600667.data.RegionType;
+import cn.autoforged.land_economy_mod_1783600667.network.ModMessages;
+import cn.autoforged.land_economy_mod_1783600667.network.PacketS2COpenScreen;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.ChatFormatting;
@@ -42,7 +44,6 @@ public class RegionCommandHandler {
             ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
             return 0;
         }
-
         RegionData existing = data.getRegionByOwner(player.getUUID());
         if (existing != null) {
             ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.claim.exists"));
@@ -1450,6 +1451,8 @@ public class RegionCommandHandler {
             case "ender_pearl" -> "末影珍珠使用";
             case "fire_spread" -> "火焰蔓延";
             case "block_place_break" -> "非成员破坏与放置方块";
+            case "region_fly" -> "区域飞行";
+            case "block_update" -> "区域方块更新(关闭=区域冻结)";
             default -> permName;
         };
     }
@@ -1463,5 +1466,45 @@ public class RegionCommandHandler {
             }
         }
         return null;
+    }
+
+    /** /land gui — 打开箱子GUI */
+    public static int openChestGui(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        EconomySavedData data = LandEconomyMod.getEconomyData();
+        if (data == null) {
+            ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
+            return 0;
+        }
+        ModMessages.sendToPlayer(player, new PacketS2COpenScreen(PacketS2COpenScreen.Type.CHEST));
+        ctx.getSource().sendSuccess(() -> Component.literal("正在打开领地GUI...")
+                .withStyle(ChatFormatting.AQUA), true);
+        return 1;
+    }
+
+    /** /land message <text> — 在当前所在区域留言板发布留言 */
+    public static int postMessage(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        String text = ctx.getArgument("text", String.class);
+        EconomySavedData data = LandEconomyMod.getEconomyData();
+        if (data == null) {
+            ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
+            return 0;
+        }
+        RegionData region = findRegionAtPlayer(player, data);
+        if (region == null) {
+            ctx.getSource().sendFailure(Component.literal("你不在任何领地中"));
+            return 0;
+        }
+        if (!region.isMember(player.getUUID())) {
+            ctx.getSource().sendFailure(Component.literal("仅领地成员可留言"));
+            return 0;
+        }
+        int max = ModConfig.COMMON.messageBoardSize.get();
+        region.addMessage(player.getUUID(), player.getScoreboardName(), text, max);
+        data.setDirty();
+        ctx.getSource().sendSuccess(() -> Component.literal("已在 " + region.getName() + " 留言板发布留言")
+                .withStyle(ChatFormatting.GREEN), true);
+        return 1;
     }
 }
