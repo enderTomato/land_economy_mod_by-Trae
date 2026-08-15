@@ -103,7 +103,7 @@ public class ChunkClaimScreen extends Screen {
     // ==================== 数据 ====================
 
     private void requestChunkData() {
-        ModMessages.sendToServer(new PacketC2SRequestPlotData(centerCX, centerCZ));
+        ModMessages.sendToServer(new PacketC2SRequestChunkData(centerCX, centerCZ));
     }
 
     public void onChunkDataUpdated() {

@@ -97,7 +97,7 @@ public class RegionData {
     public Set<Long> getClaimedChunks() { return claimedChunks; }
 
     /** 新模式是否已启用（有任意已购买区块） */
-    public boolean hasPlots() { return !claimedChunks.isEmpty(); }
+    public boolean hasClaimedChunks() { return !claimedChunks.isEmpty(); }
 
     public boolean ownsChunk(long key) { return claimedChunks.contains(key); }
     public boolean ownsChunk(BlockPos pos) { return claimedChunks.contains(chunkKey(pos)); }

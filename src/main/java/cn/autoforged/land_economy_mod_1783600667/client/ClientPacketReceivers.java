@@ -25,14 +25,14 @@ public final class ClientPacketReceivers {
 
     private ClientPacketReceivers() {}
 
-    /** 服务端下发某区块范围的地块归属快照 → 写入缓存并通知 Screen */
-    public static void onPlotChunkData(PacketS2CPlotChunkData m, Supplier<NetworkEvent.Context> ctx) {
+    /** 服务端下发某区块范围的区块归属快照 → 写入缓存并通知 Screen */
+    public static void onChunkData(PacketS2CChunkData m, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             Minecraft mc = Minecraft.getInstance();
             LocalPlayer p = mc.player;
             if (p == null) return;
             UUID me = p.getUUID();
-            for (PacketS2CPlotChunkData.CellDTO c : m.getCells()) {
+            for (PacketS2CChunkData.CellDTO c : m.getCells()) {
                 ChunkClaimCache.put(c.chunkKey(), c.owner(), c.regionName(), me);
             }
             if (mc.screen instanceof ChunkClaimScreen ccs) {

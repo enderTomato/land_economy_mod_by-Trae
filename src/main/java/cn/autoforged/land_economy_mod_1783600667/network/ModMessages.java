@@ -30,8 +30,8 @@ public final class ModMessages {
 
     public static void register() {
         // C2S
-        INSTANCE.registerMessage(next(), PacketC2SRequestPlotData.class,
-                PacketC2SRequestPlotData::enc, PacketC2SRequestPlotData::dec, PacketC2SRequestPlotData::handle);
+        INSTANCE.registerMessage(next(), PacketC2SRequestChunkData.class,
+                PacketC2SRequestChunkData::enc, PacketC2SRequestChunkData::dec, PacketC2SRequestChunkData::handle);
         INSTANCE.registerMessage(next(), PacketC2SChunkClaimAction.class,
                 PacketC2SChunkClaimAction::enc, PacketC2SChunkClaimAction::dec, PacketC2SChunkClaimAction::handle);
         INSTANCE.registerMessage(next(), PacketC2SRequestRegionDetail.class,
@@ -39,8 +39,8 @@ public final class ModMessages {
         INSTANCE.registerMessage(next(), PacketC2SPostMessage.class,
                 PacketC2SPostMessage::enc, PacketC2SPostMessage::dec, PacketC2SPostMessage::handle);
         // S2C
-        INSTANCE.registerMessage(next(), PacketS2CPlotChunkData.class,
-                PacketS2CPlotChunkData::enc, PacketS2CPlotChunkData::dec, PacketS2CPlotChunkData::handle);
+        INSTANCE.registerMessage(next(), PacketS2CChunkData.class,
+                PacketS2CChunkData::enc, PacketS2CChunkData::dec, PacketS2CChunkData::handle);
         INSTANCE.registerMessage(next(), PacketS2CChunkClaimResult.class,
                 PacketS2CChunkClaimResult::enc, PacketS2CChunkClaimResult::dec, PacketS2CChunkClaimResult::handle);
         INSTANCE.registerMessage(next(), PacketS2CRegionDetail.class,

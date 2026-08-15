@@ -1523,7 +1523,7 @@ public class RegionCommandHandler {
             ctx.getSource().sendFailure(Component.literal("仅领地成员可留言"));
             return 0;
         }
-        int max = ModConfig.COMMON.plotMessageBoardSize.get();
+        int max = ModConfig.COMMON.messageBoardSize.get();
         region.addMessage(player.getUUID(), player.getScoreboardName(), text, max);
         data.setDirty();
         ctx.getSource().sendSuccess(() -> Component.literal("已在 " + region.getName() + " 留言板发布留言")

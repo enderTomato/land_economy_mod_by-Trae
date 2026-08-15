@@ -14,17 +14,17 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 /**
- * 服务端下发某区块范围内（cx0..cx1, cz0..cz1）的地块归属快照。
- * 客户端写入 PlotClientCache 用于绘制四色高亮。
+ * 服务端下发某区块范围（cx0..cx1, cz0..cz1）的区块归属快照。
+ * 客户端写入 ChunkClaimCache 用于绘制区块颜色。
  */
-public class PacketS2CPlotChunkData {
+public class PacketS2CChunkData {
 
     public record CellDTO(long chunkKey, UUID owner, String regionName, boolean isFlyland) {}
 
     private final List<CellDTO> cells;
     private final int cx0, cz0, cx1, cz1;
 
-    public PacketS2CPlotChunkData(Collection<EconomySavedData.ChunkCell> rawCells, int cx0, int cz0, int cx1, int cz1) {
+    public PacketS2CChunkData(Collection<EconomySavedData.ChunkCell> rawCells, int cx0, int cz0, int cx1, int cz1) {
         this.cells = new ArrayList<>(rawCells.size());
         for (EconomySavedData.ChunkCell c : rawCells) {
             this.cells.add(new CellDTO(c.chunkKey(), c.owner(), c.regionName(), c.isFlyland()));
@@ -32,11 +32,11 @@ public class PacketS2CPlotChunkData {
         this.cx0 = cx0; this.cz0 = cz0; this.cx1 = cx1; this.cz1 = cz1;
     }
 
-    public PacketS2CPlotChunkData(List<CellDTO> cells, int cx0, int cz0, int cx1, int cz1) {
+    public PacketS2CChunkData(List<CellDTO> cells, int cx0, int cz0, int cx1, int cz1) {
         this.cells = cells; this.cx0 = cx0; this.cz0 = cz0; this.cx1 = cx1; this.cz1 = cz1;
     }
 
-    public static void enc(PacketS2CPlotChunkData m, FriendlyByteBuf b) {
+    public static void enc(PacketS2CChunkData m, FriendlyByteBuf b) {
         b.writeVarInt(m.cells.size());
         for (CellDTO c : m.cells) {
             b.writeLong(c.chunkKey());
@@ -48,7 +48,7 @@ public class PacketS2CPlotChunkData {
         b.writeInt(m.cx0); b.writeInt(m.cz0); b.writeInt(m.cx1); b.writeInt(m.cz1);
     }
 
-    public static PacketS2CPlotChunkData dec(FriendlyByteBuf b) {
+    public static PacketS2CChunkData dec(FriendlyByteBuf b) {
         int n = b.readVarInt();
         List<CellDTO> list = new ArrayList<>(n);
         for (int i = 0; i < n; i++) {
@@ -59,12 +59,11 @@ public class PacketS2CPlotChunkData {
             list.add(new CellDTO(k, o, name, fl));
         }
         int cx0 = b.readInt(), cz0 = b.readInt(), cx1 = b.readInt(), cz1 = b.readInt();
-        return new PacketS2CPlotChunkData(list, cx0, cz0, cx1, cz1);
+        return new PacketS2CChunkData(list, cx0, cz0, cx1, cz1);
     }
 
-    public static void handle(PacketS2CPlotChunkData m, Supplier<NetworkEvent.Context> ctx) {
-        // DistExecutor 包裹以避免服务端加载 ClientPacketReceivers
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketReceivers.onPlotChunkData(m, ctx));
+    public static void handle(PacketS2CChunkData m, Supplier<NetworkEvent.Context> ctx) {
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketReceivers.onChunkData(m, ctx));
         ctx.get().setPacketHandled(true);
     }
 

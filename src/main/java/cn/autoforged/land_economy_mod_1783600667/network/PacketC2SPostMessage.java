@@ -42,7 +42,7 @@ public class PacketC2SPostMessage {
             RegionData r = data.getRegion(m.regionId);
             if (r == null) return;
             if (!r.isMember(p.getUUID())) return;            // 仅成员可留言
-            int max = ModConfig.COMMON.plotMessageBoardSize.get();
+            int max = ModConfig.COMMON.messageBoardSize.get();
             r.addMessage(p.getUUID(), p.getScoreboardName(), m.text, max);
             // 回发刷新后的详情
             String ownerName = r.getOwner() != null ? r.getOwner().toString().substring(0, 8) : "未知";

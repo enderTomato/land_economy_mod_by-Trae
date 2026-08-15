@@ -328,7 +328,7 @@ public class EconomySavedData extends SavedData {
 
     /** 旧→新 迁移：对单个 region 把 AABB 转为 chunk 集合（幂等） */
     public void migrateLegacyAABBToChunks(RegionData r) {
-        if (r.hasPlots()) return;            // 已是 chunk 模式
+        if (r.hasClaimedChunks()) return;            // 已是 chunk 模式
         if (r.getMinX() == 0 && r.getMaxX() == 0 && r.getMinZ() == 0 && r.getMaxZ() == 0) return; // 空区域
         r.addAllChunksInAABB();
         setDirty();

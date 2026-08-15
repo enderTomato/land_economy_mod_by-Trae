@@ -55,7 +55,7 @@ public class ModConfig {
         public final ForgeConfigSpec.DoubleValue chunkExpandDistanceMultiplier; // 扩大距离系数
         public final ForgeConfigSpec.BooleanValue chunkClaimForceLoadEnabled;  // 是否启用强制加载
         public final ForgeConfigSpec.IntValue     chunkClaimForceLoadMax;      // 最大强制加载数
-        public final ForgeConfigSpec.IntValue     plotMessageBoardSize;        // 留言板最大留言数
+        public final ForgeConfigSpec.IntValue     messageBoardSize;        // 留言板最大留言数
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("gdp");
@@ -197,7 +197,7 @@ public class ModConfig {
             builder.comment("Max force-loaded chunks per player.");
             this.chunkClaimForceLoadMax = builder.defineInRange("forceLoadMax", 25, 0, 500);
             builder.comment("Max messages on the region message board.");
-            this.plotMessageBoardSize = builder.defineInRange("messageBoardSize", 20, 1, 100);
+            this.messageBoardSize = builder.defineInRange("messageBoardSize", 20, 1, 100);
             builder.pop();
 
             builder.push("building_blocks");
