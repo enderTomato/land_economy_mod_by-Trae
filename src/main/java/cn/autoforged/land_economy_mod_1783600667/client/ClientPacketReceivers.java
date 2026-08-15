@@ -2,9 +2,8 @@ package cn.autoforged.land_economy_mod_1783600667.client;
 
 import cn.autoforged.land_economy_mod_1783600667.client.gui.RegionDetailScreen;
 import cn.autoforged.land_economy_mod_1783600667.client.gui.LandChestScreen;
-import cn.autoforged.land_economy_mod_1783600667.client.plot.MapOpener;
 import cn.autoforged.land_economy_mod_1783600667.client.plot.PlotClientCache;
-import cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapScreen;
+import cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapHandler;
 import cn.autoforged.land_economy_mod_1783600667.network.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -39,10 +38,8 @@ public final class ClientPacketReceivers {
                 boolean isOthers = c.owner() != null && !isMine;
                 PlotClientCache.put(c.chunkKey(), isMine, isOthers, c.regionName(), c.isFlyland(), c.owner());
             }
-            // 强制刷新正在显示的 PlotMapScreen
-            if (Minecraft.getInstance().screen instanceof PlotMapScreen pms) {
-                pms.onChunkDataUpdated(m.getCx0(), m.getCz0(), m.getCx1(), m.getCz1());
-            }
+            // 通知 PlotMapHandler 数据已更新
+            PlotMapHandler.onChunkDataUpdated();
         });
     }
 
@@ -53,16 +50,9 @@ public final class ClientPacketReceivers {
             if (p == null) return;
             if (m.isSuccess()) {
                 p.sendSystemMessage(Component.literal("§a" + m.getMessage()));
-                // 清除本地选区并刷新缓存
-                if (Minecraft.getInstance().screen instanceof PlotMapScreen pms) {
-                    pms.clearSelection();
-                }
+                // 清除本地缓存并通知 PlotMapHandler
                 PlotClientCache.invalidate(m.getUpdatedChunks());
-                // 重新拉取受影响区块的最新归属
-                String dim = Minecraft.getInstance().level.dimension().location().toString();
-                if (Minecraft.getInstance().screen instanceof PlotMapScreen pms) {
-                    pms.requestChunksIfNeeded(dim);
-                }
+                PlotMapHandler.onActionResult(m.isSuccess(), m.getMessage());
             } else {
                 p.sendSystemMessage(Component.literal("§c" + m.getMessage()));
             }
@@ -82,7 +72,7 @@ public final class ClientPacketReceivers {
         ctx.get().enqueueWork(() -> {
             Minecraft mc = Minecraft.getInstance();
             switch (m.getType()) {
-                case PLOT_MAP -> MapOpener.openMap();
+                case PLOT_MAP -> PlotMapHandler.openMap();
                 case CHEST  -> mc.setScreen(new LandChestScreen());
             }
         });
@@ -91,29 +81,8 @@ public final class ClientPacketReceivers {
     /** 服务端强制退出地块界面（受击/传送/位移时下发） */
     public static void onForceExit(PacketS2CForceExitPlot m, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            Minecraft mc = Minecraft.getInstance();
-            var screen = mc.screen;
-
-            if (screen instanceof PlotMapScreen pms) {
-                pms.cancelAll();
-            }
-
-            // 关闭 JourneyMap 全屏
-            if (screen != null && screen.getClass().getName().equals("journeymap.client.ui.fullscreen.Fullscreen")) {
-                mc.setScreen(null);
-            }
-
-            // 关闭 Xaero's World Map 全屏
-            if (screen != null && screen.getClass().getName().equals("xaero.map.gui.GuiMap")) {
-                mc.setScreen(null);
-            }
-
-            // 关闭本模组创建的其他 screen
-            if (screen != null && screen.getClass().getName().startsWith("cn.autoforged.land_economy_mod_1783600667.client")) {
-                mc.setScreen(null);
-            }
-
-            LocalPlayer p = mc.player;
+            PlotMapHandler.closeMap();
+            LocalPlayer p = Minecraft.getInstance().player;
             if (p != null) {
                 p.sendSystemMessage(Component.literal("§e[地块界面] 已被服务端强制退出（受击/移动/传送）"));
             }

@@ -2,26 +2,34 @@ package cn.autoforged.land_economy_mod_1783600667.client.integration;
 
 import cn.autoforged.land_economy_mod_1783600667.LandEconomyMod;
 import cn.autoforged.land_economy_mod_1783600667.client.plot.PlotClientCache;
+import cn.autoforged.land_economy_mod_1783600667.client.plot.PlotKeyBindings;
+import cn.autoforged.land_economy_mod_1783600667.network.ModMessages;
+import cn.autoforged.land_economy_mod_1783600667.network.PacketC2SPlotAction;
+import cn.autoforged.land_economy_mod_1783600667.plot.PlotAction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Xaero's World Map 集成。
  *
  * 功能：
- * - 在全屏世界地图上通过 Ctrl+左键/右键框选区块
- * - 在世界地图上渲染区域边界（通过 RenderLevelStageEvent）
+ * - 在全屏世界地图上通过中键拖拽框选区块（购买）、右键放弃
+ * - 在世界地图上渲染区域边界（通过 RenderLevelStageEvent + MapBoundaryRenderer）
+ *
+ * 通过反射和 ScreenEvent 实现，因为 Xaero's World Map 不提供公开 API。
  */
 public class XaeroWorldMapIntegration implements IMapIntegration {
 
+    private static final int SELECT_BUY = 0;
+    private static final int SELECT_ABANDON = 1;
+
     private static boolean isSelecting = false;
-    private static int selectionButton = -1;
+    private static int selectionMode = -1;
     private static int dragStartBlockX, dragStartBlockZ;
     private static int dragEndBlockX, dragEndBlockZ;
 
@@ -44,12 +52,11 @@ public class XaeroWorldMapIntegration implements IMapIntegration {
     public void shutdown() {
         MinecraftForge.EVENT_BUS.unregister(this);
         isSelecting = false;
-        selectionButton = -1;
+        selectionMode = -1;
     }
 
     /**
-     * 在 RenderLevelStage 绘制区域边界。
-     * Xaero's World Map 全屏地图渲染世界内容，世界空间中的边界会出现在地图上。
+     * 在世界空间渲染区域边界。
      */
     @SubscribeEvent
     public void onRenderLevelStage(RenderLevelStageEvent event) {
@@ -58,13 +65,14 @@ public class XaeroWorldMapIntegration implements IMapIntegration {
     }
 
     /**
-     * 处理世界地图全屏中的鼠标点击。
+     * 开始选框操作。
+     *
+     * @param isBuy true=购买选框, false=放弃选框
+     * @param blockX 起始世界X坐标
+     * @param blockZ 起始世界Z坐标
      */
-    public static void handleMouseClick(int button, boolean isCtrlDown, int blockX, int blockZ) {
-        if (button != 0 && button != 1) return;
-        if (!isCtrlDown) return;
-
-        selectionButton = button;
+    public static void startSelection(boolean isBuy, int blockX, int blockZ) {
+        selectionMode = isBuy ? SELECT_BUY : SELECT_ABANDON;
         isSelecting = true;
         dragStartBlockX = blockX;
         dragStartBlockZ = blockZ;
@@ -72,13 +80,19 @@ public class XaeroWorldMapIntegration implements IMapIntegration {
         dragEndBlockZ = blockZ;
     }
 
-    public static void handleMouseDrag(int blockX, int blockZ) {
+    /**
+     * 更新选框范围。
+     */
+    public static void updateSelection(int blockX, int blockZ) {
         if (!isSelecting) return;
         dragEndBlockX = blockX;
         dragEndBlockZ = blockZ;
     }
 
-    public static void handleMouseRelease() {
+    /**
+     * 结束选框，计算框内区块并发送操作。
+     */
+    public static void endSelection() {
         if (!isSelecting) return;
         isSelecting = false;
 
@@ -93,13 +107,12 @@ public class XaeroWorldMapIntegration implements IMapIntegration {
         for (int cx = cx0; cx <= cx1; cx++) {
             for (int cz = cz0; cz <= cz1; cz++) {
                 long key = ChunkPos.asLong(cx, cz);
-                if (selectionButton == 0) {
-                    PlotClientCache.Cell cell = PlotClientCache.get(key);
+                PlotClientCache.Cell cell = PlotClientCache.get(key);
+                if (selectionMode == SELECT_BUY) {
                     if (cell == null || (!cell.isMine() && !cell.isOthers())) {
                         buy.add(key);
                     }
-                } else if (selectionButton == 1) {
-                    PlotClientCache.Cell cell = PlotClientCache.get(key);
+                } else {
                     if (cell != null && cell.isMine()) {
                         abandon.add(key);
                     }
@@ -112,7 +125,21 @@ public class XaeroWorldMapIntegration implements IMapIntegration {
             Minecraft.getInstance().setScreen(new MapSelectionConfirmScreen(buy, abandon, dim));
         }
 
-        selectionButton = -1;
-        isSelecting = false;
+        selectionMode = -1;
+    }
+
+    /**
+     * 处理单个区块的放弃操作（右键单击）。
+     */
+    public static void handleSingleAbandon(int blockX, int blockZ) {
+        int cx = blockX >> 4;
+        int cz = blockZ >> 4;
+        long key = ChunkPos.asLong(cx, cz);
+        PlotClientCache.Cell cell = PlotClientCache.get(key);
+        if (cell != null && cell.isMine()) {
+            String dim = Minecraft.getInstance().level.dimension().location().toString();
+            Minecraft.getInstance().setScreen(new MapSelectionConfirmScreen(
+                    List.of(), List.of(key), dim));
+        }
     }
 }

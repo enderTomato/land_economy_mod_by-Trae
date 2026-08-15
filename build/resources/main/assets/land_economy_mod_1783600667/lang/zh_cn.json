@@ -86,5 +86,8 @@
   "economy.plot_not_mine": "该地块不属于你",
   "economy.plot_over_limit": "已达到每个玩家最大地块数量上限",
   "economy.plot_mode_new": "新版（地图地块系统）",
-  "economy.plot_mode_old": "旧版（区域声明）"
+  "economy.plot_mode_old": "旧版（区域声明）",
+  "key.categories.land_economy": "领地经济",
+  "key.land_economy.plot_buy": "地块购买选框",
+  "key.land_economy.plot_abandon": "地块放弃"
 }

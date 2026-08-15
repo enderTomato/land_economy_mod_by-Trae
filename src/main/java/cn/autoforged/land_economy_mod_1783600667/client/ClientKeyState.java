@@ -6,9 +6,7 @@ import net.minecraft.client.Minecraft;
 /**
  * 客户端 WASD 按键状态跟踪器（用于地块地图视角平移）。
  *
- * 仅在 PlotMapScreen 打开期间采样；不注册全局 KeyMapping，避免与玩家实体移动冲突。
- * 使用 GLFW 直接查询按键状态，而非 Minecraft 的 KeyMapping.isDown()（后者会被
- * Screen 抢占事件后不会更新）。
+ * 使用 GLFW 直接查询按键状态，而非 Minecraft 的 KeyMapping.isDown()。
  */
 public final class ClientKeyState {
 

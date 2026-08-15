@@ -8,8 +8,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 /**
  * Xaero's Minimap 集成。
  *
- * 功能：在 minimap 上渲染区域边界（通过 RenderLevelStageEvent 在世界空间绘制）。
- * 不支持选框购买（minimap 太小）。
+ * 在 minimap 上渲染区域边界（通过 RenderLevelStageEvent 在世界空间绘制）。
+ * 不支持选框（minimap 太小）。
  */
 public class XaeroMinimapIntegration implements IMapIntegration {
 
@@ -33,10 +33,6 @@ public class XaeroMinimapIntegration implements IMapIntegration {
         MinecraftForge.EVENT_BUS.unregister(this);
     }
 
-    /**
-     * 在 RenderLevelStage 绘制区域边界。
-     * Xaero's Minimap 渲染世界内容，世界空间中的边界会出现在 minimap 上。
-     */
     @SubscribeEvent
     public void onRenderLevelStage(RenderLevelStageEvent event) {
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS) return;

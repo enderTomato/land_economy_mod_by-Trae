@@ -5,13 +5,17 @@ import cn.autoforged.land_economy_mod_1783600667.ModConfig;
 import cn.autoforged.land_economy_mod_1783600667.data.EconomySavedData;
 import cn.autoforged.land_economy_mod_1783600667.data.RegionData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.ChunkPos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 服务端权威地块购买/放弃核心。
  * 所有资金/冲突/边界/上限校验在服务端进行，客户端仅发送请求。
+ *
+ * 新增：扩大区域距离定价 — 新区块距原区域越远越贵。
  */
 public final class PlotService {
 
@@ -46,17 +50,27 @@ public final class PlotService {
             double costPer = ModConfig.COMMON.plotCostPerChunk.get();
             int max = ModConfig.COMMON.plotMaxChunksPerPlayer.get();
             int alreadyOwned = mine != null ? mine.getClaimedChunks().size() : 0;
-            int wantBuy = 0;
+
+            // 过滤可购买区块
+            List<Long> buyable = new ArrayList<>();
             for (long k : chunks) {
                 RegionData owner = data.getRegionOwningChunk(dim, k);
-                if (owner != null) continue;                  // 已被他人/自己占用
-                wantBuy++;
+                if (owner != null) continue;
+                buyable.add(k);
             }
-            if (wantBuy == 0)
+            if (buyable.isEmpty())
                 return new Result(false, "所选区块均已被占用", data.getPlayerFunds(p.getUUID()), List.of());
-            if (max >= 0 && alreadyOwned + wantBuy > max)
+            if (max >= 0 && alreadyOwned + buyable.size() > max)
                 return new Result(false, "超过最大区块数上限 " + max, data.getPlayerFunds(p.getUUID()), List.of());
-            double total = costPer * wantBuy;
+
+            // 计算总价：支持扩大区域距离定价
+            double total;
+            if (mine != null && mine.hasPlots()) {
+                total = calculateExpandCost(mine, buyable, costPer);
+            } else {
+                total = costPer * buyable.size();
+            }
+
             double funds = data.getPlayerFunds(p.getUUID());
             if (total > 0 && funds < total)
                 return new Result(false, "资金不足（需 " + total + "，现有 " + funds + "）", funds, List.of());
@@ -71,7 +85,7 @@ public final class PlotService {
                 mine.setDimensionId(dim);
                 data.createRegion(p.getUUID(), mine);
             }
-            for (long k : chunks) {
+            for (long k : buyable) {
                 if (data.getRegionOwningChunk(dim, k) == null && mine.addChunk(k)) changed.add(k);
             }
             mine.recomputeAABBFromChunks();
@@ -97,5 +111,40 @@ public final class PlotService {
             return new Result(true, "放弃 " + n + " 区块，返还 " + refund,
                     data.getPlayerFunds(p.getUUID()), changed);
         }
+    }
+
+    /**
+     * 计算扩大区域的总价（距离定价）。
+     *
+     * 对于每个新区块，计算它到原区域所有已拥有区块的最近 Chebyshev 距离。
+     * 价格 = 基础价格 × (1 + 距离系数 × 最近距离)
+     *
+     * @param region 当前区域
+     * @param newChunks 要购买的新区块 key 列表
+     * @param baseCost 每区块基础价格
+     * @return 总价
+     */
+    public static double calculateExpandCost(RegionData region, List<Long> newChunks, double baseCost) {
+        double multiplier = ModConfig.COMMON.plotExpandDistanceMultiplier.get();
+        Set<Long> owned = region.getClaimedChunks();
+
+        double total = 0;
+        for (long newKey : newChunks) {
+            int nx = ChunkPos.getX(newKey);
+            int nz = ChunkPos.getZ(newKey);
+
+            // 计算到最近已拥有区块的 Chebyshev 距离
+            int minDist = Integer.MAX_VALUE;
+            for (long ownKey : owned) {
+                int ox = ChunkPos.getX(ownKey);
+                int oz = ChunkPos.getZ(ownKey);
+                int dist = Math.max(Math.abs(nx - ox), Math.abs(nz - oz));
+                if (dist < minDist) minDist = dist;
+            }
+
+            double cost = baseCost * (1.0 + multiplier * minDist);
+            total += cost;
+        }
+        return total;
     }
 }

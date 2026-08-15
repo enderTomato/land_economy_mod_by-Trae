@@ -1,20 +1,20 @@
 package cn.autoforged.land_economy_mod_1783600667.client.integration;
 
 import cn.autoforged.land_economy_mod_1783600667.LandEconomyMod;
+import cn.autoforged.land_economy_mod_1783600667.client.plot.PlotKeyBindings;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.lwjgl.glfw.GLFW;
 
 /**
  * 第三方地图全屏鼠标事件捕获器。
  *
  * 监听 Forge ScreenEvent，当检测到当前屏幕是 JourneyMap 全屏或 Xaero's World Map 全屏时，
- * 拦截 Ctrl+鼠标点击事件，将操作委托给对应集成类的静态处理方法。
+ * 拦截可配置键位的鼠标点击事件：
+ * - 购买键位（默认中键）拖拽 = 选框购买
+ * - 放弃键位（默认右键）单击 = 放弃区块
  *
- * 简化方案：由于第三方地图的屏幕坐标→世界坐标转换需要深度反射，
- * 当前版本使用玩家所在位置的区块作为操作目标（Ctrl+左键=购买, Ctrl+右键=放弃）。
  * 边界渲染已通过 RenderLevelStageEvent 实现，在第三方地图上可见。
  */
 public final class MapScreenEventHandler {
@@ -34,7 +34,6 @@ public final class MapScreenEventHandler {
     }
 
     public static void shutdown() {
-        // 事件总线注册使用实例方法，通过 instance 注销
         initialized = false;
     }
 
@@ -50,30 +49,28 @@ public final class MapScreenEventHandler {
         if (!isJourneyMap && !isXaeroWorldMap) return;
 
         int button = event.getButton();
-        if (button != GLFW.GLFW_MOUSE_BUTTON_LEFT && button != GLFW.GLFW_MOUSE_BUTTON_RIGHT) return;
 
-        // 检查 Ctrl 是否按下
-        long window = Minecraft.getInstance().getWindow().getWindow();
-        boolean ctrlDown = (org.lwjgl.glfw.GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS)
-                || (org.lwjgl.glfw.GLFW.glfwGetKey(window, GLFW.GLFW_KEY_RIGHT_CONTROL) == GLFW.GLFW_PRESS);
-
-        if (!ctrlDown) return;
-
-        // 使用玩家当前所在区块作为操作目标
-        var player = Minecraft.getInstance().player;
-        if (player == null) return;
-
-        int blockX = player.blockPosition().getX();
-        int blockZ = player.blockPosition().getZ();
-
-        if (isJourneyMap) {
-            JourneyMapIntegration.handleMouseClick(button, true, blockX, blockZ);
-        } else {
-            XaeroWorldMapIntegration.handleMouseClick(button, true, blockX, blockZ);
+        // 购买键位（中键）= 开始选框购买
+        if (PlotKeyBindings.isBuyButton(button)) {
+            // 使用玩家当前位置作为选框起始点
+            var player = Minecraft.getInstance().player;
+            if (player == null) return;
+            int blockX = player.blockPosition().getX();
+            int blockZ = player.blockPosition().getZ();
+            XaeroWorldMapIntegration.startSelection(true, blockX, blockZ);
+            event.setCanceled(true);
+            return;
         }
 
-        // 消费事件，阻止第三方地图的默认行为
-        event.setCanceled(true);
+        // 放弃键位（右键）= 放弃当前区块
+        if (PlotKeyBindings.isAbandonButton(button)) {
+            var player = Minecraft.getInstance().player;
+            if (player == null) return;
+            int blockX = player.blockPosition().getX();
+            int blockZ = player.blockPosition().getZ();
+            XaeroWorldMapIntegration.handleSingleAbandon(blockX, blockZ);
+            event.setCanceled(true);
+        }
     }
 
     @SubscribeEvent
@@ -88,12 +85,9 @@ public final class MapScreenEventHandler {
         if (!isJourneyMap && !isXaeroWorldMap) return;
 
         int button = event.getButton();
-        if (button != GLFW.GLFW_MOUSE_BUTTON_LEFT && button != GLFW.GLFW_MOUSE_BUTTON_RIGHT) return;
 
-        if (isJourneyMap) {
-            JourneyMapIntegration.handleMouseRelease();
-        } else {
-            XaeroWorldMapIntegration.handleMouseRelease();
+        if (PlotKeyBindings.isBuyButton(button)) {
+            XaeroWorldMapIntegration.endSelection();
         }
     }
 }

@@ -56,6 +56,7 @@ public class ModConfig {
         public final ForgeConfigSpec.IntValue    plotMapViewRadius;      // 一次请求的区块半径
         public final ForgeConfigSpec.IntValue    plotMessageBoardSize;  // 留言板上限
         public final ForgeConfigSpec.BooleanValue legacyCommandsEnabled; // 旧指令全局开关（默认 false）
+        public final ForgeConfigSpec.DoubleValue plotExpandDistanceMultiplier; // 扩大区域距离系数
 
         // —— 第三方地图集成 ——
         public final ForgeConfigSpec.BooleanValue plotMapIntegrationEnabled;
@@ -204,6 +205,7 @@ public class ModConfig {
             this.plotMessageBoardSize = builder.defineInRange("plotMessageBoardSize", 20, 0, 200);
             builder.comment("Globally enable legacy /land claim|add|unclaim (also require player mode=old).");
             this.legacyCommandsEnabled = builder.define("legacyCommandsEnabled", false);
+            this.plotExpandDistanceMultiplier = builder.defineInRange("plotExpandDistanceMultiplier", 0.05, 0.0, 10.0);
             builder.pop();
 
             // —— 第三方地图集成配置 ——

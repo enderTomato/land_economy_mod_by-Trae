@@ -124,15 +124,6 @@ Adding input to inheritance map
 Processing entries
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/data/EconomySavedData/save(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag; from net/minecraft/world/level/saveddata/SavedData/save(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;: save -> m_7176_
 Conflicting propagated mapping for net/minecraft/world/entity/LivingEntity/lambda$addAdditionalSaveData$3(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/nbt/Tag;)V from net/minecraft/world/entity/player/Player/lambda$addAdditionalSaveData$3(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/nbt/Tag;)V: lambda$addAdditionalSaveData$3 -> m_219754_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapScreen/keyPressed(III)Z from net/minecraft/client/gui/screens/Screen/keyPressed(III)Z: keyPressed -> m_7933_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapScreen/isPauseScreen()Z from net/minecraft/client/gui/screens/Screen/isPauseScreen()Z: isPauseScreen -> m_7043_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapScreen/mouseScrolled(DDD)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseScrolled(DDD)Z: mouseScrolled -> m_6050_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapScreen/onClose()V from net/minecraft/client/gui/screens/Screen/onClose()V: onClose -> m_7379_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapScreen/mouseClicked(DDI)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseClicked(DDI)Z: mouseClicked -> m_6375_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapScreen/tick()V from net/minecraft/client/gui/screens/Screen/tick()V: tick -> m_86600_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapScreen/mouseDragged(DDIDD)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseDragged(DDIDD)Z: mouseDragged -> m_7979_
-Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapScreen/mouseReleased(DDI)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseReleased(DDI)Z: mouseReleased -> m_6348_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/LandChestScreen/isPauseScreen()Z from net/minecraft/client/gui/screens/Screen/isPauseScreen()Z: isPauseScreen -> m_7043_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/LandChestScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/LandChestScreen/init()V from net/minecraft/client/gui/screens/Screen/init()V: init -> m_7856_
@@ -146,6 +137,15 @@ Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/cli
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/RegionNameInputScreen/isPauseScreen()Z from net/minecraft/client/gui/screens/Screen/isPauseScreen()Z: isPauseScreen -> m_7043_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/RegionNameInputScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
 Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/gui/RegionNameInputScreen/init()V from net/minecraft/client/gui/screens/Screen/init()V: init -> m_7856_
+Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/FallbackPlotScreen/keyPressed(III)Z from net/minecraft/client/gui/screens/Screen/keyPressed(III)Z: keyPressed -> m_7933_
+Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/FallbackPlotScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
+Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/FallbackPlotScreen/mouseScrolled(DDD)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseScrolled(DDD)Z: mouseScrolled -> m_6050_
+Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/FallbackPlotScreen/onClose()V from net/minecraft/client/gui/screens/Screen/onClose()V: onClose -> m_7379_
+Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/FallbackPlotScreen/init()V from net/minecraft/client/gui/screens/Screen/init()V: init -> m_7856_
+Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/FallbackPlotScreen/mouseClicked(DDI)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseClicked(DDI)Z: mouseClicked -> m_6375_
+Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/FallbackPlotScreen/tick()V from net/minecraft/client/gui/screens/Screen/tick()V: tick -> m_86600_
+Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/FallbackPlotScreen/mouseDragged(DDIDD)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseDragged(DDIDD)Z: mouseDragged -> m_7979_
+Conflicting propagated mapping for cn/autoforged/land_economy_mod_1783600667/client/plot/FallbackPlotScreen/mouseReleased(DDI)Z from net/minecraft/client/gui/components/events/ContainerEventHandler/mouseReleased(DDI)Z: mouseReleased -> m_6348_
 Adding extras
 Sorting
 Writing Output: /workspace/build/reobfJar/output.jar
@@ -189,14 +189,13 @@ Writing Output: /workspace/build/reobfJar/output.jar
   cn/autoforged/land_economy_mod_1783600667/client/integration/XaeroMinimapIntegration.class
   cn/autoforged/land_economy_mod_1783600667/client/integration/XaeroWorldMapIntegration.class
   cn/autoforged/land_economy_mod_1783600667/client/plot/
-  cn/autoforged/land_economy_mod_1783600667/client/plot/MapOpener.class
+  cn/autoforged/land_economy_mod_1783600667/client/plot/FallbackPlotScreen.class
   cn/autoforged/land_economy_mod_1783600667/client/plot/PlotClientCache$Cell.class
   cn/autoforged/land_economy_mod_1783600667/client/plot/PlotClientCache.class
-  cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapScreen.class
-  cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapTerrainImage.class
-  cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapTerrainRenderer$1.class
-  cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapTerrainRenderer.class
-  cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapView.class
+  cn/autoforged/land_economy_mod_1783600667/client/plot/PlotKeyBindings$1.class
+  cn/autoforged/land_economy_mod_1783600667/client/plot/PlotKeyBindings.class
+  cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapHandler$MapType.class
+  cn/autoforged/land_economy_mod_1783600667/client/plot/PlotMapHandler.class
   cn/autoforged/land_economy_mod_1783600667/command/
   cn/autoforged/land_economy_mod_1783600667/command/EconomyCommandHandler$1.class
   cn/autoforged/land_economy_mod_1783600667/command/EconomyCommandHandler.class
