@@ -24,9 +24,9 @@ public class PacketS2CPlotChunkData {
     private final List<CellDTO> cells;
     private final int cx0, cz0, cx1, cz1;
 
-    public PacketS2CPlotChunkData(Collection<EconomySavedData.PlotCell> rawCells, int cx0, int cz0, int cx1, int cz1) {
+    public PacketS2CPlotChunkData(Collection<EconomySavedData.ChunkCell> rawCells, int cx0, int cz0, int cx1, int cz1) {
         this.cells = new ArrayList<>(rawCells.size());
-        for (EconomySavedData.PlotCell c : rawCells) {
+        for (EconomySavedData.ChunkCell c : rawCells) {
             this.cells.add(new CellDTO(c.chunkKey(), c.owner(), c.regionName(), c.isFlyland()));
         }
         this.cx0 = cx0; this.cz0 = cz0; this.cx1 = cx1; this.cz1 = cz1;

@@ -1,7 +1,6 @@
 package cn.autoforged.land_economy_mod_1783600667.network;
 
 import cn.autoforged.land_economy_mod_1783600667.LandEconomyMod;
-import cn.autoforged.land_economy_mod_1783600667.ModConfig;
 import cn.autoforged.land_economy_mod_1783600667.data.EconomySavedData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -37,9 +36,9 @@ public class PacketC2SRequestPlotData {
             if (p == null) return;
             EconomySavedData data = LandEconomyMod.getEconomyData();
             if (data == null) return;
-            int r = ModConfig.COMMON.plotMapViewRadius.get();
+            int r = 16; // 区块数据请求半径
             String dim = p.level().dimension().location().toString();
-            var cells = data.snapshotPlotCells(dim, m.cx - r, m.cz - r, m.cx + r, m.cz + r);
+            var cells = data.snapshotChunkCells(dim, m.cx - r, m.cz - r, m.cx + r, m.cz + r);
             ModMessages.sendToPlayer(p, new PacketS2CPlotChunkData(cells, m.cx - r, m.cz - r, m.cx + r, m.cz + r));
         });
         ctx.get().setPacketHandled(true);

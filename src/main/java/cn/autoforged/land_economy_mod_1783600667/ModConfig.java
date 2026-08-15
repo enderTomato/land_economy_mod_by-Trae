@@ -48,21 +48,14 @@ public class ModConfig {
         public final ForgeConfigSpec.IntValue mathGdpCooldownMinutes;
         public final ForgeConfigSpec.ConfigValue<String> regionDisplayMode;
 
-        // —— 地块系统配置 ——
-        public final ForgeConfigSpec.BooleanValue plotSystemEnabled;     // 全局默认地块系统
-        public final ForgeConfigSpec.DoubleValue plotCostPerChunk;       // 每区块购买费用
-        public final ForgeConfigSpec.DoubleValue plotRefundPerChunk;     // 放弃每区块返还
-        public final ForgeConfigSpec.IntValue    plotMaxChunksPerPlayer; // -1=不限
-        public final ForgeConfigSpec.IntValue    plotMapViewRadius;      // 一次请求的区块半径
-        public final ForgeConfigSpec.IntValue    plotMessageBoardSize;  // 留言板上限
-        public final ForgeConfigSpec.BooleanValue legacyCommandsEnabled; // 旧指令全局开关（默认 false）
-        public final ForgeConfigSpec.DoubleValue plotExpandDistanceMultiplier; // 扩大区域距离系数
-
-        // —— 第三方地图集成 ——
-        public final ForgeConfigSpec.BooleanValue plotMapIntegrationEnabled;
-        public final ForgeConfigSpec.BooleanValue plotJourneyMapIntegration;
-        public final ForgeConfigSpec.BooleanValue plotXaeroMinimapIntegration;
-        public final ForgeConfigSpec.BooleanValue plotXaeroWorldMapIntegration;
+        // —— 区块认领系统配置 ——
+        public final ForgeConfigSpec.DoubleValue chunkClaimCost;            // 每区块购买费用
+        public final ForgeConfigSpec.DoubleValue chunkUnclaimRefund;        // 放弃每区块返还
+        public final ForgeConfigSpec.IntValue    chunkMaxPerPlayer;         // -1=不限
+        public final ForgeConfigSpec.DoubleValue chunkExpandDistanceMultiplier; // 扩大距离系数
+        public final ForgeConfigSpec.BooleanValue chunkClaimForceLoadEnabled;  // 是否启用强制加载
+        public final ForgeConfigSpec.IntValue     chunkClaimForceLoadMax;      // 最大强制加载数
+        public final ForgeConfigSpec.IntValue     plotMessageBoardSize;        // 留言板最大留言数
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("gdp");
@@ -189,35 +182,22 @@ public class ModConfig {
                     .define("regionDisplayMode", "title");
             builder.pop();
 
-            // —— plot 配置段 ——
-            builder.push("plot");
-            builder.comment("Enable the new Cities-Skylines-style plot system by default (per-player can override via /land mode).");
-            this.plotSystemEnabled = builder.define("plotSystemEnabled", true);
-            builder.comment("Cost (player funds) to buy one chunk in plot mode.");
-            this.plotCostPerChunk = builder.defineInRange("plotCostPerChunk", 0.0, 0.0, 1000000.0);
-            builder.comment("Funds refunded per chunk when abandoning in plot mode.");
-            this.plotRefundPerChunk = builder.defineInRange("plotRefundPerChunk", 0.0, 0.0, 1000000.0);
-            builder.comment("Max chunks a single player can own (-1 = unlimited).");
-            this.plotMaxChunksPerPlayer = builder.defineInRange("plotMaxChunksPerPlayer", -1, -1, 1000000);
-            builder.comment("Chunk radius fetched per plot-data request (client pan).");
-            this.plotMapViewRadius = builder.defineInRange("plotMapViewRadius", 16, 4, 64);
-            builder.comment("Max message-board entries per region.");
-            this.plotMessageBoardSize = builder.defineInRange("plotMessageBoardSize", 20, 0, 200);
-            builder.comment("Globally enable legacy /land claim|add|unclaim (also require player mode=old).");
-            this.legacyCommandsEnabled = builder.define("legacyCommandsEnabled", false);
-            this.plotExpandDistanceMultiplier = builder.defineInRange("plotExpandDistanceMultiplier", 0.05, 0.0, 10.0);
-            builder.pop();
-
-            // —— 第三方地图集成配置 ——
-            builder.push("mapIntegration");
-            builder.comment("Enable third-party map mod integration (JourneyMap / Xaero's).");
-            this.plotMapIntegrationEnabled = builder.define("enabled", false);
-            builder.comment("Enable JourneyMap integration (boundary overlay + Ctrl+click selection).");
-            this.plotJourneyMapIntegration = builder.define("journeyMap", true);
-            builder.comment("Enable Xaero's Minimap integration (boundary overlay).");
-            this.plotXaeroMinimapIntegration = builder.define("xaeroMinimap", true);
-            builder.comment("Enable Xaero's World Map integration (boundary overlay + Ctrl+click selection).");
-            this.plotXaeroWorldMapIntegration = builder.define("xaeroWorldMap", true);
+            // —— chunk_claim 配置段 ——
+            builder.push("chunk_claim");
+            builder.comment("Cost (player funds) to claim one chunk.");
+            this.chunkClaimCost = builder.defineInRange("chunkClaimCost", 100.0, 0.0, 1000000.0);
+            builder.comment("Funds refunded per chunk when unclaiming.");
+            this.chunkUnclaimRefund = builder.defineInRange("chunkUnclaimRefund", 50.0, 0.0, 1000000.0);
+            builder.comment("Max chunks a single player can claim (-1 = unlimited).");
+            this.chunkMaxPerPlayer = builder.defineInRange("chunkMaxPerPlayer", -1, -1, 1000000);
+            builder.comment("Price multiplier based on distance from existing claimed chunks.");
+            this.chunkExpandDistanceMultiplier = builder.defineInRange("chunkExpandDistanceMultiplier", 0.05, 0.0, 10.0);
+            builder.comment("Enable force-loading of claimed chunks via Shift+click.");
+            this.chunkClaimForceLoadEnabled = builder.define("forceLoadEnabled", true);
+            builder.comment("Max force-loaded chunks per player.");
+            this.chunkClaimForceLoadMax = builder.defineInRange("forceLoadMax", 25, 0, 500);
+            builder.comment("Max messages on the region message board.");
+            this.plotMessageBoardSize = builder.defineInRange("messageBoardSize", 20, 1, 100);
             builder.pop();
 
             builder.push("building_blocks");

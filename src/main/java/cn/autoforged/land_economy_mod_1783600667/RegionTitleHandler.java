@@ -3,7 +3,7 @@ package cn.autoforged.land_economy_mod_1783600667;
 import cn.autoforged.land_economy_mod_1783600667.data.EconomySavedData;
 import cn.autoforged.land_economy_mod_1783600667.data.RegionData;
 import cn.autoforged.land_economy_mod_1783600667.network.ModMessages;
-import cn.autoforged.land_economy_mod_1783600667.network.PacketS2CForceExitPlot;
+import cn.autoforged.land_economy_mod_1783600667.network.PacketS2COpenScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -55,11 +55,10 @@ public class RegionTitleHandler {
         if (pos.equals(lastPos)) return;
         LAST_POS.put(serverPlayer.getUUID(), pos);
 
-        // 玩家实体位置变化：如果处于地块界面，强制退出（避免玩家利用地图视角期间移动实体）
+        // 玩家实体位置变化：如果处于区块认领地图界面，强制退出
         EconomySavedData dataCheck = LandEconomyMod.getEconomyData();
-        if (dataCheck != null && dataCheck.isInPlotMode(serverPlayer.getUUID())) {
-            dataCheck.setInPlotMode(serverPlayer.getUUID(), false);
-            ModMessages.sendToPlayer(serverPlayer, new PacketS2CForceExitPlot());
+        if (dataCheck != null) {
+            ModMessages.sendToPlayer(serverPlayer, new PacketS2COpenScreen(PacketS2COpenScreen.Type.CLOSE_MAP));
         }
 
         RegionData region = getRegionAt(level, pos);
@@ -87,11 +86,6 @@ public class RegionTitleHandler {
         UUID uid = event.getEntity().getUUID();
         LAST_REGION.remove(uid);
         LAST_POS.remove(uid);
-        // 退出登录时清理地块界面状态，防止内存泄漏
-        EconomySavedData data = LandEconomyMod.getEconomyData();
-        if (data != null) {
-            data.setInPlotMode(uid, false);
-        }
     }
 
     /**

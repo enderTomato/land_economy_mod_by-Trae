@@ -30,12 +30,10 @@ public final class ModMessages {
 
     public static void register() {
         // C2S
-        INSTANCE.registerMessage(next(), PacketC2SOpenPlotMap.class,
-                PacketC2SOpenPlotMap::enc, PacketC2SOpenPlotMap::dec, PacketC2SOpenPlotMap::handle);
         INSTANCE.registerMessage(next(), PacketC2SRequestPlotData.class,
                 PacketC2SRequestPlotData::enc, PacketC2SRequestPlotData::dec, PacketC2SRequestPlotData::handle);
-        INSTANCE.registerMessage(next(), PacketC2SPlotAction.class,
-                PacketC2SPlotAction::enc, PacketC2SPlotAction::dec, PacketC2SPlotAction::handle);
+        INSTANCE.registerMessage(next(), PacketC2SChunkClaimAction.class,
+                PacketC2SChunkClaimAction::enc, PacketC2SChunkClaimAction::dec, PacketC2SChunkClaimAction::handle);
         INSTANCE.registerMessage(next(), PacketC2SRequestRegionDetail.class,
                 PacketC2SRequestRegionDetail::enc, PacketC2SRequestRegionDetail::dec, PacketC2SRequestRegionDetail::handle);
         INSTANCE.registerMessage(next(), PacketC2SPostMessage.class,
@@ -43,14 +41,12 @@ public final class ModMessages {
         // S2C
         INSTANCE.registerMessage(next(), PacketS2CPlotChunkData.class,
                 PacketS2CPlotChunkData::enc, PacketS2CPlotChunkData::dec, PacketS2CPlotChunkData::handle);
-        INSTANCE.registerMessage(next(), PacketS2CPlotActionResult.class,
-                PacketS2CPlotActionResult::enc, PacketS2CPlotActionResult::dec, PacketS2CPlotActionResult::handle);
+        INSTANCE.registerMessage(next(), PacketS2CChunkClaimResult.class,
+                PacketS2CChunkClaimResult::enc, PacketS2CChunkClaimResult::dec, PacketS2CChunkClaimResult::handle);
         INSTANCE.registerMessage(next(), PacketS2CRegionDetail.class,
                 PacketS2CRegionDetail::enc, PacketS2CRegionDetail::dec, PacketS2CRegionDetail::handle);
         INSTANCE.registerMessage(next(), PacketS2COpenScreen.class,
                 PacketS2COpenScreen::enc, PacketS2COpenScreen::dec, PacketS2COpenScreen::handle);
-        INSTANCE.registerMessage(next(), PacketS2CForceExitPlot.class,
-                PacketS2CForceExitPlot::enc, PacketS2CForceExitPlot::dec, PacketS2CForceExitPlot::handle);
     }
 
     public static <M> void sendToServer(M msg) { INSTANCE.sendToServer(msg); }

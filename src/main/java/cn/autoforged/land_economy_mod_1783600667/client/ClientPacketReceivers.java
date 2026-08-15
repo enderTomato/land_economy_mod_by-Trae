@@ -2,17 +2,15 @@ package cn.autoforged.land_economy_mod_1783600667.client;
 
 import cn.autoforged.land_economy_mod_1783600667.client.gui.RegionDetailScreen;
 import cn.autoforged.land_economy_mod_1783600667.client.gui.LandChestScreen;
-import cn.autoforged.land_economy_mod_1783600667.client.plot.PlotClientCache;
-import cn.autoforged.land_economy_mod_1783600667.client.plot.PlotMapHandler;
+import cn.autoforged.land_economy_mod_1783600667.client.screen.ChunkClaimCache;
+import cn.autoforged.land_economy_mod_1783600667.client.screen.ChunkClaimScreen;
 import cn.autoforged.land_economy_mod_1783600667.network.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.network.NetworkEvent;
-import net.minecraft.world.level.ChunkPos;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -27,34 +25,36 @@ public final class ClientPacketReceivers {
 
     private ClientPacketReceivers() {}
 
-    /** 服务端下发某区块范围的地块归属快照 → 写入 PlotClientCache */
+    /** 服务端下发某区块范围的地块归属快照 → 写入缓存并通知 Screen */
     public static void onPlotChunkData(PacketS2CPlotChunkData m, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            LocalPlayer p = Minecraft.getInstance().player;
+            Minecraft mc = Minecraft.getInstance();
+            LocalPlayer p = mc.player;
             if (p == null) return;
             UUID me = p.getUUID();
             for (PacketS2CPlotChunkData.CellDTO c : m.getCells()) {
-                boolean isMine = c.owner() != null && c.owner().equals(me);
-                boolean isOthers = c.owner() != null && !isMine;
-                PlotClientCache.put(c.chunkKey(), isMine, isOthers, c.regionName(), c.isFlyland(), c.owner());
+                ChunkClaimCache.put(c.chunkKey(), c.owner(), c.regionName(), me);
             }
-            // 通知 PlotMapHandler 数据已更新
-            PlotMapHandler.onChunkDataUpdated();
+            if (mc.screen instanceof ChunkClaimScreen ccs) {
+                ccs.onChunkDataUpdated();
+            }
         });
     }
 
-    /** 服务端下发地块操作结果 → 提示玩家 + 清除选区 + 重新拉取变更范围 */
-    public static void onPlotActionResult(PacketS2CPlotActionResult m, Supplier<NetworkEvent.Context> ctx) {
+    /** 服务端下发区块操作结果 */
+    public static void onChunkClaimResult(PacketS2CChunkClaimResult m, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             LocalPlayer p = Minecraft.getInstance().player;
             if (p == null) return;
             if (m.isSuccess()) {
                 p.sendSystemMessage(Component.literal("§a" + m.getMessage()));
-                // 清除本地缓存并通知 PlotMapHandler
-                PlotClientCache.invalidate(m.getUpdatedChunks());
-                PlotMapHandler.onActionResult(m.isSuccess(), m.getMessage());
+                ChunkClaimCache.invalidate(m.getAffectedChunks());
             } else {
                 p.sendSystemMessage(Component.literal("§c" + m.getMessage()));
+            }
+            Minecraft mc = Minecraft.getInstance();
+            if (mc.screen instanceof ChunkClaimScreen ccs) {
+                ccs.clearSelection();
             }
         });
     }
@@ -67,33 +67,20 @@ public final class ClientPacketReceivers {
         });
     }
 
-    /** 服务端要求客户端打开某 Screen（地块图/箱子GUI） */
+    /** 服务端要求客户端打开某 Screen（区块认领地图/箱子GUI） */
     public static void onOpenScreen(PacketS2COpenScreen m, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             Minecraft mc = Minecraft.getInstance();
             switch (m.getType()) {
-                case PLOT_MAP -> PlotMapHandler.openMap();
+                case CHUNK_CLAIM_MAP -> mc.setScreen(new ChunkClaimScreen());
                 case CHEST  -> mc.setScreen(new LandChestScreen());
+                case CLOSE_MAP -> {
+                    if (mc.screen instanceof ChunkClaimScreen) {
+                        mc.screen.onClose();
+                        mc.setScreen(null);
+                    }
+                }
             }
         });
-    }
-
-    /** 服务端强制退出地块界面（受击/传送/位移时下发） */
-    public static void onForceExit(PacketS2CForceExitPlot m, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            PlotMapHandler.closeMap();
-            LocalPlayer p = Minecraft.getInstance().player;
-            if (p != null) {
-                p.sendSystemMessage(Component.literal("§e[地块界面] 已被服务端强制退出（受击/移动/传送）"));
-            }
-        });
-    }
-
-    /** 便利：将一组长区块键转为字符串（调试用） */
-    @SuppressWarnings("unused")
-    private static String fmtChunks(Set<Long> keys) {
-        Set<String> s = new HashSet<>();
-        for (long k : keys) s.add("[" + ChunkPos.getX(k) + "," + ChunkPos.getZ(k) + "]");
-        return s.toString();
     }
 }

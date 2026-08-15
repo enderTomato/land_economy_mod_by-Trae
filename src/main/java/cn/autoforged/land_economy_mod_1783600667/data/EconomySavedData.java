@@ -32,10 +32,6 @@ public class EconomySavedData extends SavedData {
     private final Map<String, double[]> regionTypeOverrides = new ConcurrentHashMap<>();
     // 玩家UUID -> 区域进入提示显示方式（"title" 屏幕标题 / "actionbar" 原版 ActionBar）
     private final Map<UUID, String> playerDisplayModes = new ConcurrentHashMap<>();
-    // —— 地块系统：玩家新版/旧版模式 ——
-    private final Map<UUID, String> playerPlotMode = new ConcurrentHashMap<>();
-    // —— 服务端追踪地块界面在线玩家（运行期状态，不持久化） ——
-    private final Set<UUID> playersInPlotMode = ConcurrentHashMap.newKeySet();
 
     public EconomySavedData() {}
 
@@ -91,15 +87,6 @@ public class EconomySavedData extends SavedData {
                 playerDisplayModes.put(entry.getUUID("Player"), entry.getString("Mode"));
             }
         }
-
-        // —— 新增：玩家地块模式 ——
-        if (tag.contains("PlayerPlotMode")) {
-            ListTag plotList = tag.getList("PlayerPlotMode", Tag.TAG_COMPOUND);
-            for (int i = 0; i < plotList.size(); i++) {
-                CompoundTag entry = plotList.getCompound(i);
-                playerPlotMode.put(entry.getUUID("Player"), entry.getString("Mode"));
-            }
-        }
     }
 
     @Override
@@ -153,16 +140,6 @@ public class EconomySavedData extends SavedData {
             modeList.add(entryTag);
         }
         tag.put("PlayerDisplayModes", modeList);
-
-        // —— 新增：玩家地块模式 ——
-        ListTag plotList = new ListTag();
-        for (Map.Entry<UUID, String> entry : playerPlotMode.entrySet()) {
-            CompoundTag entryTag = new CompoundTag();
-            entryTag.putUUID("Player", entry.getKey());
-            entryTag.putString("Mode", entry.getValue());
-            plotList.add(entryTag);
-        }
-        tag.put("PlayerPlotMode", plotList);
 
         return tag;
     }
@@ -334,37 +311,19 @@ public class EconomySavedData extends SavedData {
         return null;
     }
 
-    /** 地块归属快照条目（供客户端渲染四色高亮） */
-    public record PlotCell(long chunkKey, UUID owner, String regionName, boolean isFlyland) {}
+    /** 区块归属快照条目（供客户端渲染区块颜色） */
+    public record ChunkCell(long chunkKey, UUID owner, String regionName, boolean isFlyland) {}
 
-    /** 返回某区块范围内（cx0..cx1, cz0..cz1）的地块归属快照 */
-    public List<PlotCell> snapshotPlotCells(String dimId, int cx0, int cz0, int cx1, int cz1) {
-        List<PlotCell> out = new ArrayList<>();
+    /** 返回某区块范围内（cx0..cx1, cz0..cz1）的区块归属快照 */
+    public List<ChunkCell> snapshotChunkCells(String dimId, int cx0, int cz0, int cx1, int cz1) {
+        List<ChunkCell> out = new ArrayList<>();
         for (int cx = cx0; cx <= cx1; cx++)
             for (int cz = cz0; cz <= cz1; cz++) {
                 long key = RegionData.chunkKey(cx, cz);
                 RegionData r = getRegionOwningChunk(dimId, key);
-                if (r != null) out.add(new PlotCell(key, r.getOwner(), r.getName(), r.isFlyland()));
+                if (r != null) out.add(new ChunkCell(key, r.getOwner(), r.getName(), r.isFlyland()));
             }
         return out;
-    }
-
-    /** 玩家地块模式："new"/"old"；未设置时回退到配置默认 */
-    public String getPlayerPlotMode(UUID id) {
-        String m = playerPlotMode.get(id);
-        return m != null ? m : (ModConfig.COMMON.plotSystemEnabled.get() ? "new" : "old");
-    }
-    public void setPlayerPlotMode(UUID id, String mode) {
-        if (!"new".equals(mode) && !"old".equals(mode)) return;
-        playerPlotMode.put(id, mode);
-        setDirty();
-    }
-
-    /** 地块界面在线状态（服务端强制退出用） */
-    public boolean isInPlotMode(UUID id) { return playersInPlotMode.contains(id); }
-    public void setInPlotMode(UUID id, boolean v) {
-        if (v) playersInPlotMode.add(id);
-        else playersInPlotMode.remove(id);
     }
 
     /** 旧→新 迁移：对单个 region 把 AABB 转为 chunk 集合（幂等） */

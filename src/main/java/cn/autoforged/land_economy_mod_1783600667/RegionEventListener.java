@@ -3,7 +3,7 @@ package cn.autoforged.land_economy_mod_1783600667;
 import cn.autoforged.land_economy_mod_1783600667.data.EconomySavedData;
 import cn.autoforged.land_economy_mod_1783600667.data.RegionData;
 import cn.autoforged.land_economy_mod_1783600667.network.ModMessages;
-import cn.autoforged.land_economy_mod_1783600667.network.PacketS2CForceExitPlot;
+import cn.autoforged.land_economy_mod_1783600667.network.PacketS2COpenScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -136,24 +136,10 @@ public class RegionEventListener {
             }
         }
 
-        // 玩家受击：强制退出地块界面
-        forceExitPlotIfActive((ServerPlayer) target);
-    }
-
-    /** 受击/移动/传送时强制退出地块地图界面 */
-    private static void forceExitPlotIfActive(ServerPlayer sp) {
-        EconomySavedData data = LandEconomyMod.getEconomyData();
-        if (data == null || !data.isInPlotMode(sp.getUUID())) return;
-        data.setInPlotMode(sp.getUUID(), false);
-        ModMessages.sendToPlayer(sp, new PacketS2CForceExitPlot());
-    }
-
-    /** 玩家传送（含 /tp、末影珍珠、传送门）时强制退出地块界面 */
-    @SubscribeEvent
-    public static void onEntityTeleport(EntityTeleportEvent event) {
-        if (event.getEntity().level().isClientSide) return;
-        if (!(event.getEntity() instanceof ServerPlayer sp)) return;
-        forceExitPlotIfActive(sp);
+        // 玩家受击时关闭区块认领地图
+        if (event.getEntity() instanceof ServerPlayer sp) {
+            forceExitClaimMap(sp);
+        }
     }
 
     @SubscribeEvent
@@ -248,8 +234,10 @@ public class RegionEventListener {
         if (region != null && !region.getPermission(8)) {
             event.setCanceled(true);
         }
-        // 末影珍珠传送：强制退出地块界面（onEntityTeleport 也会处理，这里冗余保证）
-        if (player instanceof ServerPlayer sp) forceExitPlotIfActive(sp);
+        // 传送时关闭区块认领地图
+        if (player instanceof ServerPlayer sp) {
+            forceExitClaimMap(sp);
+        }
     }
 
     // ==================== 区域冻结：禁止方块状态变化与更新 ====================
@@ -301,5 +289,12 @@ public class RegionEventListener {
         if (isFrozen(level, event.getPos())) {
             event.setCanceled(true);
         }
+    }
+
+    // ==================== 区块认领地图 ====================
+
+    /** 强制关闭玩家的区块认领地图（受击/传送时调用） */
+    private static void forceExitClaimMap(ServerPlayer player) {
+        ModMessages.sendToPlayer(player, new PacketS2COpenScreen(PacketS2COpenScreen.Type.CLOSE_MAP));
     }
 }

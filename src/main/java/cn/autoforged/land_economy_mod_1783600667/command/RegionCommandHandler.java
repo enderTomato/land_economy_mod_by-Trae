@@ -44,12 +44,6 @@ public class RegionCommandHandler {
             ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
             return 0;
         }
-        // 新版模式下提示使用 /land map（旧指令仍可执行）
-        if ("new".equals(data.getPlayerPlotMode(player.getUUID()))) {
-            ctx.getSource().sendSuccess(() -> Component.literal("[提示] 你处于新版地图地块模式，建议使用 /land map 通过图形化方式购买地块")
-                    .withStyle(ChatFormatting.AQUA), false);
-        }
-
         RegionData existing = data.getRegionByOwner(player.getUUID());
         if (existing != null) {
             ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.claim.exists"));
@@ -1481,9 +1475,9 @@ public class RegionCommandHandler {
         return null;
     }
 
-    // ==================== 地块系统相关命令实现 ====================
+    // ==================== 区块认领系统相关命令 ====================
 
-    /** /land map — 打开地图地块界面 */
+    /** /land map — 打开区块认领地图 */
     public static int openMap(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         ServerPlayer player = ctx.getSource().getPlayerOrException();
         EconomySavedData data = LandEconomyMod.getEconomyData();
@@ -1491,44 +1485,9 @@ public class RegionCommandHandler {
             ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
             return 0;
         }
-        // 新版模式下，提示客户端打开 PlotMapScreen；旧版模式提示切换
-        String mode = data.getPlayerPlotMode(player.getUUID());
-        if ("old".equals(mode)) {
-            ctx.getSource().sendFailure(Component.literal("当前为旧版模式，请先使用 /land mode new 切换到新版地图地块系统")
-                    .withStyle(ChatFormatting.YELLOW));
-            return 0;
-        }
-        // 进入地块界面：服务端记录在线状态（用于强制退出）
-        data.setInPlotMode(player.getUUID(), true);
-        ModMessages.sendToPlayer(player, new PacketS2COpenScreen(PacketS2COpenScreen.Type.PLOT_MAP));
-        ctx.getSource().sendSuccess(() -> Component.literal("正在打开地图地块界面... 按 空格/ESC 退出")
+        ModMessages.sendToPlayer(player, new PacketS2COpenScreen(PacketS2COpenScreen.Type.CHUNK_CLAIM_MAP));
+        ctx.getSource().sendSuccess(() -> Component.literal("正在打开区块认领地图... 按 ESC 退出")
                 .withStyle(ChatFormatting.AQUA), true);
-        return 1;
-    }
-
-    /** /land mode <new|old> — 切换玩家个人地块模式 */
-    public static int setPlotMode(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
-        ServerPlayer player = ctx.getSource().getPlayerOrException();
-        String mode = ctx.getArgument("mode", String.class);
-        if (!"new".equals(mode) && !"old".equals(mode)) {
-            ctx.getSource().sendFailure(Component.literal("模式必须为 new 或 old"));
-            return 0;
-        }
-        EconomySavedData data = LandEconomyMod.getEconomyData();
-        if (data == null) {
-            ctx.getSource().sendFailure(Component.translatable("command.land_economy_mod_1783600667.error.no_data"));
-            return 0;
-        }
-        // 切换到新版：自动迁移旧版 AABB 到 chunk 集合
-        if ("new".equals(mode)) {
-            RegionData mine = data.getRegionByOwner(player.getUUID());
-            if (mine != null) data.migrateLegacyAABBToChunks(mine);
-        }
-        data.setPlayerPlotMode(player.getUUID(), mode);
-        data.setDirty();
-        String label = "new".equals(mode) ? "新版（地图地块系统）" : "旧版（区域声明）";
-        ctx.getSource().sendSuccess(() -> Component.literal("已切换到" + label)
-                .withStyle(ChatFormatting.GREEN), true);
         return 1;
     }
 

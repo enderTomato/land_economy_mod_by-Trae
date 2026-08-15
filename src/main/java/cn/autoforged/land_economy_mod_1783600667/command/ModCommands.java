@@ -145,14 +145,9 @@ public class ModCommands {
                         .then(Commands.literal("add")
                                 .then(Commands.argument("amount", DoubleArgumentType.doubleArg(0))
                                         .executes(ModCommands::setOutlayAdd))))
-                // /land map — 打开地图地块界面（新版）
+                // /land map — 打开区块认领地图
                 .then(Commands.literal("map")
                         .executes(ModCommands::openMap))
-                // /land mode <new|old> — 切换新旧版本
-                .then(Commands.literal("mode")
-                        .then(Commands.argument("mode", StringArgumentType.word())
-                                .suggests(ModCommands::suggestPlotModes)
-                                .executes(ModCommands::setPlotMode)))
                 // /land gui — 打开箱子GUI
                 .then(Commands.literal("gui")
                         .executes(ModCommands::openChestGui))
@@ -273,13 +268,6 @@ public class ModCommands {
     private static CompletableFuture<Suggestions> suggestDisplayModes(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder builder) {
         builder.suggest("title");
         builder.suggest("actionbar");
-        return builder.buildFuture();
-    }
-
-    // Tab completion for /land mode <new|old>
-    private static CompletableFuture<Suggestions> suggestPlotModes(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder builder) {
-        builder.suggest("new");
-        builder.suggest("old");
         return builder.buildFuture();
     }
 
@@ -510,10 +498,6 @@ public class ModCommands {
 
     private static int openMap(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         return RegionCommandHandler.openMap(ctx);
-    }
-
-    private static int setPlotMode(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
-        return RegionCommandHandler.setPlotMode(ctx);
     }
 
     private static int openChestGui(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
