@@ -62,6 +62,9 @@ public class PlotMapScreen extends Screen {
     /** 平移速度（像素/tick） */
     private static final int PAN_SPEED = 6;
 
+    /** 地形纹理预渲染 */
+    private final PlotMapTerrainImage terrainImage = new PlotMapTerrainImage();
+
     public PlotMapScreen() {
         super(Component.literal("地图地块"));
         Minecraft mc = Minecraft.getInstance();
@@ -117,10 +120,12 @@ public class PlotMapScreen extends Screen {
         int cx1 = (int) Math.ceil((view.centerX + (W / 2.0) * (16.0 / view.cellSize)) / 16.0);
         int cz1 = (int) Math.ceil((view.centerZ + (H / 2.0) * (16.0 / view.cellSize)) / 16.0);
 
-        ClientLevel level = Minecraft.getInstance().level;
-        boolean useTerrain = view.cellSize >= 16; // 大地形渲染仅在缩放 >= 16 时启用
+        // 地形纹理：一次性渲染为单个纹理，大幅减少 draw call
+        if (view.cellSize >= 16) {
+            terrainImage.render(g, view, W, H);
+        }
 
-        // 绘制每个区块
+        // 绘制每个区块的归属色叠加层（仅 1 次 fill / chunk，不再 256 次）
         for (int cx = cx0; cx <= cx1; cx++) {
             for (int cz = cz0; cz <= cz1; cz++) {
                 long key = ChunkPos.asLong(cx, cz);
@@ -131,45 +136,14 @@ public class PlotMapScreen extends Screen {
 
                 PlotClientCache.Cell cell = PlotClientCache.get(key);
 
-                // 尝试使用地形颜色渲染（DynMap 风格）
-                boolean terrainDrawn = false;
-                if (useTerrain && level != null) {
-                    int[] terrain = PlotMapTerrainRenderer.sampleTerrain(level, cx, cz);
-                    if (terrain != null) {
-                        float scale = (float) view.cellSize / 16f;
-                        for (int lx = 0; lx < 16; lx++) {
-                            for (int lz = 0; lz < 16; lz++) {
-                                int color = terrain[lx * 16 + lz];
-                                int tx = x0 + (int) (lx * scale);
-                                int ty = y0 + (int) (lz * scale);
-                                int tw = (int) Math.ceil(scale);
-                                int th = (int) Math.ceil(scale);
-                                // 叠加半透明归属色
-                                int overlay = 0;
-                                if (selectedBuy.contains(key) || selectedAbandon.contains(key))       overlay = 0x40FFFFFF;
-                                else if (cell == null)                                                  overlay = 0x33000000;
-                                else if (cell.isMine())                                                overlay = 0x400000AA;
-                                else if (cell.isOthers())                                              overlay = 0x40AA0000;
-                                else                                                                    overlay = 0x4000AA00;
-                                g.fill(tx, ty, tx + tw, ty + th, color);
-                                if (overlay != 0) g.fill(tx, ty, tx + tw, ty + th, overlay);
-                            }
-                        }
-                        terrainDrawn = true;
-                    }
-                }
-
-                if (!terrainDrawn) {
-                    // 回退：纯色填充
-                    int fill;
-                    if (selectedBuy.contains(key))            fill = 0x40FFFFFF;
-                    else if (selectedAbandon.contains(key))    fill = 0x40FFFFFF;
-                    else if (cell == null)                    fill = 0x33000000;
-                    else if (cell.isMine())                   fill = 0x400000AA;
-                    else if (cell.isOthers())                 fill = 0x40AA0000;
-                    else                                      fill = 0x4000AA00;
-                    g.fill(x0, y0, x1, y1, fill);
-                }
+                // 归属色半透明叠加
+                int fill;
+                if (selectedBuy.contains(key) || selectedAbandon.contains(key)) fill = 0x40FFFFFF;
+                else if (cell == null)         fill = 0x33000000;
+                else if (cell.isMine())        fill = 0x400000AA;
+                else if (cell.isOthers())      fill = 0x40AA0000;
+                else                           fill = 0x4000AA00;
+                g.fill(x0, y0, x1, y1, fill);
 
                 // 边框色（实线）
                 int border;
@@ -472,8 +446,7 @@ public class PlotMapScreen extends Screen {
 
     @Override
     public void onClose() {
-        // 退出前通知服务端退出地块界面（让 isInPlotMode=false）
-        // 服务端事件也会兜底处理，这里冗余保证
+        terrainImage.close();
         PlotMapTerrainRenderer.clearAll();
         super.onClose();
     }

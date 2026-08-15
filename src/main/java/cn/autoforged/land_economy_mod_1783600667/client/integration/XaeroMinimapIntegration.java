@@ -1,11 +1,14 @@
 package cn.autoforged.land_economy_mod_1783600667.client.integration;
 
 import cn.autoforged.land_economy_mod_1783600667.LandEconomyMod;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 /**
  * Xaero's Minimap 集成。
  *
- * 功能：在 minimap 上渲染区域边界（通过反射注入渲染钩子）。
+ * 功能：在 minimap 上渲染区域边界（通过 RenderLevelStageEvent 在世界空间绘制）。
  * 不支持选框购买（minimap 太小）。
  */
 public class XaeroMinimapIntegration implements IMapIntegration {
@@ -21,13 +24,22 @@ public class XaeroMinimapIntegration implements IMapIntegration {
 
     @Override
     public void init() {
+        MinecraftForge.EVENT_BUS.register(this);
         LandEconomyMod.LOGGER.info("[XaeroMinimapIntegration] Initialized.");
     }
 
     @Override
     public void shutdown() {
+        MinecraftForge.EVENT_BUS.unregister(this);
     }
 
-    // 边界渲染将在后续版本中通过反射注入 Xaero's MinimapRenderer 实现
-    // 当前版本保留接口，渲染逻辑回退到 PlotMapScreen 独立使用
+    /**
+     * 在 RenderLevelStage 绘制区域边界。
+     * Xaero's Minimap 渲染世界内容，世界空间中的边界会出现在 minimap 上。
+     */
+    @SubscribeEvent
+    public void onRenderLevelStage(RenderLevelStageEvent event) {
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS) return;
+        MapBoundaryRenderer.drawWorldBoundaries(event);
+    }
 }

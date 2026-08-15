@@ -4,7 +4,9 @@ import cn.autoforged.land_economy_mod_1783600667.LandEconomyMod;
 import cn.autoforged.land_economy_mod_1783600667.client.plot.PlotClientCache;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +16,7 @@ import java.util.List;
  *
  * 功能：
  * - 在全屏世界地图上通过 Ctrl+左键/右键框选区块
- * - 在世界地图上渲染区域边界
- *
- * 使用反射实现，因为 Xaero's World Map 不提供公开 API。
+ * - 在世界地图上渲染区域边界（通过 RenderLevelStageEvent）
  */
 public class XaeroWorldMapIntegration implements IMapIntegration {
 
@@ -45,6 +45,16 @@ public class XaeroWorldMapIntegration implements IMapIntegration {
         MinecraftForge.EVENT_BUS.unregister(this);
         isSelecting = false;
         selectionButton = -1;
+    }
+
+    /**
+     * 在 RenderLevelStage 绘制区域边界。
+     * Xaero's World Map 全屏地图渲染世界内容，世界空间中的边界会出现在地图上。
+     */
+    @SubscribeEvent
+    public void onRenderLevelStage(RenderLevelStageEvent event) {
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS) return;
+        MapBoundaryRenderer.drawWorldBoundaries(event);
     }
 
     /**
